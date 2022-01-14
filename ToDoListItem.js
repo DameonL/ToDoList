@@ -44,9 +44,18 @@ export class ToDoListItem {
             rootNode.draggable = true;
             rootNode.style.backgroundColor = (this.Index % 2 == 0) ? StyleSettings.ListItemBGColor : StyleSettings.ListItemBGAltColor;
 
-            rootNode.addEventListener("dragover", (event) => {
+            rootNode.addEventListener("dragenter", (event) => {
                 event.preventDefault();
-                console.log("dragover");
+                event.stopPropagation();
+                event.dataTransfer.dropEffect = "move";
+                console.log("dragenter");
+                console.log(event);
+            });
+
+            rootNode.addEventListener("dragleave", (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                console.log("dragleave");
                 console.log(event);
             });
 
