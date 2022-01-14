@@ -83,6 +83,9 @@ export class ToDoListItem {
             nameSpan.id = "toDoItemName" + this.Index;
             nameSpan.innerHTML = this.#backingData.name;
             nameSpan.addEventListener("focusout", itemChanged);
+            nameSpan.addEventListener("pointerdown", (event) => {
+                event.preventDefault();
+            });
             nameSpan.addEventListener("keypress", (event) => {
                 if (event.key == "Enter") {
                     event.preventDefault();
