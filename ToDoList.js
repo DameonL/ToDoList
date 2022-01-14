@@ -1,11 +1,11 @@
 class ToDoList {
     #listItems = [];
-    #database = new ToDoDatabase();
+    #database = null;
     #rootNode = null;
 
     constructor(rootNode) {
         this.#rootNode = rootNode;
-        this.#database.Initialize(() => {
+        this.#database = new ToDoDatabase(() => {
             let itemData = this.#database.GetItems();
             itemData.forEach(data => {
                 this.AddItem(data);

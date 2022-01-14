@@ -16,7 +16,7 @@ class ToDoDatabase {
             store.getAll().onsuccess = (event) => {
                 this.#items = event.target.result;
                 db.close();
-                onSuccess();
+                if (onSuccess != null) { onSuccess(); }
             };
 
         }
@@ -76,9 +76,7 @@ class ToDoDatabase {
     #InitializeDatabase(event) {
         if (event.oldVersion == 0) {
             let db = event.target.result;
-            let store = db.createObjectStore("items", {
-                autoIncrement: true
-            });
+            let store = db.createObjectStore("items");
     
             store.put({name: "My New ToDo Item", description: "Insert description here"}, 0);
         }
