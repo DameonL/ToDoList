@@ -15,7 +15,7 @@ export class ToDoList {
     }
 
     CreateNewItem() {
-        let data = { name: "New ToDo Item", description: "Insert description here" };
+        let data = { name: "New ToDo Item", description: "Insert description here", complete: false };
         this.#database.AddItem(data);
     }
 
@@ -26,9 +26,7 @@ export class ToDoList {
         return newItem;
     }
 
-    DeleteItem(data) {
-        this.#database.DeleteItem(data);
-    }
+    DeleteItem = this.#database.DeleteItem;
 
     RenderToDoListItems() {
         while (this.#rootNode.firstChild) {

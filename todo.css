@@ -42,7 +42,7 @@
     display: grid;
     padding-top: 5px;
     padding-bottom: 5px;
-    grid-template-columns: 1.25em 25% 65%;
+    grid-template-columns: 1.25em 1.25em 25% 65%;
     column-gap: 15px;
 }
 

@@ -2,7 +2,12 @@ export class ItemDeleteDialog {
     #deleteDialogText = `
     <div class="itemDeleteDialogCenter">
         <div>This will permanently delete this To Do List entry. Are you sure you want to DELETE this entry?</div>
-        <span><button id="deleteDialogDelete">Delete</button></span><span><button id="deleteDialogCancel">Cancel</span>
+        <span>
+            <button id="deleteDialogDelete">Delete</button>
+        </span>
+        <span>
+            <button id="deleteDialogCancel">Cancel</button>
+        </span>
     </div>
     `;
 
