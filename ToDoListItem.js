@@ -55,23 +55,24 @@ export class ToDoListItem {
                 event.dataTransfer.dropEffect = "move";
                 let blankElement = document.createElement("div");
 
-                rootNode.parentNode.appendChild(blankElement);
-                rootNode.parentNode.insertBefore(rootNode, blankElement);
                 counter++;
 
-                let leaveListener = (event) => {
-                    event.preventDefault();
-                    counter--;
-                    if (counter == 0) {
-                        rootNode.removeEventListener("dragleave", leaveListener);
-                        rootNode.parentNode.removeChild(blankElement);
-
-                        console.log("Dragleave");
+                if (counter == 1) {
+                    let leaveListener = (event) => {
+                        event.preventDefault();
+                        counter--;
+                        if (counter == 0) {
+                            rootNode.removeEventListener("dragleave", leaveListener);
+                            rootNode.parentElement.removeChild(blankElement);
+    
+                            console.log("Dragleave");
+                        }
                     }
+    
+                    rootNode.addEventListener("dragleave", (event) => leaveListener);
+                    rootNode.parentElement.insertBefore(blankElement, rootNode);
                 }
 
-                if (counter == 1)
-                    rootNode.addEventListener("dragleave", leaveListener);
             });
         
         
