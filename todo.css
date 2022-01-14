@@ -46,6 +46,10 @@
     column-gap: 15px;
 }
 
+.toDoItem * {
+    pointer-events: none;
+}
+
 .toDoItemHandle {
     background-color: darkslategrey;
     border: 1px solid black;
