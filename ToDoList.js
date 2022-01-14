@@ -6,7 +6,7 @@ class ToDoList {
     constructor(rootNode) {
         this.#rootNode = rootNode;
         this.#database.Initialize(() => {
-            let itemData = this.#database.GetToDoItems();
+            let itemData = this.#database.GetItems();
             itemData.forEach(data => {
                 this.AddItem(data);
             });
@@ -18,12 +18,12 @@ class ToDoList {
     AddItem(data) {
         if (data == null) {
             data = { name: "New ToDo Item", description: "Insert description here" };
-            this.#database.AddToDoItem(data);
+            this.#database.AddItem(data);
         }
 
         let newItem = new ToDoListItem(data, () => { return this.#database.GetItemIndex(data); });
         this.#listItems.push(newItem);
-        newItem.AddChangeListener(() => this.#database.UpdateToDoItem(data));
+        newItem.AddChangeListener(() => this.#database.UpdateItem(data));
         this.RenderToDoListItems();
         return newItem;
     }

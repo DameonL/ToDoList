@@ -1,68 +1,20 @@
 class ToDoDatabase {
-    #toDoItems = [];
+    #items = [];
     #reverseLookup = {};
-    get count() { return this.#toDoItems.length; }
+    #itemChangedHandlers = [];
 
-    GetToDoItems() {
-        return [...this.#toDoItems];
-    }
+    get count() { return this.#items.length; }
 
-    GetToDoItem(index) {
-        return toDoItems[index];
-    }
-
-    GetItemIndex(data) {
-        return this.#toDoItems.indexOf(data);
-    }
-
-    AddToDoItem(data) {
-        this.#toDoItems.push(data);
-        this.#reverseLookup[data] = this.#toDoItems.length - 1;
-        this.UpdateToDoItem(data);
-    }
-
-    DeleteItem(index, completeHandler) {
-        let deletedItem = this.#toDoItems[index];
-        this.#toDoItems.splice(index, 1);
-
-        let dbOpenRequest = window.indexedDB.open("ToDoList", 1);
-        dbOpenRequest.onsuccess = (event) => {
-            let db = event.target.result;
-            let transaction = db.transaction("ToDoItems", "readwrite");
-            let store = transaction.objectStore("ToDoItems");
-            let deleteRequest = store.delete(this.#toDoItems.length);
-
-            transaction.oncomplete = () => {
-                for (let i = index; i < this.#toDoItems.length; i++) {
-                    this.UpdateToDoItem(this.#toDoItems[i]);
-                }
-
-                completeHandler();
-            }
-        }
-    }
-
-    UpdateToDoItem(data) {
-        let dbOpenRequest = window.indexedDB.open("ToDoList", 1);
-        dbOpenRequest.onsuccess = (event) => {
-            let db = event.target.result;
-            let transaction = db.transaction("ToDoItems", "readwrite");
-            let store = transaction.objectStore("ToDoItems");
-            let index = this.GetItemIndex(data);
-            store.put(data, index);
-        }
-    }
-
-    Initialize(onSuccess = null) {
+    constructor(onSuccess = null) {
         let dbOpenRequest = window.indexedDB.open("ToDoList", 1);
         dbOpenRequest.onupgradeneeded = this.#InitializeDatabase;
         dbOpenRequest.onsuccess = (event) => {
             let db = event.target.result;
-            let transaction = db.transaction("ToDoItems", "readonly");
-            let store = transaction.objectStore("ToDoItems");
+            let transaction = db.transaction("items", "readonly");
+            let store = transaction.objectStore("items");
         
             store.getAll().onsuccess = (event) => {
-                this.#toDoItems = event.target.result;
+                this.#items = event.target.result;
                 db.close();
                 onSuccess();
             };
@@ -70,10 +22,61 @@ class ToDoDatabase {
         }
     }
 
+    AddItem(data) {
+        this.#items.push(data);
+        this.#reverseLookup[data] = this.#items.length - 1;
+        this.UpdateItem(data);
+    }
+
+    DeleteItem(data, completeHandler) {
+        let index = this.GetItemIndex(data);
+        let deletedItem = this.#items[index];
+        this.#items.splice(index, 1);
+
+        let dbOpenRequest = window.indexedDB.open("ToDoList", 1);
+        dbOpenRequest.onsuccess = (event) => {
+            let db = event.target.result;
+            let transaction = db.transaction("items", "readwrite");
+            let store = transaction.objectStore("items");
+            let deleteRequest = store.delete(this.#items.length);
+
+            transaction.oncomplete = () => {
+                for (let i = index; i < this.#items.length; i++) {
+                    this.UpdateItem(this.#items[i]);
+                }
+
+                completeHandler();
+            }
+        }
+    }
+
+    GetItem(index) {
+        return items[index];
+    }
+
+    GetItemIndex(data) {
+        return this.#items.indexOf(data);
+    }
+
+    GetItems() {
+        return [...this.#items];
+    }
+
+    UpdateItem(data) {
+        let dbOpenRequest = window.indexedDB.open("ToDoList", 1);
+        dbOpenRequest.onsuccess = (event) => {
+            let db = event.target.result;
+            let transaction = db.transaction("items", "readwrite");
+            let store = transaction.objectStore("items");
+            let index = this.GetItemIndex(data);
+            store.put(data, index);
+        }
+    }
+
     #InitializeDatabase(event) {
         if (event.oldVersion == 0) {
             let db = event.target.result;
-            let store = db.createObjectStore("ToDoItems", {
+            let store = db.createObjectStore("items", {
                 autoIncrement: true
             });
     
