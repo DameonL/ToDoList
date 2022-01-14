@@ -1,4 +1,4 @@
-import { ToDoListItem } from "ToDoListItem.js";
+import { ToDoListItem } from "./ToDoListItem.js";
 
 export class ToDoList {
     #listItems = [];
