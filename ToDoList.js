@@ -2,46 +2,31 @@ import { ToDoListItem } from "./ToDoListItem.js";
 import { ToDoDatabase } from "./ToDoDatabase.js";
 
 export class ToDoList {
-    #listItems = [];
     #database = null;
     #rootNode = null;
 
     constructor(rootNode) {
         this.#rootNode = rootNode;
         this.#database = new ToDoDatabase(() => {
-            let itemData = this.#database.GetItems();
-            itemData.forEach(data => {
-                this.AddItem(data);
+            this.#database.AddListChangedHandler((event) => {
+                this.RenderToDoListItems();
             });
 
             this.RenderToDoListItems();
         });
     }
 
-    AddItem(data) {
+    CreateListItem(data) {
         if (data == null) {
             data = { name: "New ToDo Item", description: "Insert description here" };
             this.#database.AddItem(data);
         }
 
-        let newItem = new ToDoListItem(data, () => { return this.#database.GetItemIndex(data); });
-        this.#listItems.push(newItem);
-        newItem.AddChangeListener(() => this.#database.UpdateItem(data));
-        this.RenderToDoListItems();
         return newItem;
     }
 
     DeleteItem(data) {
-        let deletedItem = this.#listItems[index];
-        this.#listItems.splice(index, 1);
-        for (let i = index; i < this.#listItems.length; i++) {
-            this.#listItems[i].Index -= 1;
-            console.log(this.#listItems[i].Index);
-        }
-
-        this.#database.DeleteItem(index, () => {
-            this.RenderToDoListItems();
-        });
+        this.#database.DeleteItem(data);
     }
 
     RenderToDoListItems() {
@@ -49,8 +34,11 @@ export class ToDoList {
             this.#rootNode.removeChild(this.#rootNode.firstChild);
         }
 
-        for (let i = 0; i < this.#listItems.length; i++) {
-            let renderer = this.#listItems[i].Renderer;
+        let itemData = this.#database.GetItems();
+
+        for (let i = 0; i < itemData.length; i++) {
+            let listItem = this.CreateListItem(itemData[i]);
+            let renderer = listItem.Renderer;
             this.#rootNode.appendChild(renderer);
         }
     }

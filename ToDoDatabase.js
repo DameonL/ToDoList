@@ -1,7 +1,7 @@
 export class ToDoDatabase {
     #items = [];
-    #reverseLookup = {};
     #itemChangedHandlers = [];
+    #listChangedHandlers = [];
 
     get count() { return this.#items.length; }
 
@@ -21,13 +21,34 @@ export class ToDoDatabase {
         }
     }
 
+    AddItemChangedHandler(handler) {
+        this.#itemChangedHandlers.push(handler);
+    }
+
+    RemoveItemChangedHandler(handler) {
+        let index = this.#itemChangedHandlers.indexOf(handler);
+        if (index == -1) return;
+
+        this.#itemChangedHandlers.splice(index, 1);
+    }
+
+    AddListChangedHandler(handler) {
+        this.#listChangedHandlers.push(handler);
+    }
+
+    RemoveListChangedHandler(handler) {
+        let index = this.#listChangedHandlers.indexOf(handler);
+        if (index == -1) return;
+
+        this.#listChangedHandlers.splice(index, 1);
+    }
+
     AddItem(data) {
         this.#items.push(data);
-        this.#reverseLookup[data] = this.#items.length - 1;
         this.UpdateItem(data);
     }
 
-    DeleteItem(data, completeHandler) {
+    DeleteItem(data) {
         let index = this.GetItemIndex(data);
         let deletedItem = this.#items[index];
         this.#items.splice(index, 1);
@@ -44,7 +65,9 @@ export class ToDoDatabase {
                     this.UpdateItem(this.#items[i]);
                 }
 
-                completeHandler();
+                this.#itemChangedHandlers.forEach(x => {
+                    x({item: [...this.#items]});
+                });
             }
         }
     }
@@ -69,7 +92,11 @@ export class ToDoDatabase {
             let store = transaction.objectStore("items");
             let index = this.GetItemIndex(data);
             store.put(data, index);
-        }
+
+            this.#itemChangedHandlers.forEach(x => {
+                x({item: [...this.#items]});
+            });
+    }
     }
 
     #InitializeDatabase(event) {
