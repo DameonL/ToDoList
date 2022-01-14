@@ -1,3 +1,5 @@
+import { ToDoList } from "./ToDoList.js";
+
 let toDoList = new ToDoList(document.getElementById("toDoListRender"));
 Start();
 
