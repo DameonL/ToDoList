@@ -68,6 +68,8 @@ export class ToDoListItem {
 
             rootNode.addEventListener("dragleave", (event) => {
                 counter--;
+                console.log(counter);
+
                 if (counter == 0) {
                     rootNode.parentElement.removeChild(blankElement);
 
