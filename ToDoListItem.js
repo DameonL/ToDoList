@@ -53,6 +53,10 @@ export class ToDoListItem {
             blankElement.style.minHeight = 20;
 
             rootNode.addEventListener("dragenter", (event) => {
+                if (event.target.className != "toDoItem") return;
+                if (event.target == event.SrcElement) return;
+                
+
                 event.preventDefault();
                 event.dataTransfer.dropEffect = "move";
                 console.log(event);
@@ -63,6 +67,9 @@ export class ToDoListItem {
             });
 
             rootNode.addEventListener("dragleave", (event) => {
+                if (event.target.className != "toDoItem") return;
+                if (event.target == event.SrcElement) return;
+                    
                 event.preventDefault();
                 console.log(event);
 
