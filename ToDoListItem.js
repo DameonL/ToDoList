@@ -53,8 +53,8 @@ export class ToDoListItem {
             });
 
             rootNode.addEventListener("dragover", (event) => {
-                console.log(event.dataTransfer.getData("text/plain"));
-                if (event.dataTransfer.getData("text/plain") == this.Index)
+                console.log(event.dataTransfer.getData("text"));
+                if (event.dataTransfer.getData("text") == this.Index)
                     return true;
                     
                 event.preventDefault();
@@ -63,8 +63,8 @@ export class ToDoListItem {
             });
 
             rootNode.addEventListener("dragenter", (event) => {
-                console.log(event.dataTransfer.getData("text/plain"));
-                if (event.dataTransfer.getData("text/plain") == this.Index)
+                console.log(event.dataTransfer.getData("text"));
+                if (event.dataTransfer.getData("text") == this.Index)
                     return true;
                     
                 event.preventDefault();
@@ -76,8 +76,8 @@ export class ToDoListItem {
             blankElement.style.minHeight = 20;
 
             rootNode.addEventListener("drop", (event) => {
-                if (event.dataTransfer.getData("text/plain") == this.Index)
-                    return;
+                if (event.dataTransfer.getData("text") == this.Index)
+                    return true;
 
                 event.preventDefault();
 
