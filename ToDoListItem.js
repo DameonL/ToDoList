@@ -58,7 +58,7 @@ export class ToDoListItem {
                 event.dataTransfer.dropEffect = "move";
 
                 counter++;
-
+                console.log(counter);
                 if (counter == 1) {
                     rootNode.parentElement.insertBefore(blankElement, rootNode);
                     console.log("Dragenter");
