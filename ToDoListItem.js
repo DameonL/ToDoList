@@ -51,6 +51,7 @@ export class ToDoListItem {
 
             let counter = 0;
             let blankElement = document.createElement("div");
+            blankElement.style.minHeight = 20;
 
             rootNode.addEventListener("dragenter", (event) => {
                 event.preventDefault();
@@ -59,13 +60,12 @@ export class ToDoListItem {
                 counter++;
 
                 if (counter == 1) {
-    
                     rootNode.parentElement.insertBefore(blankElement, rootNode);
                     console.log("Dragenter");
                 }
 
             });
-            
+
             rootNode.addEventListener("dragleave", (event) => {
                 counter--;
                 if (counter == 0) {
