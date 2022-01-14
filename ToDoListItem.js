@@ -1,4 +1,4 @@
-import { StyleSettings } from "./StyleSettings";
+import { StyleSettings } from "./StyleSettings.js";
 
 export class ToDoListItem {
     #indexFunction = null;
