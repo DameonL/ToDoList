@@ -73,7 +73,7 @@ export class ToDoDatabase {
         }
     }
 
-    GetItem(index) {
+    GetItemAt(index) {
         return items[index];
     }
 
@@ -83,6 +83,25 @@ export class ToDoDatabase {
 
     GetItems() {
         return [...this.#items];
+    }
+
+    InsertItemBefore(priorItem, itemToInsert) {
+        let insertIndex = this.GetItemIndex(priorItem);
+        let oldIndex = this.GetItemIndex(itemToInsert);
+
+        if (insertIndex > oldIndex) {
+
+        }
+
+        this.#items.splice(insertIndex, 0, this.#items.splice(oldIndex, 1)[0]);
+
+        for (let i = 0; i < this.#items.length; i++) {
+            this.UpdateItem(this.#items[i]);
+        }
+
+        this.#listChangedHandlers.forEach(x => {
+            x({item: [...this.#items]});
+        });
     }
 
     UpdateItem(data) {

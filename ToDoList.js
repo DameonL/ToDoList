@@ -5,6 +5,7 @@ export class ToDoList {
     #database = null;
     #rootNode = null;
     #ignoreListChanges = false;
+    #itemData = [];
 
     constructor(rootNode) {
         this.#rootNode = rootNode;
@@ -16,7 +17,7 @@ export class ToDoList {
 
     CreateNewItem() {
         let data = { name: "New ToDo Item", description: "Insert description here", complete: false };
-        this.#database.AddItem(data);
+        this.#database.InsertItemBefore(this.#itemData[0], data);
     }
 
     CreateListItem(data) {
@@ -34,6 +35,7 @@ export class ToDoList {
         }
 
         let itemData = this.#database.GetItems();
+        this.#itemData = itemData;
 
         for (let i = 0; i < itemData.length; i++) {
             let listItem = this.CreateListItem(itemData[i]);

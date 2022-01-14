@@ -43,11 +43,26 @@ export class ToDoListItem {
             rootNode.className = "toDoItem";
             rootNode.draggable = true;
             rootNode.style.backgroundColor=(this.Index %2 == 0) ? StyleSettings.ListItemBGColor : StyleSettings.ListItemBGAltColor;
+
             rootNode.addEventListener("dragstart", (event) => {
                 event.dataTransfer.effectAllowed = "move";
                 event.dataTransfer.setData("text/plain", this.Index);
             });
 
+            rootNode.addEventListener("dragover", (event) => {
+                event.preventDefault();
+                event.dataTransfer.dropEffect = "move";
+            });
+        
+            rootNode.addEventListener("dragleave", (event) => {
+                event.preventDefault();
+                event.dataTransfer.dropEffect = "move";
+            });
+        
+            rootNode.addEventListener("drop", (event) => {
+//                let droppedListIndex = Number(event.dataTransfer.getData("text/plain"));
+            });
+        
             let completeCheck = document.createElement("input");
             completeCheck.id = "toDoItemComplete" + this.Index;
             completeCheck.type="checkbox";
