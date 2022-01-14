@@ -52,25 +52,20 @@ export class ToDoListItem {
             let blankElement = document.createElement("div");
             blankElement.style.minHeight = 20;
 
-            rootNode.addEventListener("dragenter", (event) => {
-                if (event.target == rootNode)
-                    return;
-
+            rootNode.addEventListener("dragenter", (event, source) => {
                 event.preventDefault();
                 event.dataTransfer.dropEffect = "move";
-                console.log(event.target);
+                console.log(source);
 
                 rootNode.parentElement.insertBefore(blankElement, rootNode);
                 console.log("Dragenter");
 
             });
 
-            rootNode.addEventListener("dragleave", (event) => {
-                if (event.target == rootNode)
-                    return;
-
+            rootNode.addEventListener("dragleave", (event, source) => {
                 event.preventDefault();
-                console.log(counter);
+                console.log(source);
+                
                 rootNode.parentElement.removeChild(blankElement);
                 console.log("Dragleave");
             });
