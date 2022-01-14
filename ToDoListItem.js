@@ -50,7 +50,8 @@ export class ToDoListItem {
             });
 
             rootNode.addEventListener("dragover", (event) => {
-                event.preventDefault();
+                if (event.dataTransfer.getData("text/plain") != this.Index)
+                    event.preventDefault();
             });
 
             let blankElement = document.createElement("div");
@@ -59,7 +60,6 @@ export class ToDoListItem {
             rootNode.addEventListener("drop", (event) => {
                 event.preventDefault();
 
-                console.log(getElementById(event.dataTransfer.getData("text/plain")));
                 console.log(event);
             });
 
