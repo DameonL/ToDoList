@@ -47,11 +47,15 @@ export class ToDoListItem {
 
             rootNode.addEventListener("dragstart", (event) => {
                 event.dataTransfer.setData("text/plain", this.Index);
+                event.dataTransfer.effectAllowed="move";
             });
 
             rootNode.addEventListener("dragover", (event) => {
-                if (event.dataTransfer.getData("text/plain") != this.Index)
-                    event.preventDefault();
+                if (event.dataTransfer.getData("text/plain") == this.Index)
+                    return;
+                    
+                event.preventDefault();
+                event.dataTransfer.dropEffect="move";
             });
 
             let blankElement = document.createElement("div");
