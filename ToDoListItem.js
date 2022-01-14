@@ -65,7 +65,7 @@ export class ToDoListItem {
             rootNode.addEventListener("dragleave", (event, source) => {
                 event.preventDefault();
                 console.log(source);
-                
+
                 rootNode.parentElement.removeChild(blankElement);
                 console.log("Dragleave");
             });
