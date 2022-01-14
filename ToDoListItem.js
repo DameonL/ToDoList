@@ -1,4 +1,4 @@
-class ToDoListItem {
+export class ToDoListItem {
     #indexFunction = null;
     #backingData = null;
     #render = null;
