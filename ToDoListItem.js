@@ -45,6 +45,7 @@ export class ToDoListItem {
             rootNode.style.backgroundColor = (this.Index % 2 == 0) ? StyleSettings.ListItemBGColor : StyleSettings.ListItemBGAltColor;
 
             rootNode.addEventListener("dragover", (event, source) => {
+                console.log("dragover");
                 console.log(event);
             });
 
@@ -75,9 +76,6 @@ export class ToDoListItem {
             nameSpan.id = "toDoItemName" + this.Index;
             nameSpan.innerHTML = this.#backingData.name;
             nameSpan.addEventListener("focusout", itemChanged);
-            nameSpan.addEventListener("dragover", (event) => {
-                event.preventDefault();
-            });
             nameSpan.addEventListener("keypress", (event) => {
                 if (event.key == "Enter") {
                     event.preventDefault();
