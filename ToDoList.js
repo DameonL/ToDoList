@@ -21,7 +21,7 @@ export class ToDoList {
         }
 
         let newItem = new ToDoListItem(data, () => this.#database.GetItemIndex(data));
-        newItem.AddChangeListener(this.#database.UpdateItem(data));
+        newItem.AddChangeListener(() => this.#database.UpdateItem(data));
 
         return newItem;
     }
