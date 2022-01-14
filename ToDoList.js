@@ -1,6 +1,6 @@
 import { ToDoListItem } from "./ToDoListItem";
 
-class ToDoList {
+export class ToDoList {
     #listItems = [];
     #database = null;
     #rootNode = null;
