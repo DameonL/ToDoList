@@ -52,12 +52,17 @@ export class ToDoListItem {
             rootNode.addEventListener("dragover", (event) => {
                 event.preventDefault();
                 event.dataTransfer.dropEffect = "move";
+                console.log("Dragover");
+
+                let leaveListener = (event) => {
+                    event.preventDefault();
+                    rootNode.removeEventListener("dragleave", leaveListener);
+                    console.log("Dragleave");
+                }
+
+                rootNode.addEventListener("dragleave", leaveListener);
             });
         
-            rootNode.addEventListener("dragleave", (event) => {
-                event.preventDefault();
-                event.dataTransfer.dropEffect = "move";
-            });
         
             rootNode.addEventListener("drop", (event) => {
 //                let droppedListIndex = Number(event.dataTransfer.getData("text/plain"));
