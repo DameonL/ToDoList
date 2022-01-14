@@ -55,6 +55,7 @@ export class ToDoListItem {
                 event.dataTransfer.dropEffect = "move";
                 let blankElement = document.createElement("div");
 
+                rootNode.parentNode.appendChild(blankElement);
                 rootNode.parentNode.insertBefore(rootNode, blankElement);
                 counter++;
 
