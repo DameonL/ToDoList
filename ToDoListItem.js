@@ -50,6 +50,15 @@ export class ToDoListItem {
                 event.dataTransfer.effectAllowed="move";
             });
 
+            rootNode.addEventListener("dragover", (event) => {
+                console.log(event.dataTransfer.getData("text/plain"));
+                if (event.dataTransfer.getData("text/plain") == this.Index)
+                    return;
+                    
+                event.preventDefault();
+                event.dataTransfer.dropEffect="move";
+            });
+
             rootNode.addEventListener("dragenter", (event) => {
                 console.log(event.dataTransfer.getData("text/plain"));
                 if (event.dataTransfer.getData("text/plain") == this.Index)
