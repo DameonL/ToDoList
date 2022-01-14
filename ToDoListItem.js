@@ -46,6 +46,7 @@ export class ToDoListItem {
             rootNode.style.backgroundColor = (this.Index % 2 == 0) ? StyleSettings.ListItemBGColor : StyleSettings.ListItemBGAltColor;
 
             rootNode.addEventListener("dragstart", (event) => {
+                console.log(this.Index);
                 event.dataTransfer.setData("text/plain", this.Index);
                 event.dataTransfer.effectAllowed="move";
             });
@@ -53,19 +54,21 @@ export class ToDoListItem {
             rootNode.addEventListener("dragover", (event) => {
                 console.log(event.dataTransfer.getData("text/plain"));
                 if (event.dataTransfer.getData("text/plain") == this.Index)
-                    return;
+                    return true;
                     
                 event.preventDefault();
                 event.dataTransfer.dropEffect="move";
+                return false
             });
 
             rootNode.addEventListener("dragenter", (event) => {
                 console.log(event.dataTransfer.getData("text/plain"));
                 if (event.dataTransfer.getData("text/plain") == this.Index)
-                    return;
+                    return true;
                     
                 event.preventDefault();
                 event.dataTransfer.dropEffect="move";
+                return false
             });
 
             let blankElement = document.createElement("div");
