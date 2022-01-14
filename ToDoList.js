@@ -16,8 +16,10 @@ export class ToDoList {
 
     CreateListItem(data) {
         if (data == null) {
+            this.#ignoreListChanges = true;
             data = { name: "New ToDo Item", description: "Insert description here" };
             this.#database.AddItem(data);
+            this.#ignoreListChanges = false;
         }
 
         let newItem = new ToDoListItem(data, () => this.#database.GetItemIndex(data));
