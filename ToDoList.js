@@ -20,7 +20,10 @@ export class ToDoList {
             this.#database.AddItem(data);
         }
 
-        return new ToDoListItem(data, () => this.#database.GetItemIndex(data));
+        let newItem = new ToDoListItem(data, () => this.#database.GetItemIndex(data));
+        newItem.AddChangeListener(this.#database.UpdateItem(data));
+
+        return newItem;
     }
 
     DeleteItem(data) {
