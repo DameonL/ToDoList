@@ -54,15 +54,16 @@ export class ToDoListItem {
                 event.preventDefault();
                 event.dataTransfer.dropEffect = "move";
                 counter++;
-                console.log("dragenter");
+                if (counter == 1)
+                    console.log("dragenter");
 
                 let leaveListener = (event) => {
                     event.preventDefault();
                     counter--;
-                    if (counter == 0)
+                    if (counter == 0) {
                         rootNode.removeEventListener("dragleave", leaveListener);
-                        
-                    console.log("Dragleave");
+                        console.log("Dragleave");
+                    }
                 }
 
                 if (counter == 1)
