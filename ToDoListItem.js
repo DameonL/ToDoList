@@ -50,7 +50,7 @@ export class ToDoListItem {
                 console.log(source);
             });
 
-            rootNode.addEventListener("dragstart", (event, source) => {
+            rootNode.addEventListener("dragstart", (event, this) => {
                 event.dataTransfer.effectAllowed = "move";
                 event.dataTransfer.setData("text/plain", this.Index);
             });
