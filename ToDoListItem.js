@@ -44,7 +44,7 @@ export class ToDoListItem {
             rootNode.draggable = true;
             rootNode.style.backgroundColor = (this.Index % 2 == 0) ? StyleSettings.ListItemBGColor : StyleSettings.ListItemBGAltColor;
 
-            rootNode.addEventListener("dragstart", (event, source) => {
+            rootNode.addEventListener("dragstart", (event) => {
                 event.dataTransfer.effectAllowed = "move";
                 event.dataTransfer.setData("text/plain", this.Index);
             });
@@ -52,27 +52,27 @@ export class ToDoListItem {
             let blankElement = document.createElement("div");
             blankElement.style.minHeight = 20;
 
-            rootNode.addEventListener("dragenter", (event, source) => {
+            rootNode.addEventListener("dragenter", (event) => {
                 event.preventDefault();
                 event.dataTransfer.dropEffect = "move";
-                console.log(source);
+                console.log(event);
 
                 rootNode.parentElement.insertBefore(blankElement, rootNode);
                 console.log("Dragenter");
 
             });
 
-            rootNode.addEventListener("dragleave", (event, source) => {
+            rootNode.addEventListener("dragleave", (event) => {
                 event.preventDefault();
-                console.log(source);
+                console.log(event);
 
                 rootNode.parentElement.removeChild(blankElement);
                 console.log("Dragleave");
             });
 
 
-            rootNode.addEventListener("drop", (event, source) => {
-                console.log(source);
+            rootNode.addEventListener("drop", (event) => {
+                console.log(event);
             });
 
             let completeCheck = document.createElement("input");
