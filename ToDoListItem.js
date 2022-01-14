@@ -49,7 +49,7 @@ export class ToDoListItem {
                 event.stopPropagation();
                 event.dataTransfer.dropEffect = "move";
                 console.log("dragenter");
-                console.log(event.target === event.relatedTarget);
+                console.log(event.target === this.#render);
                 console.log(event);
             });
 
