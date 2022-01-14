@@ -49,6 +49,10 @@ export class ToDoListItem {
                 event.dataTransfer.setData("text/plain", this.Index);
             });
 
+            rootNode.addEventListener("dragover", (event) => {
+                event.preventDefault();
+            });
+
             let blankElement = document.createElement("div");
             blankElement.style.minHeight = 20;
 
