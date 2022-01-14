@@ -26,7 +26,7 @@ export class ToDoListItem {
 
     #ExecuteChangeHandlers() {
         for (let i = 0; i < this.#onchange.length; i++) {
-             this.#onchange[i](); 
+            this.#onchange[i]();
         }
     }
 
@@ -38,18 +38,17 @@ export class ToDoListItem {
                 this.#backingData.complete = document.getElementById("toDoItemComplete" + this.Index).checked == true;
                 this.#ExecuteChangeHandlers();
             }
-        
+
             let rootNode = document.createElement("div");
             rootNode.className = "toDoItem";
             rootNode.draggable = true;
-            rootNode.style.backgroundColor=(this.Index %2 == 0) ? StyleSettings.ListItemBGColor : StyleSettings.ListItemBGAltColor;
+            rootNode.style.backgroundColor = (this.Index % 2 == 0) ? StyleSettings.ListItemBGColor : StyleSettings.ListItemBGAltColor;
 
             rootNode.addEventListener("dragstart", (event, source) => {
                 event.dataTransfer.effectAllowed = "move";
                 event.dataTransfer.setData("text/plain", this.Index);
             });
 
-            let counter = 0;
             let blankElement = document.createElement("div");
             blankElement.style.minHeight = 20;
 
@@ -59,39 +58,31 @@ export class ToDoListItem {
 
                 event.preventDefault();
                 event.dataTransfer.dropEffect = "move";
+                console.log(event.target);
 
-                counter++;
-                console.log(counter);
-                if (counter == 1) {
-                    rootNode.parentElement.insertBefore(blankElement, rootNode);
-                    console.log("Dragenter");
-                }
+                rootNode.parentElement.insertBefore(blankElement, rootNode);
+                console.log("Dragenter");
 
             });
 
             rootNode.addEventListener("dragleave", (event) => {
                 if (event.target == rootNode)
                     return;
-                    
-                counter--;
+
+                event.preventDefault();
                 console.log(counter);
-
-                if (counter == 0) {
-                    rootNode.parentElement.removeChild(blankElement);
-
-                    console.log("Dragleave");
-                }
+                rootNode.parentElement.removeChild(blankElement);
+                console.log("Dragleave");
             });
 
-        
+
             rootNode.addEventListener("drop", (event, source) => {
                 console.log(source);
-//                let droppedListIndex = Number(event.dataTransfer.getData("text/plain"));
             });
-        
+
             let completeCheck = document.createElement("input");
             completeCheck.id = "toDoItemComplete" + this.Index;
-            completeCheck.type="checkbox";
+            completeCheck.type = "checkbox";
             completeCheck.checked = (this.#backingData.complete == true);
             completeCheck.addEventListener("change", itemChanged);
 
@@ -113,19 +104,19 @@ export class ToDoListItem {
                     event.target.blur();
                 }
             });
-            
+
             let descriptionSpan = document.createElement("span");
             descriptionSpan.contentEditable = true;
             descriptionSpan.className = "toDoItemDescription";
             descriptionSpan.id = "toDoItemDescription" + this.Index;
             descriptionSpan.innerHTML = this.#backingData.description;
             descriptionSpan.addEventListener("focusout", itemChanged);
-        
+
             rootNode.appendChild(handleSpan);
             rootNode.appendChild(completeCheck);
             rootNode.appendChild(nameSpan);
             rootNode.appendChild(descriptionSpan);
-    
+
             this.#render = rootNode;
         }
 
