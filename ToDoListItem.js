@@ -45,6 +45,7 @@ export class ToDoListItem {
             rootNode.style.backgroundColor = (this.Index % 2 == 0) ? StyleSettings.ListItemBGColor : StyleSettings.ListItemBGAltColor;
 
             rootNode.addEventListener("dragover", (event, source) => {
+                event.preventDefault();
                 console.log("dragover");
                 console.log(event);
             });
