@@ -47,7 +47,7 @@ export class ToDoListItem {
             rootNode.addEventListener("dragover", (event, source) => {
                 event.preventDefault();
                 console.log("dragover");
-                console.log(event);
+                console.log(source);
             });
 
             rootNode.addEventListener("dragstart", (event, source) => {
