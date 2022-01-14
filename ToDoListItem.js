@@ -35,6 +35,7 @@ export class ToDoListItem {
             let itemChanged = () => {
                 this.#backingData.name = document.getElementById("toDoItemName" + this.Index).innerHTML;
                 this.#backingData.description = document.getElementById("toDoItemDescription" + this.Index).innerHTML;
+                this.#backingData.complete = document.getElementById("toDoItemComplete" + this.Index).checked == true;
                 this.#ExecuteChangeHandlers();
             }
         
@@ -47,17 +48,11 @@ export class ToDoListItem {
                 event.dataTransfer.setData("text/plain", this.Index);
             });
 
-            let completeSpan = document.createElement("span");
             let completeCheck = document.createElement("input");
+            completeCheck.id = "toDoItemComplete" + this.Index;
             completeCheck.type="checkbox";
             completeCheck.checked = (this.#backingData.complete == true);
-            completeCheck.addEventListener("change", (event) => {
-                console.log(event.target);
-                console.log(event.target.checked);
-                this.#backingData.complete = event.target.checked;
-            });
-
-            completeSpan.appendChild(completeCheck);
+            completeCheck.addEventListener("change", itemChanged);
 
             let handleSpan = document.createElement("span");
             handleSpan.className = "toDoItemHandle";
