@@ -1,4 +1,4 @@
-class ToDoDatabase {
+export class ToDoDatabase {
     #items = [];
     #reverseLookup = {};
     #itemChangedHandlers = [];

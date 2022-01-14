@@ -1,4 +1,4 @@
-class ItemDeleteDialog {
+export class ItemDeleteDialog {
     #deleteDialogText = `
     <div class="itemDeleteDialogCenter">
         <div>This will permanently delete this To Do List entry. Are you sure you want to DELETE this entry?</div>
