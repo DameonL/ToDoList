@@ -48,8 +48,10 @@ export class ToDoListItem {
                 event.preventDefault();
                 event.stopPropagation();
                 event.dataTransfer.dropEffect = "move";
+                event.dataTransfer["sourceToDoItem"] = this;
                 console.log("dragenter");
-                console.log(event.target === this.#render);
+                console.log(this);
+//                console.log(event.target === this.#render);
                 console.log(event);
             });
 
