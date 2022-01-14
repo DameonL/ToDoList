@@ -51,6 +51,7 @@ export class ToDoListItem {
             });
 
             rootNode.addEventListener("dragover", (event) => {
+                console.log(event.dataTransfer.getData("text/plain"));
                 if (event.dataTransfer.getData("text/plain") == this.Index)
                     return;
                     
