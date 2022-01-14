@@ -1,12 +1,12 @@
 class ToDoListItem {
-    #index = -1;
+    #indexFunction = null;
     #backingData = null;
     #render = null;
     #onchange = [];
 
-    constructor(index, backingData) {
-        this.#index = index;
+    constructor(backingData, indexFunction) {
         this.#backingData = backingData;
+        this.#indexFunction = indexFunction;
     }
 
     AddChangeListener(listener) {
@@ -21,11 +21,7 @@ class ToDoListItem {
     }
 
     get Index() {
-        return this.#index;
-    }
-
-    set Index(newIndex) {
-        this.#index = newIndex;
+        return this.#indexFunction(this);
     }
 
     get Renderer() {
@@ -35,10 +31,10 @@ class ToDoListItem {
             let handleSpan = document.createElement("span");
             handleSpan.className = "toDoItemHandle";
             rootNode.draggable = true;
-            rootNode.style.backgroundColor=(this.#index %2 == 0) ? StyleSettings.ListItemBGColor : StyleSettings.ListItemBGAltColor;
+            rootNode.style.backgroundColor=(this.Index %2 == 0) ? StyleSettings.ListItemBGColor : StyleSettings.ListItemBGAltColor;
             rootNode.addEventListener("dragstart", (event) => {
                 event.dataTransfer.effectAllowed = "move";
-                event.dataTransfer.setData("text/plain", this.#index);
+                event.dataTransfer.setData("text/plain", this.Index);
             });
 
             let nameSpan = document.createElement("span");
@@ -46,18 +42,18 @@ class ToDoListItem {
         
             nameSpan.contentEditable = true;
             nameSpan.className = "toDoItemName";
-            nameSpan.id = "toDoItemName" + this.#index;
+            nameSpan.id = "toDoItemName" + this.Index;
             nameSpan.innerHTML = this.#backingData.name;
             
             let itemChanged = () => {
-                this.#backingData.name = document.getElementById("toDoItemName" + this.#index).innerHTML;
-                this.#backingData.description = document.getElementById("toDoItemDescription" + this.#index).innerHTML;
+                this.#backingData.name = document.getElementById("toDoItemName" + this.Index).innerHTML;
+                this.#backingData.description = document.getElementById("toDoItemDescription" + this.Index).innerHTML;
                 for (let i = 0; i < this.#onchange.length; i++) { this.#onchange[i](); }
             }
         
             descriptionSpan.contentEditable = true;
             descriptionSpan.className = "toDoItemDescription";
-            descriptionSpan.id = "toDoItemDescription" + this.#index;
+            descriptionSpan.id = "toDoItemDescription" + this.Index;
             descriptionSpan.innerHTML = this.#backingData.description;
         
             nameSpan.addEventListener("focusout", itemChanged);

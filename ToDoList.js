@@ -7,31 +7,28 @@ class ToDoList {
         this.#rootNode = rootNode;
         this.#database.Initialize(() => {
             let itemData = this.#database.GetToDoItems();
-            let i = 0;
             itemData.forEach(data => {
-                var newItem = new ToDoListItem(i, data);
-                this.#listItems.push(newItem);
-                var index = i;
-                newItem.AddChangeListener(() => { this.#database.UpdateToDoItem(index); });
-                i++;
+                this.AddItem(data);
             });
 
             this.RenderToDoListItems();
         });
     }
 
-    AddNewItem() {
-        let backingData = { name: "New ToDo Item", description: "Insert description here" };
-        var index = this.#database.count;
-        let newItem = new ToDoListItem(index, backingData);
+    AddItem(data) {
+        if (data == null) {
+            data = { name: "New ToDo Item", description: "Insert description here" };
+            this.#database.AddToDoItem(data);
+        }
+
+        let newItem = new ToDoListItem(data, () => { return this.#database.GetItemIndex(data); });
         this.#listItems.push(newItem);
-        this.#database.AddToDoItem(backingData);
-        newItem.AddChangeListener(() => { this.#database.UpdateToDoItem(index); });
+        newItem.AddChangeListener(() => this.#database.UpdateToDoItem(data));
         this.RenderToDoListItems();
         return newItem;
     }
 
-    DeleteItem(index) {
+    DeleteItem(data) {
         let deletedItem = this.#listItems[index];
         this.#listItems.splice(index, 1);
         for (let i = index; i < this.#listItems.length; i++) {

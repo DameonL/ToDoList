@@ -1,5 +1,6 @@
 class ToDoDatabase {
     #toDoItems = [];
+    #reverseLookup = {};
     get count() { return this.#toDoItems.length; }
 
     GetToDoItems() {
@@ -10,9 +11,14 @@ class ToDoDatabase {
         return toDoItems[index];
     }
 
+    GetItemIndex(data) {
+        return this.#toDoItems.indexOf(data);
+    }
+
     AddToDoItem(data) {
         this.#toDoItems.push(data);
-        this.UpdateToDoItem(this.#toDoItems.length - 1);
+        this.#reverseLookup[data] = this.#toDoItems.length - 1;
+        this.UpdateToDoItem(data);
     }
 
     DeleteItem(index, completeHandler) {
@@ -28,7 +34,7 @@ class ToDoDatabase {
 
             transaction.oncomplete = () => {
                 for (let i = index; i < this.#toDoItems.length; i++) {
-                    this.UpdateToDoItem(i);
+                    this.UpdateToDoItem(this.#toDoItems[i]);
                 }
 
                 completeHandler();
@@ -36,13 +42,14 @@ class ToDoDatabase {
         }
     }
 
-    UpdateToDoItem(index) {
+    UpdateToDoItem(data) {
         let dbOpenRequest = window.indexedDB.open("ToDoList", 1);
         dbOpenRequest.onsuccess = (event) => {
             let db = event.target.result;
             let transaction = db.transaction("ToDoItems", "readwrite");
             let store = transaction.objectStore("ToDoItems");
-            store.put(this.#toDoItems[index], index);
+            let index = this.GetItemIndex(data);
+            store.put(data, index);
         }
     }
 

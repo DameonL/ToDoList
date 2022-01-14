@@ -8,7 +8,7 @@ function Start() {
     }
 
     let newItemButton = document.getElementById("newListItem");
-    newItemButton.onclick = () => { toDoList.AddNewItem(); }
+    newItemButton.onclick = () => { toDoList.AddItem(); }
 
     InitializeTrash();
 }
