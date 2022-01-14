@@ -52,6 +52,8 @@ export class ToDoListItem {
             completeCheck.type="checkbox";
             completeCheck.checked = (this.#backingData.complete == true);
             completeCheck.addEventListener("change", (event) => {
+                console.log(event.target);
+                console.log(event.target.checked);
                 this.#backingData.complete = event.target.checked;
             });
 
