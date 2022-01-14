@@ -44,11 +44,14 @@ export class ToDoListItem {
             rootNode.draggable = true;
             rootNode.style.backgroundColor = (this.Index % 2 == 0) ? StyleSettings.ListItemBGColor : StyleSettings.ListItemBGAltColor;
 
+            rootNode.addEventListener("dragstart", (event) => {
+                event.dataTransfer["sourceToDoItem"] = this;
+            });
+
             rootNode.addEventListener("dragenter", (event) => {
                 event.preventDefault();
                 event.stopPropagation();
                 event.dataTransfer.dropEffect = "move";
-                event.dataTransfer["sourceToDoItem"] = this;
                 console.log("dragenter");
                 console.log(this);
 //                console.log(event.target === this.#render);
