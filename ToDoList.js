@@ -12,16 +12,16 @@ export class ToDoList {
         this.#database.AddListChangedHandler((event) => {
             if (!this.#ignoreListChanges) this.RenderToDoListItems();
         });
-}
+    }
 
-    CreateListItem(data) {
+    CreateNewItem() {
         if (data == null) {
-            this.#ignoreListChanges = true;
             data = { name: "New ToDo Item", description: "Insert description here" };
             this.#database.AddItem(data);
-            this.#ignoreListChanges = false;
         }
+    }
 
+    CreateListItem(data) {
         let newItem = new ToDoListItem(data, () => this.#database.GetItemIndex(data));
         newItem.AddChangeListener(() => this.#database.UpdateItem(data));
 
