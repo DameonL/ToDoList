@@ -83,7 +83,7 @@ export class ToDoListItem {
             nameSpan.id = "toDoItemName" + this.Index;
             nameSpan.innerHTML = this.#backingData.name;
             nameSpan.addEventListener("focusout", itemChanged);
-            nameSpan.addEventListener("dragenter", (event) => {
+            nameSpan.addEventListener("dragover", (event) => {
                 event.preventDefault();
             });
             nameSpan.addEventListener("keypress", (event) => {
