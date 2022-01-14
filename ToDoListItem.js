@@ -1,3 +1,5 @@
+import { StyleSettings } from "./StyleSettings";
+
 export class ToDoListItem {
     #indexFunction = null;
     #backingData = null;

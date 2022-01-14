@@ -18,7 +18,6 @@ export class ToDoDatabase {
                 db.close();
                 if (onSuccess != null) { onSuccess(); }
             };
-
         }
     }
 
