@@ -59,7 +59,7 @@ export class ToDoListItem {
 
                 if (counter == 1) {
                     let leaveListener = (event) => {
-                        event.preventDefault();
+//                        event.preventDefault();
                         counter--;
                         if (counter == 0) {
                             rootNode.removeEventListener("dragleave", leaveListener);
@@ -71,6 +71,7 @@ export class ToDoListItem {
     
                     rootNode.addEventListener("dragleave", (event) => leaveListener);
                     rootNode.parentElement.insertBefore(blankElement, rootNode);
+                    console.log("Dragenter");
                 }
 
             });
