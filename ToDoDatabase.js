@@ -23,6 +23,14 @@ export class ToDoDatabase {
         }
     }
 
+    GetItemAt(index) {
+        return items[index];
+    }
+
+    GetItemIndex(data) {
+        return this.#items.indexOf(data);
+    }
+
     AddItemChangedHandler(handler) {
         this.#itemChangedHandlers.push(handler);
     }
@@ -71,14 +79,6 @@ export class ToDoDatabase {
                 });
             }
         }
-    }
-
-    GetItemAt(index) {
-        return items[index];
-    }
-
-    GetItemIndex(data) {
-        return this.#items.indexOf(data);
     }
 
     GetItems() {
