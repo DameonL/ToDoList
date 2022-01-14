@@ -28,6 +28,7 @@ class ToDoList {
         this.#database.AddToDoItem(backingData);
         newItem.AddChangeListener(() => { this.#database.UpdateToDoItem(index); });
         this.RenderToDoListItems();
+        return newItem;
     }
 
     DeleteItem(index) {
