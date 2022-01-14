@@ -54,6 +54,9 @@ export class ToDoListItem {
             blankElement.style.minHeight = 20;
 
             rootNode.addEventListener("dragenter", (event) => {
+                if (event.target == rootNode)
+                    return;
+
                 event.preventDefault();
                 event.dataTransfer.dropEffect = "move";
 
@@ -67,6 +70,9 @@ export class ToDoListItem {
             });
 
             rootNode.addEventListener("dragleave", (event) => {
+                if (event.target == rootNode)
+                    return;
+                    
                 counter--;
                 console.log(counter);
 
