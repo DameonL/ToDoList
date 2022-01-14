@@ -50,32 +50,31 @@ export class ToDoListItem {
             });
 
             let counter = 0;
+            let blankElement = document.createElement("div");
+
             rootNode.addEventListener("dragenter", (event) => {
                 event.preventDefault();
                 event.dataTransfer.dropEffect = "move";
-                let blankElement = document.createElement("div");
 
                 counter++;
 
                 if (counter == 1) {
-                    let leaveListener = (event) => {
-//                        event.preventDefault();
-                        counter--;
-                        if (counter == 0) {
-                            rootNode.removeEventListener("dragleave", leaveListener);
-                            rootNode.parentElement.removeChild(blankElement);
     
-                            console.log("Dragleave");
-                        }
-                    }
-    
-                    rootNode.addEventListener("dragleave", (event) => leaveListener);
                     rootNode.parentElement.insertBefore(blankElement, rootNode);
                     console.log("Dragenter");
                 }
 
             });
-        
+            
+            rootNode.addEventListener("dragleave", (event) => {
+                counter--;
+                if (counter == 0) {
+                    rootNode.parentElement.removeChild(blankElement);
+
+                    console.log("Dragleave");
+                }
+            });
+
         
             rootNode.addEventListener("drop", (event, source) => {
                 console.log(source);
