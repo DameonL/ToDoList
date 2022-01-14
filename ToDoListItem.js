@@ -53,15 +53,18 @@ export class ToDoListItem {
             rootNode.addEventListener("dragenter", (event) => {
                 event.preventDefault();
                 event.dataTransfer.dropEffect = "move";
+                let blankElement = new document.createElement("div");
+
+                rootNode.parentNode.insertBefore(rootNode, blankElement);
                 counter++;
-                if (counter == 1)
-                    console.log("dragenter");
 
                 let leaveListener = (event) => {
                     event.preventDefault();
                     counter--;
                     if (counter == 0) {
                         rootNode.removeEventListener("dragleave", leaveListener);
+                        rootNode.parentNode.removeChild(blankElement);
+
                         console.log("Dragleave");
                     }
                 }
