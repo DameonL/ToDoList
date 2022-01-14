@@ -28,7 +28,7 @@ export class ToDoList {
         return newItem;
     }
 
-    get DeleteItem() { return this.#database.DeleteItem };
+    DeleteItem(data) { this.#database.DeleteItem(data); }
 
     RenderToDoListItems() {
         while (this.#rootNode.firstChild) {
