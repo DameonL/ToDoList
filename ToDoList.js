@@ -15,10 +15,8 @@ export class ToDoList {
     }
 
     CreateNewItem() {
-        if (data == null) {
-            data = { name: "New ToDo Item", description: "Insert description here" };
-            this.#database.AddItem(data);
-        }
+        let data = { name: "New ToDo Item", description: "Insert description here" };
+        this.#database.AddItem(data);
     }
 
     CreateListItem(data) {
