@@ -17,6 +17,7 @@ export class ToDoList {
 
     CreateNewItem() {
         let data = { name: "New ToDo Item", description: "Insert description here", complete: false };
+        this.#database.AddItem(data);
         this.#database.InsertItemBefore(this.#itemData[0], data);
     }
 
