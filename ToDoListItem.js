@@ -44,13 +44,13 @@ export class ToDoListItem {
             rootNode.draggable = true;
             rootNode.style.backgroundColor = (this.Index % 2 == 0) ? StyleSettings.ListItemBGColor : StyleSettings.ListItemBGAltColor;
 
-            rootNode.addEventListener("dragover", (event, source) => {
+            rootNode.addEventListener("dragover", (event) => {
                 event.preventDefault();
                 console.log("dragover");
-                console.log(source);
+                console.log(event);
             });
 
-            rootNode.addEventListener("dragstart", (event, this) => {
+            rootNode.addEventListener("dragstart", (event) => {
                 event.dataTransfer.effectAllowed = "move";
                 event.dataTransfer.setData("text/plain", this.Index);
             });
@@ -58,7 +58,8 @@ export class ToDoListItem {
             let blankElement = document.createElement("div");
             blankElement.style.minHeight = 20;
 
-            rootNode.addEventListener("drop", (event, source) => {
+            rootNode.addEventListener("drop", (event) => {
+                console.log("drop");
                 console.log(event);
             });
 
