@@ -23,7 +23,7 @@ export class ToDoListItem {
     }
 
     get Index() {
-        return this.#indexFunction(this);
+        return this.#indexFunction();
     }
 
     get Renderer() {

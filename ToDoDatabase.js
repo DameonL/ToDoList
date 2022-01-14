@@ -5,7 +5,7 @@ export class ToDoDatabase {
 
     get count() { return this.#items.length; }
 
-    constructor(onSuccess = null) {
+    constructor() {
         let dbOpenRequest = window.indexedDB.open("ToDoList", 1);
         dbOpenRequest.onupgradeneeded = this.#InitializeDatabase;
         dbOpenRequest.onsuccess = (event) => {
@@ -16,7 +16,9 @@ export class ToDoDatabase {
             store.getAll().onsuccess = (event) => {
                 this.#items = event.target.result;
                 db.close();
-                if (onSuccess != null) { onSuccess(); }
+                this.#listChangedHandlers.forEach(x => {
+                    x({item: [...this.#items]});
+                });        
             };
         }
     }
@@ -46,6 +48,9 @@ export class ToDoDatabase {
     AddItem(data) {
         this.#items.push(data);
         this.UpdateItem(data);
+        this.#listChangedHandlers.forEach(x => {
+            x({item: [...this.#items]});
+        });
     }
 
     DeleteItem(data) {
@@ -65,7 +70,7 @@ export class ToDoDatabase {
                     this.UpdateItem(this.#items[i]);
                 }
 
-                this.#itemChangedHandlers.forEach(x => {
+                this.#listChangedHandlers.forEach(x => {
                     x({item: [...this.#items]});
                 });
             }

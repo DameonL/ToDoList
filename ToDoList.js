@@ -4,12 +4,13 @@ import { ToDoDatabase } from "./ToDoDatabase.js";
 export class ToDoList {
     #database = null;
     #rootNode = null;
+    #ignoreListChanges = false;
 
     constructor(rootNode) {
         this.#rootNode = rootNode;
         this.#database = new ToDoDatabase(() => {
             this.#database.AddListChangedHandler((event) => {
-                this.RenderToDoListItems();
+                if (!this.#ignoreListChanges) this.RenderToDoListItems();
             });
 
             this.RenderToDoListItems();
@@ -22,7 +23,7 @@ export class ToDoList {
             this.#database.AddItem(data);
         }
 
-        return newItem;
+        return new ToDoListItem(data, () => this.#database.GetItemIndex(data));
     }
 
     DeleteItem(data) {
