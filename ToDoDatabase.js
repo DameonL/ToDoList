@@ -66,10 +66,6 @@ export class ToDoDatabase {
             let deleteRequest = store.delete(this.#items.length);
 
             transaction.oncomplete = () => {
-                for (let i = index; i < this.#items.length; i++) {
-                    this.UpdateItem(this.#items[i]);
-                }
-
                 this.#listChangedHandlers.forEach(x => {
                     x({item: [...this.#items]});
                 });
