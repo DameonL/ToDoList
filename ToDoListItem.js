@@ -49,10 +49,10 @@ export class ToDoListItem {
                 event.dataTransfer.setData("text/plain", this.Index);
             });
 
-            rootNode.addEventListener("dragover", (event) => {
+            rootNode.addEventListener("dragenter", (event) => {
                 event.preventDefault();
                 event.dataTransfer.dropEffect = "move";
-                console.log("Dragover");
+                console.log("dragenter");
 
                 let leaveListener = (event) => {
                     event.preventDefault();
