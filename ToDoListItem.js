@@ -53,7 +53,7 @@ export class ToDoListItem {
             rootNode.addEventListener("dragenter", (event) => {
                 event.preventDefault();
                 event.dataTransfer.dropEffect = "move";
-                let blankElement = new document.createElement("div");
+                let blankElement = document.createElement("div");
 
                 rootNode.parentNode.insertBefore(rootNode, blankElement);
                 counter++;
