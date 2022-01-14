@@ -81,6 +81,7 @@ export class ToDoListItem {
             descriptionSpan.addEventListener("focusout", itemChanged);
         
             rootNode.appendChild(handleSpan);
+            rootNode.appendChild(completeCheck);
             rootNode.appendChild(nameSpan);
             rootNode.appendChild(descriptionSpan);
     
