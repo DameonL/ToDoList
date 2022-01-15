@@ -90,6 +90,7 @@ export class ToDoList {
     #CreateLabelDiv() {
         let labelDiv = document.createElement("div");
         let columnTemplate = "1.25em ";
+        labelDiv.appendChild(document.createElement("span"));
         this.#columnDefinitions.forEach(definition => {
             columnTemplate += definition.width + " ";
             let label = document.createElement("span");
@@ -97,6 +98,7 @@ export class ToDoList {
             labelDiv.appendChild(label);
         });
         columnTemplate += "auto";
+        labelDiv.appendChild(document.createElement("span"));
         labelDiv.style.gridTemplateColumns = columnTemplate;
         return labelDiv;
     }
