@@ -77,7 +77,7 @@ export class ToDoList {
                     this.#rootNode.insertBefore(emptyDiv, renderer);
                     emptyDiv.setAttribute("targetIndex", listItem.Index);
                 } else {
-                    this.#rootNode.insertAfter(emptyDiv, renderers[i + 1]);
+                    this.#rootNode.insertBefore(emptyDiv, renderers[i + 1]);
                     emptyDiv.setAttribute("targetIndex", listItem.Index + 1);
                 }
                 emptyDiv.setAttribute("targetIndex", listItem.Index);
