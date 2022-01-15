@@ -46,6 +46,10 @@ export class ToDoList {
 
             console.log(emptyDiv.getAttribute("targetIndex"));
         });
+        emptyDiv.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            event.dataTransfer.dropEffect="move";
+        });
 
         for (let i = 0; i < itemData.length; i++) {
 
