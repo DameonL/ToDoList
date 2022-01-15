@@ -44,8 +44,10 @@ export class ToDoList {
         emptyDiv.addEventListener("drop", (event) => {
             event.preventDefault();
             let droppedIndex = event.dataTransfer.getData("text");
-            this.#database.InsertItemBefore(itemData[i], itemData[droppedIndex]);
+            let targetIndex = emptyDiv.getAttribute("targetIndex");
+            this.#database.InsertItemBefore(itemData[targetIndex], itemData[droppedIndex]);
         });
+
         emptyDiv.addEventListener("dragover", (event) => {
             event.preventDefault();
             event.dataTransfer.dropEffect="move";
