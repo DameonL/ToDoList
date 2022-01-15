@@ -1,4 +1,3 @@
-import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
 import { ToDoList } from "./ToDoList.js";
 
 let newItemHandler = () => { return { name: "New ToDo Item", description: "Insert description here", complete: false } };
@@ -15,5 +14,20 @@ function Start() {
     let newItemButton = document.getElementById("newListItem");
     newItemButton.onclick = () => { toDoList.CreateNewItem(); }
 
+}
+
+function InitializeTrash() {
+    let trashDiv = document.getElementById("trash");
+    trashDiv.addEventListener("dragover", (event) => {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "move";
+    });
+
+    trashDiv.addEventListener("drop", (event) => {
+        let droppedListIndex = Number(event.dataTransfer.getData("text"));
+        let deleteDialog = new ItemDeleteDialog(droppedListIndex, () => {
+            toDoList.DeleteItem(droppedListIndex);
+        });
+    });
 }
 
