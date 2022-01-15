@@ -76,6 +76,7 @@ export class ToDoListItem {
             blankElement.style.minHeight = 20;
 
             rootNode.addEventListener("drop", (event) => {
+                console.log(event.dataTransfer.getData("text"));
                 if (event.dataTransfer.getData("text") == this.Index)
                     return true;
 
