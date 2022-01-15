@@ -73,7 +73,6 @@ export class ToDoList {
             let lastY = 0;
             renderer.addEventListener("dragover", (event) => {
                 var delta = event.clientY - lastY;
-                console.log(delta);
                 event.preventDefault();
                 event.dataTransfer.dropEffect="move";
                 if (delta < 0) {
@@ -87,7 +86,7 @@ export class ToDoList {
                 lastY = event.clientY;
             });
 
-            renderer.addEventListener("dragend", (event) => { this.#rootNode.removeChild(emptyDiv); });
+            renderer.addEventListener("dragend", (event) => { if (emptyDiv.parentNode == this.#rootNode) this.#rootNode.removeChild(emptyDiv); });
 
             this.#rootNode.appendChild(renderer);
         }
