@@ -53,6 +53,10 @@ export class ToDoList {
             event.dataTransfer.dropEffect="move";
         });
 
+        emptyDiv.addEventListener("dragleave", (event) => {
+            this.#rootNode.removeChild(emptyDiv);
+        });
+
         for (let i = 0; i < itemData.length; i++) {
 
             let listItem = this.CreateListItem(itemData[i]);
