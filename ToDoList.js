@@ -50,68 +50,76 @@ export class ToDoList {
         let itemData = this.#database.GetItems();
         this.#itemData = itemData;
 
-        let emptyDiv = document.createElement("div");
-        emptyDiv.className = "toDoItem";
-        emptyDiv.style.border = "1px solid black";
-        emptyDiv.addEventListener("drop", (event) => {
-            event.preventDefault();
-            let droppedIndex = event.dataTransfer.getData("text");
-            let targetIndex = emptyDiv.getAttribute("targetIndex");
-            this.#database.InsertItemBefore(itemData[droppedIndex], itemData[targetIndex]);
-        });
-
-        emptyDiv.addEventListener("dragover", (event) => {
-            event.preventDefault();
-            event.dataTransfer.dropEffect="move";
-        });
+        let itemMovementDropPoint = this.#CreateMovementDiv(itemData);
 
         let renderers = [];
         for (let i = 0; i < itemData.length; i++) {
-
-            let listItem = this.CreateListItem(itemData[i]);
-            let renderer = listItem.Renderer;
-            renderers.push(renderer);
-            let lastY = 0;
-            let currentIndex = -1;
-            renderer.addEventListener("dragover", (event) => {
-                event.preventDefault();
-                event.dataTransfer.dropEffect="move";
-                let rect = renderer.getBoundingClientRect();
-                let deadzone = 5;
-                let delta = event.clientY - (rect.top + (rect.height * 0.5));
-                if (Math.abs(delta) <= deadzone) return;
-
-                let targetIndex = (delta < 0) ? i : i + 1;
-                if (currentIndex != targetIndex) {
-                    emptyDiv.setAttribute("targetIndex", targetIndex);
-                    this.#rootNode.insertBefore(emptyDiv, renderers[targetIndex]);
-                    emptyDiv.animate(
-                    [
-                      { height: "0em" },
-                      { height: "1.25em" }
-                    ], {
-                      fill: 'forwards',
-                      duration: 100,
-                      iterations: 1
-                    });
-                    currentIndex = targetIndex;
-                }
-
-                lastY = event.clientY;
-            });
-
-            renderer.addEventListener("dragend", (event) => { 
-                if (emptyDiv.parentNode == this.#rootNode)
-                {
-                    this.#rootNode.removeChild(emptyDiv);
-                    currentIndex = -1; 
-                }
-            });
-
+            let renderer = this.#CreateChildItem(itemData, i, renderers, itemMovementDropPoint);
             this.#rootNode.appendChild(renderer);
         }
 
     }
 
-    
+    #CreateChildItem(itemData, i, renderers, itemMovementDropPoint) {
+        let listItem = this.CreateListItem(itemData[i]);
+        let renderer = listItem.Renderer;
+        renderers.push(renderer);
+        let lastY = 0;
+        let currentIndex = -1;
+        let dragOverHandler = (event) => {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "move";
+            let rect = renderer.getBoundingClientRect();
+            let deadzone = 5;
+            let delta = event.clientY - (rect.top + (rect.height * 0.5));
+            if (Math.abs(delta) <= deadzone)
+                return;
+
+            let targetIndex = (delta < 0) ? i : i + 1;
+            if (currentIndex != targetIndex) {
+                itemMovementDropPoint.setAttribute("targetIndex", targetIndex);
+                this.#rootNode.insertBefore(itemMovementDropPoint, renderers[targetIndex]);
+                itemMovementDropPoint.animate(
+                    [
+                        { height: "0em" },
+                        { height: "1.25em" }
+                    ], {
+                    fill: 'forwards',
+                    duration: 100,
+                    iterations: 1
+                });
+                currentIndex = targetIndex;
+            }
+
+            lastY = event.clientY;
+        };
+
+        renderer.addEventListener("dragover", dragOverHandler);
+
+        renderer.addEventListener("dragend", (event) => {
+            if (itemMovementDropPoint.parentNode == this.#rootNode) {
+                this.#rootNode.removeChild(itemMovementDropPoint);
+                currentIndex = -1;
+            }
+        });
+        return renderer;
+    }
+
+    #CreateMovementDiv(itemData) {
+        let itemMovementDropPoint = document.createElement("div");
+        itemMovementDropPoint.className = "toDoItem";
+        itemMovementDropPoint.style.border = "1px solid black";
+        itemMovementDropPoint.addEventListener("drop", (event) => {
+            event.preventDefault();
+            let droppedIndex = event.dataTransfer.getData("text");
+            let targetIndex = itemMovementDropPoint.getAttribute("targetIndex");
+            this.#database.InsertItemBefore(itemData[droppedIndex], itemData[targetIndex]);
+        });
+
+        itemMovementDropPoint.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "move";
+        });
+        return itemMovementDropPoint;
+    }
 }
