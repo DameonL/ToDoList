@@ -30,15 +30,21 @@ export class ToDoListItem {
         }
     }
 
+    #UpdateAppearance() {
+        nameSpan.style.textDecoration = (this.#backingData.complete) ? "line-through" : "";
+    }
+
+    #UpdateBackingData() {
+        this.#backingData.name = document.getElementById("toDoItemName" + this.Index).innerHTML;
+        this.#backingData.description = document.getElementById("toDoItemDescription" + this.Index).innerHTML;
+        this.#backingData.complete = document.getElementById("toDoItemComplete" + this.Index).checked == true;
+    }
+
     get Renderer() {
         if (this.#render == null) {
             let itemChanged = () => {
-                this.#backingData.name = document.getElementById("toDoItemName" + this.Index).innerHTML;
-                this.#backingData.description = document.getElementById("toDoItemDescription" + this.Index).innerHTML;
-                this.#backingData.complete = document.getElementById("toDoItemComplete" + this.Index).checked == true;
-                if (this.#backingData.complete) {
-                    nameSpan.style.textDecoration = "line-through";
-                }
+                this.#UpdateBackingData();
+                this.#UpdateAppearance();
                 this.#ExecuteChangeHandlers();
             }
 
@@ -53,7 +59,6 @@ export class ToDoListItem {
                     event.preventDefault();
                     return true;
                  }
-                
 
                 event.dataTransfer.setData("text", this.Index);
                 event.dataTransfer.effectAllowed="move";
@@ -64,12 +69,12 @@ export class ToDoListItem {
                 event.dataTransfer.dropEffect="move";
             });
 
-            rootNode.addEventListener("drop", (event) => {
-                if (event.dataTransfer.getData("text") == this.Index)
-                    return true;
-
-                event.preventDefault();
-            });
+//            rootNode.addEventListener("drop", (event) => {
+//                if (event.dataTransfer.getData("text") == this.Index)
+//                    return true;
+//
+//                event.preventDefault();
+//            });
 
             let completeCheck = document.createElement("input");
             completeCheck.id = "toDoItemComplete" + this.Index;
@@ -109,6 +114,7 @@ export class ToDoListItem {
             rootNode.appendChild(descriptionSpan);
 
             this.#render = rootNode;
+            this.#UpdateAppearance();
         }
 
         return this.#render;
