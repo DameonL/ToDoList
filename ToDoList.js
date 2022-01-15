@@ -63,6 +63,8 @@ export class ToDoList {
             this.#rootNode.removeChild(emptyDiv);
         });
 
+        emptyDiv.style.height = 0;
+
         let emptyDivAnimation = [
             { // from
                 height: "0em",
@@ -81,9 +83,12 @@ export class ToDoList {
             let lastY = 0;
             let currentIndex = -1;
             renderer.addEventListener("dragover", (event) => {
-                let delta = event.clientY - lastY;
                 event.preventDefault();
                 event.dataTransfer.dropEffect="move";
+
+                let delta = event.screenY - lastY;
+                if (delta == 0) return;
+
                 let targetIndex = (delta < 0) ? i : i + 1;
                 if (currentIndex != targetIndex) {
                     emptyDiv.setAttribute("targetIndex", targetIndex);
@@ -92,7 +97,7 @@ export class ToDoList {
                     currentIndex = targetIndex;
                 }
 
-                lastY = event.clientY;
+                lastY = event.screenY;
             });
 
             renderer.addEventListener("dragend", (event) => { 
