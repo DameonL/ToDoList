@@ -84,7 +84,6 @@ export class ToDoList {
             this.#rootNode.appendChild(renderer);
         }
 
-        this.#rootNode.parentNode.appendChild(buttonDiv);
     }
 
     
