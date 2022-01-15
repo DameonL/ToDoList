@@ -95,6 +95,8 @@ export class ToDoDatabase {
     }
 
     InsertItemBefore(itemToInsert, priorItem) {
+        if (itemToInsert == priorItem) return;
+        
         let insertIndex = this.GetItemIndex(priorItem);
         let oldIndex = this.GetItemIndex(itemToInsert);
 
