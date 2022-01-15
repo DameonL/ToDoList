@@ -63,6 +63,16 @@ export class ToDoList {
             this.#rootNode.removeChild(emptyDiv);
         });
 
+        let emptyDivAnimation = [
+            { // from
+                scale: 0,
+            },
+            { // to
+                scale: 1,
+                easing: 'ease-out',
+            }
+          ];
+
         let renderers = [];
         for (let i = 0; i < itemData.length; i++) {
 
@@ -70,22 +80,29 @@ export class ToDoList {
             let renderer = listItem.Renderer;
             renderers.push(renderer);
             let lastY = 0;
+            let currentIndex = -1;
             renderer.addEventListener("dragover", (event) => {
-                var delta = event.clientY - lastY;
+                let delta = event.clientY - lastY;
                 event.preventDefault();
                 event.dataTransfer.dropEffect="move";
-                if (delta < 0) {
-                    this.#rootNode.insertBefore(emptyDiv, renderers[i]);
-                    emptyDiv.setAttribute("targetIndex", listItem.Index);
-                } else {
-                    this.#rootNode.insertBefore(emptyDiv, renderers[i + 1]);
-                    emptyDiv.setAttribute("targetIndex", listItem.Index + 1);
+                let targetIndex = (delta < 0) ? i : i + 1;
+                if (currentIndex != targetIndex) {
+                    this.#rootNode.insertBefore(emptyDiv, renderers[targetIndex]);
+                    emptyDiv.setAttribute("targetIndex", targetIndex);
+                    emptyDiv.animate(emptyDivAnimation, 5000);
                 }
 
                 lastY = event.clientY;
+                currentIndex = targetIndex;
             });
 
-            renderer.addEventListener("dragend", (event) => { if (emptyDiv.parentNode == this.#rootNode) this.#rootNode.removeChild(emptyDiv); });
+            renderer.addEventListener("dragend", (event) => { 
+                if (emptyDiv.parentNode == this.#rootNode)
+                {
+                    this.#rootNode.removeChild(emptyDiv);
+                    currentIndex = -1; 
+                }
+            });
 
             this.#rootNode.appendChild(renderer);
         }
