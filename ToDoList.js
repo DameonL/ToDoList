@@ -70,7 +70,7 @@ export class ToDoList {
             let listItem = this.CreateListItem(itemData[i]);
             let renderer = listItem.Renderer;
             renderers.push(renderer);
-            renderer.addEventListener("dragenter", (event) => {
+            renderer.addEventListener("dragover", (event) => {
                 event.preventDefault();
                 event.dataTransfer.dropEffect="move";
                 if (event.movementY > 0) {
