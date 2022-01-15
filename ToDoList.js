@@ -73,10 +73,10 @@ export class ToDoList {
             let lastY = 0;
             renderer.addEventListener("dragover", (event) => {
                 var delta = event.clientY - lastY;
+                console.log(delta);
                 event.preventDefault();
                 event.dataTransfer.dropEffect="move";
-                if (delta > 0) {
-                    console.log(renderers[i]);
+                if (delta < 0) {
                     this.#rootNode.insertBefore(emptyDiv, renderers[i]);
                     emptyDiv.setAttribute("targetIndex", listItem.Index);
                 } else {
