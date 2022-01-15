@@ -75,7 +75,9 @@ export class ToDoListItem {
             let handleSpan = document.createElement("span");
             handleSpan.className = "listItemHandle";
 
+            let columnTemplate = "1.25em ";
             this.#columnDefinitions.forEach(columnDefinition => {
+                columnTemplate += columnDefinition.width + " ";
                 let columnData = this.#backingData[columnDefinition.backingDataName];
                 let columnType = (typeof columnData);
                 let columnInstance = null;
@@ -88,6 +90,7 @@ export class ToDoListItem {
                 this.#elements.push(columnInstance);
                 rootNode.appendChild(columnInstance);
             });
+            rootNode.style.gridTemplateColumns = columnTemplate;
         }
 
         return this.#renderRoot;
