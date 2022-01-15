@@ -24,7 +24,7 @@ function InitializeTrash() {
     });
 
     trashDiv.addEventListener("drop", (event) => {
-        let droppedListIndex = Number(event.dataTransfer.getData("text/plain"));
+        let droppedListIndex = Number(event.dataTransfer.getData("text"));
         let deleteDialog = new ItemDeleteDialog(droppedListIndex, () => {
             toDoList.DeleteItem(droppedListIndex);
         });
