@@ -130,7 +130,9 @@ export class ToDoListItem {
         newCheckBox.type = "checkbox";
         newCheckBox.checked = this.#backingData[columnDefinition.backingDataName];
         newCheckBox.addEventListener("change", itemChanged);
-        return newCheckBox;
+        let newSpan = document.createElement("span");
+        newSpan.appendChild(newCheckBox);
+        return newSpan;
     }
 
     #CreateRootNode() {

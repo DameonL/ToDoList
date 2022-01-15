@@ -89,6 +89,7 @@ export class ToDoList {
 
     #CreateLabelDiv() {
         let labelDiv = document.createElement("div");
+        labelDiv.className = "toDoItem";
         let columnTemplate = "1.25em ";
         labelDiv.appendChild(document.createElement("span"));
         this.#columnDefinitions.forEach(definition => {
