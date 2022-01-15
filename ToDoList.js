@@ -28,7 +28,13 @@ export class ToDoList {
         return newItem;
     }
 
-    DeleteItem(data) { this.#database.DeleteItem(data); }
+    DeleteItem(data) {
+        if (typeof data === "number") {
+            data = this.#itemData[data];
+        }
+        
+        this.#database.DeleteItem(data); 
+    }
 
     RenderToDoListItems() {
         while (this.#rootNode.firstChild) {
