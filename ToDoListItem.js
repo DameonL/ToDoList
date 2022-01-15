@@ -53,7 +53,7 @@ export class ToDoListItem {
             });
 
             rootNode.addEventListener("dragover", (event) => {
-                console.log(event.dataTransfer.getData("text"));
+                console.log(event.dataTransfer.types);
                 if (event.dataTransfer.getData("text") == this.Index)
                     return true;
                     
