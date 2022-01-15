@@ -74,13 +74,13 @@ export class ToDoList {
                 event.preventDefault();
                 event.dataTransfer.dropEffect="move";
                 if (event.movementY > 0) {
-                    this.#rootNode.insertBefore(emptyDiv, renderer);
+                    console.log(renderers[i]);
+                    this.#rootNode.insertBefore(emptyDiv, renderers[i]);
                     emptyDiv.setAttribute("targetIndex", listItem.Index);
                 } else {
                     this.#rootNode.insertBefore(emptyDiv, renderers[i + 1]);
                     emptyDiv.setAttribute("targetIndex", listItem.Index + 1);
                 }
-                emptyDiv.setAttribute("targetIndex", listItem.Index);
             });
 
             this.#rootNode.appendChild(renderer);
