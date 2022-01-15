@@ -42,6 +42,7 @@ export class ToDoList {
         emptyDiv.className = "toDoItem";
         emptyDiv.innerHTML = "&nbsp";
         emptyDiv.addEventListener("drop", (event) => {
+            event.preventDefault();
             let droppedIndex = event.dataTransfer.getData("text");
             this.#database.InsertItemBefore(itemData[i], itemData[droppedIndex]);
         });
