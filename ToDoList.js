@@ -18,6 +18,7 @@ export class ToDoList {
             label: "Name",
             width: "25%",
             backingDataName: "name",
+            drawHandler: (element, data) => { if (data.complete) element.style.textDecoration = "line-through"; },
         },
         {
             label: "Description",

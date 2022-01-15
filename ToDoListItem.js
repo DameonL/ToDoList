@@ -36,6 +36,11 @@ export class ToDoListItem {
     }
 
     #UpdateAppearance() {
+        for (let i = 0; i < this.#elements.length; i++) {
+            if (this.#columnDefinitions[i].drawHandler) {
+                this.#columnDefinitions[i].drawHandler(this.#elements[i], this.#backingData);
+            }
+    }
 //        this.#elements.nameSpan.style.textDecoration = (this.#backingData.complete) ? "line-through" : "";
 //        this.#elements.nameSpan.contentEditable = !this.#backingData.complete;
 //        this.#elements.descriptionSpan.contentEditable = !this.#backingData.complete;
@@ -81,6 +86,10 @@ export class ToDoListItem {
                     columnInstance = this.#CreateTextInputSpan(columnDefinition, itemChanged);
                 } else if (columnType == "boolean") {
                     columnInstance = this.#CreateCheckBoxSpan(columnDefinition, itemChanged);
+                }
+
+                if (columnDefinition.drawHandler) {
+                    columnDefinition.drawHandler(columnInstance, this.#backingData);
                 }
 
                 this.#elements.push(columnInstance);
