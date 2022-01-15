@@ -51,7 +51,7 @@ export class ToDoListItem {
             if (columnType == "text") {
                 this.#backingData[columnDefinition.backingDataName] = element.innerHTML;
             } else if (columnType == "boolean") {
-                this.#backingData[columnDefinition.backingDataName] = element.checked;
+                this.#backingData[columnDefinition.backingDataName] = element.firstChild.checked;
             }
         }
    }
