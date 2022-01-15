@@ -56,20 +56,15 @@ export class ToDoListItem {
             emptyDiv.className = "toDoItem";
 
             rootNode.addEventListener("dragover", (event) => {
-                console.log(event.dataTransfer.types);
                 event.preventDefault();
-                rootNode.parentNode.insertBefore(emptyDiv, rootNode);
                 event.dataTransfer.dropEffect="move";
                 return false
             });
 
             rootNode.addEventListener("dragenter", (event) => {
-                console.log(event.dataTransfer.getData("text"));
-                if (event.dataTransfer.getData("text") == this.Index)
-                    return true;
-                    
                 event.preventDefault();
                 event.dataTransfer.dropEffect="move";
+                rootNode.parentNode.insertBefore(emptyDiv, rootNode);
                 return false
             });
 
