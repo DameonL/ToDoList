@@ -70,10 +70,12 @@ export class ToDoList {
             let listItem = this.CreateListItem(itemData[i]);
             let renderer = listItem.Renderer;
             renderers.push(renderer);
+            let lastY = 0;
             renderer.addEventListener("dragover", (event) => {
+                var delta = event.clientY - lastY;
                 event.preventDefault();
                 event.dataTransfer.dropEffect="move";
-                if (event.movementY > 0) {
+                if (delta > 0) {
                     console.log(renderers[i]);
                     this.#rootNode.insertBefore(emptyDiv, renderers[i]);
                     emptyDiv.setAttribute("targetIndex", listItem.Index);
@@ -81,6 +83,8 @@ export class ToDoList {
                     this.#rootNode.insertBefore(emptyDiv, renderers[i + 1]);
                     emptyDiv.setAttribute("targetIndex", listItem.Index + 1);
                 }
+
+                lastY = event.clientY;
             });
 
             this.#rootNode.appendChild(renderer);
