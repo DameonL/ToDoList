@@ -13,7 +13,7 @@ export class ItemDeleteDialog {
 
     #elementsToClear = [];
 
-    constructor(toDoListItem, deleteItemHandler) {
+    constructor(deleteItemHandler) {
         let pageHider = document.createElement("div");
         pageHider.className = "itemDeleteDialog";
         document.body.appendChild(pageHider);

@@ -1,5 +1,6 @@
 import { ToDoListItem } from "./ToDoListItem.js";
 import { ToDoDatabase } from "./ToDoDatabase.js";
+import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
 
 export class ToDoList {
     #database = null;
@@ -25,7 +26,7 @@ export class ToDoList {
             multiLine: true,
         },
     ];
-    
+
 
     constructor(newItemHandler) {
         this.#rootNode = document.createElement("div");
@@ -47,9 +48,13 @@ export class ToDoList {
     }
 
     CreateListItem(data) {
-        let newItem = new ToDoListItem(data, this.#columnDefinitions, () => this.#database.GetItemIndex(data), () => this.DeleteItem(data));
+        let newItem = new ToDoListItem(
+            data,
+            this.#columnDefinitions,
+            () => this.#database.GetItemIndex(data),
+            () => { new ItemDeleteDialog(() => { this.DeleteItem(data); }); }
+        );
         newItem.AddChangeListener(() => this.#database.UpdateItem(data));
-
         return newItem;
     }
 
@@ -58,7 +63,7 @@ export class ToDoList {
             data = this.#itemData[data];
         }
 
-        this.#database.DeleteItem(data); 
+        this.#database.DeleteItem(data);
     }
 
     RenderToDoListItems() {
