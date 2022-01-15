@@ -41,6 +41,11 @@ export class ToDoList {
         let emptyDiv = document.createElement("div");
         emptyDiv.className = "toDoItem";
         emptyDiv.innerHTML = "&nbsp";
+        emptyDiv.addEventListener("drop", (event) => {
+            let droppedIndex = event.dataTransfer.getData("text");
+
+            console.log(emptyDiv.getAttribute("targetIndex"));
+        });
 
         for (let i = 0; i < itemData.length; i++) {
 
@@ -50,6 +55,7 @@ export class ToDoList {
                 event.preventDefault();
                 event.dataTransfer.dropEffect="move";
                 this.#rootNode.insertBefore(emptyDiv, renderer);
+                emptyDiv.setAttribute("targetIndex", listItem.Index);
             });
 
             this.#rootNode.appendChild(renderer);
