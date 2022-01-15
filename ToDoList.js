@@ -19,7 +19,7 @@ export class ToDoList {
         this.#createNewItem = newItemHandler;
     }
 
-    get RootNode() { return this.#rootnode; }
+    get RootNode() { return this.#rootNode; }
 
     CreateNewItem() {
         let data = this.#createNewItem();
