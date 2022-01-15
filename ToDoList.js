@@ -10,7 +10,7 @@ export class ToDoList {
 
     constructor(newItemHandler) {
         this.#rootNode = document.createElement("div");
-        rootNode.id = "toDoListRender";
+        this.#rootNode.id = "toDoListRender";
 
         this.#database = new ToDoDatabase("ToDoList", "items");
         this.#database.AddListChangedHandler((event) => {
