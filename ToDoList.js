@@ -64,10 +64,12 @@ export class ToDoList {
             this.#rootNode.removeChild(emptyDiv);
         });
 
+        let renderers = [];
         for (let i = 0; i < itemData.length; i++) {
 
             let listItem = this.CreateListItem(itemData[i]);
             let renderer = listItem.Renderer;
+            renderers.push(renderer);
             renderer.addEventListener("dragenter", (event) => {
                 event.preventDefault();
                 event.dataTransfer.dropEffect="move";
@@ -75,7 +77,7 @@ export class ToDoList {
                     this.#rootNode.insertBefore(emptyDiv, renderer);
                     emptyDiv.setAttribute("targetIndex", listItem.Index);
                 } else {
-                    this.#rootNode.insertAfter(emptyDiv, renderer);
+                    this.#rootNode.insertAfter(emptyDiv, renderers[i + 1]);
                     emptyDiv.setAttribute("targetIndex", listItem.Index + 1);
                 }
                 emptyDiv.setAttribute("targetIndex", listItem.Index);
