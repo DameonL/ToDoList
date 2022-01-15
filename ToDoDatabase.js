@@ -97,8 +97,12 @@ export class ToDoDatabase {
     InsertItemBefore(priorItem, itemToInsert) {
         let insertIndex = this.GetItemIndex(priorItem);
         let oldIndex = this.GetItemIndex(itemToInsert);
+        console.log(`${insertIndex} ${oldIndex}`);
 
-        if (insertIndex == oldIndex + 1) { return; }
+        if (insertIndex == oldIndex + 1) 
+        {
+            return; 
+        }
         else if (insertIndex == -1) {
             this.#items.push(this.#items.splice(oldIndex, 1)[0]);
         } else {

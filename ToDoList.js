@@ -46,11 +46,11 @@ export class ToDoList {
 
         let emptyDiv = document.createElement("div");
         emptyDiv.className = "toDoItem";
-        emptyDiv.innerHTML = "&nbsp";
         emptyDiv.addEventListener("drop", (event) => {
             event.preventDefault();
             let droppedIndex = event.dataTransfer.getData("text");
             let targetIndex = emptyDiv.getAttribute("targetIndex");
+            console.log(`${droppedIndex} ${targetIndex}`);
             this.#database.InsertItemBefore(itemData[targetIndex], itemData[droppedIndex]);
         });
 
@@ -65,11 +65,10 @@ export class ToDoList {
 
         let emptyDivAnimation = [
             { // from
-                scale: 0,
+                height: "0em",
             },
             { // to
-                scale: 1,
-                easing: 'ease-out',
+                scale: "1.25em",
             }
           ];
 
@@ -87,13 +86,13 @@ export class ToDoList {
                 event.dataTransfer.dropEffect="move";
                 let targetIndex = (delta < 0) ? i : i + 1;
                 if (currentIndex != targetIndex) {
-                    this.#rootNode.insertBefore(emptyDiv, renderers[targetIndex]);
                     emptyDiv.setAttribute("targetIndex", targetIndex);
-                    emptyDiv.animate(emptyDivAnimation, 5000);
+                    this.#rootNode.insertBefore(emptyDiv, renderers[targetIndex]);
+//                    emptyDiv.animate(emptyDivAnimation, 5000);
+                    currentIndex = targetIndex;
                 }
 
                 lastY = event.clientY;
-                currentIndex = targetIndex;
             });
 
             renderer.addEventListener("dragend", (event) => { 
