@@ -59,11 +59,11 @@ export class ToDoList {
             event.dataTransfer.dropEffect="move";
         });
 
-        emptyDiv.addEventListener("dragleave", (event) => {
-            this.#rootNode.removeChild(emptyDiv);
-        });
+//        emptyDiv.addEventListener("dragleave", (event) => {
+//            this.#rootNode.removeChild(emptyDiv);
+//        });
 
-        emptyDiv.style.height = 0;
+//        emptyDiv.style.height = 0;
 
         let emptyDivAnimation = [
             { // from
@@ -90,11 +90,12 @@ export class ToDoList {
                 if (delta == 0) return;
 
                 let targetIndex = (delta < 0) ? i : i + 1;
-                if (currentIndex != targetIndex) {
-                    emptyDiv.setAttribute("targetIndex", targetIndex);
-                    this.#rootNode.insertBefore(emptyDiv, renderers[targetIndex]);
-//                    emptyDiv.animate(emptyDivAnimation, 5000);
-                    currentIndex = targetIndex;
+                if (delta < 0) {
+                    this.#rootNode.insertBefore(emptyDiv, renderers[i]);
+                    emptyDiv.setAttribute("targetIndex", listItem.Index);
+                } else {
+                    this.#rootNode.insertBefore(emptyDiv, renderers[i + 1]);
+                    emptyDiv.setAttribute("targetIndex", listItem.Index + 1);
                 }
 
                 lastY = event.screenY;
@@ -115,3 +116,4 @@ export class ToDoList {
 
     
 }
+
