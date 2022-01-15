@@ -36,8 +36,7 @@ export class ToDoListItem {
     }
 
     #UpdateAppearance() {
-        console.log(this.#backingData.complete);
-        nameSpan.style.textDecoration = (this.#backingData.complete) ? "line-through" : "";
+        this.#elements.nameSpan.style.textDecoration = (this.#backingData.complete) ? "line-through" : "";
     }
 
     #UpdateBackingData() {
