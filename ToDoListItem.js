@@ -3,9 +3,14 @@ import { StyleSettings } from "./StyleSettings.js";
 export class ToDoListItem {
     #indexFunction = null;
     #backingData = null;
-    #render = null;
     #onchange = [];
-
+    #elements = {
+        root: null,
+        completeCheck: null,
+        nameSpan: null,
+        descriptionSpan: null,        
+    }
+    
     get Index() { return this.#indexFunction(); }
 
     constructor(backingData, indexFunction) {
@@ -35,13 +40,13 @@ export class ToDoListItem {
     }
 
     #UpdateBackingData() {
-        this.#backingData.name = document.getElementById("toDoItemName" + this.Index).innerHTML;
-        this.#backingData.description = document.getElementById("toDoItemDescription" + this.Index).innerHTML;
-        this.#backingData.complete = document.getElementById("toDoItemComplete" + this.Index).checked == true;
+        this.#backingData.name = this.#elements.nameSpan.innerHTML;
+        this.#backingData.description = this.#elements.descriptionSpan.innerHTML;
+        this.#backingData.complete = this.#elements.completeCheck.checked == true;
     }
 
     get Renderer() {
-        if (this.#render == null) {
+        if (this.#elements.root == null) {
             let itemChanged = () => {
                 this.#UpdateBackingData();
                 this.#UpdateAppearance();
@@ -53,6 +58,7 @@ export class ToDoListItem {
             rootNode.id = "toDoItem" + this.Index;
             rootNode.draggable = true;
             rootNode.style.backgroundColor = (this.Index % 2 == 0) ? StyleSettings.ListItemBGColor : StyleSettings.ListItemBGAltColor;
+            this.#elements.root = rootNode;
 
             rootNode.addEventListener("dragstart", (event) => {
                 if ((document.activeElement == rootNode) || (document.activeElement.parentNode == rootNode)) {
@@ -69,18 +75,12 @@ export class ToDoListItem {
                 event.dataTransfer.dropEffect="move";
             });
 
-//            rootNode.addEventListener("drop", (event) => {
-//                if (event.dataTransfer.getData("text") == this.Index)
-//                    return true;
-//
-//                event.preventDefault();
-//            });
-
             let completeCheck = document.createElement("input");
             completeCheck.id = "toDoItemComplete" + this.Index;
             completeCheck.type = "checkbox";
             completeCheck.checked = this.#backingData.complete;
             completeCheck.addEventListener("change", itemChanged);
+            this.#elements.completeCheck = completeCheck;
 
             let handleSpan = document.createElement("span");
             handleSpan.className = "toDoItemHandle";
@@ -100,6 +100,7 @@ export class ToDoListItem {
                     event.target.blur();
                 }
             });
+            this.#elements.nameSpan = nameSpan;
 
             let descriptionSpan = document.createElement("span");
             descriptionSpan.contentEditable = true;
@@ -107,17 +108,18 @@ export class ToDoListItem {
             descriptionSpan.id = "toDoItemDescription" + this.Index;
             descriptionSpan.innerHTML = this.#backingData.description;
             descriptionSpan.addEventListener("focusout", itemChanged);
+            this.#elements.descriptionSpan = descriptionSpan;
 
             rootNode.appendChild(handleSpan);
             rootNode.appendChild(completeCheck);
             rootNode.appendChild(nameSpan);
             rootNode.appendChild(descriptionSpan);
 
-            this.#render = rootNode;
+            this.#elements.root = rootNode;
             this.#UpdateAppearance();
         }
 
-        return this.#render;
+        return this.#elements.root;
     }
 
 }
