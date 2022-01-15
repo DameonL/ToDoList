@@ -6,30 +6,16 @@ export class ToDoListItem {
     #onchange = [];
     #renderRoot = null;
     #elements = [];
-    #columnDefinitions = [
-        {
-            label: "",
-            width: "1.25em",
-            backingDataName: "complete",
-        },
-        {
-            label: "Name",
-            width: "25%",
-            backingDataName: "name",
-        },
-        {
-            label: "Description",
-            width: "65%",
-            backingDataName: "description",
-            multiLine: true,
-        },
-    ];
-    
+    #columnDefinitions = null;
+    #deleteHandler = null;
+
     get Index() { return this.#indexFunction(); }
 
-    constructor(backingData, indexFunction) {
+    constructor(backingData, columnDefinitions, indexFunction, deleteButtonHandler) {
         this.#backingData = backingData;
+        this.#columnDefinitions = columnDefinitions;
         this.#indexFunction = indexFunction;
+        this.#deleteHandler = deleteButtonHandler;
     }
 
     AddChangeListener(listener) {
@@ -56,15 +42,12 @@ export class ToDoListItem {
     }
 
     #UpdateBackingData() {
-        this.#columnDefinitions.forEach(columnDefinition => {
-
-        });
         for (let i = 0; i < this.#columnDefinitions.length; i++) {
             let columnDefinition = this.#columnDefinitions[i];
             let element = this.#elements[i];
             let columnData = this.#backingData[columnDefinition.backingDataName];
             let columnType = (typeof columnData);
-            
+
             if (columnType == "text") {
                 this.#backingData[columnDefinition.backingDataName] = element.innerHTML;
             } else if (columnType == "boolean") {
@@ -103,6 +86,21 @@ export class ToDoListItem {
                 this.#elements.push(columnInstance);
                 rootNode.appendChild(columnInstance);
             });
+
+            columnTemplate += " auto";
+            
+            let buttonSpan = document.createElement("span");
+            buttonSpan.style.fontSize = "18px";
+            buttonSpan.style.marginLeft = "auto";
+            buttonSpan.style.marginRight = 0;
+            
+            let trashButton = document.createElement("span");
+            trashButton.innerText = "🗑";
+            trashButton.title = "Delete this item";
+            trashButton.addEventListener("click", this.#deleteHandler);
+            buttonSpan.appendChild(trashButton);
+            
+            rootNode.appendChild(buttonSpan);
             rootNode.style.gridTemplateColumns = columnTemplate;
         }
 

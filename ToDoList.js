@@ -7,6 +7,25 @@ export class ToDoList {
     #ignoreListChanges = false;
     #itemData = [];
     #createNewItem = null;
+    #columnDefinitions = [
+        {
+            label: "",
+            width: "1.25em",
+            backingDataName: "complete",
+        },
+        {
+            label: "Name",
+            width: "25%",
+            backingDataName: "name",
+        },
+        {
+            label: "Description",
+            width: "50%",
+            backingDataName: "description",
+            multiLine: true,
+        },
+    ];
+    
 
     constructor(newItemHandler) {
         this.#rootNode = document.createElement("div");
@@ -28,7 +47,7 @@ export class ToDoList {
     }
 
     CreateListItem(data) {
-        let newItem = new ToDoListItem(data, () => this.#database.GetItemIndex(data));
+        let newItem = new ToDoListItem(data, this.#columnDefinitions, () => this.#database.GetItemIndex(data), () => this.DeleteItem(data));
         newItem.AddChangeListener(() => this.#database.UpdateItem(data));
 
         return newItem;
