@@ -90,6 +90,7 @@ export class ToDoListItem {
 
             let handleSpan = document.createElement("span");
             handleSpan.className = "toDoItemHandle";
+            handleSpan.addEventListener("dragover", (event) => {});
 
             let nameSpan = document.createElement("span");
             nameSpan.contentEditable = true;
