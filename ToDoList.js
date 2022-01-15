@@ -9,7 +9,7 @@ export class ToDoList {
 
     constructor(rootNode) {
         this.#rootNode = rootNode;
-        this.#database = new ToDoDatabase();
+        this.#database = new ToDoDatabase("ToDoList", "items");
         this.#database.AddListChangedHandler((event) => {
             if (!this.#ignoreListChanges) this.RenderToDoListItems();
         });

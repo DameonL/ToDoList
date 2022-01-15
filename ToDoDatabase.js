@@ -1,17 +1,22 @@
 export class ToDoDatabase {
+    #databaseName = "";
+    #tableName = "";
     #items = [];
     #itemChangedHandlers = [];
     #listChangedHandlers = [];
 
     get count() { return this.#items.length; }
 
-    constructor() {
-        let dbOpenRequest = window.indexedDB.open("ToDoList", 1);
+    constructor(databaseName, tableName) {
+        this.#databaseName = databaseName;
+        this.#tableName = tableName;
+
+        let dbOpenRequest = window.indexedDB.open(this.#databaseName, 1);
         dbOpenRequest.onupgradeneeded = this.#InitializeDatabase;
         dbOpenRequest.onsuccess = (event) => {
             let db = event.target.result;
-            let transaction = db.transaction("items", "readonly");
-            let store = transaction.objectStore("items");
+            let transaction = db.transaction(this.#tableName, "readonly");
+            let store = transaction.objectStore(this.#tableName);
 
             store.getAll().onsuccess = (event) => {
                 this.#items = event.target.result;
@@ -70,11 +75,11 @@ export class ToDoDatabase {
             this.UpdateItem(this.#items[i]);
         }
 
-        let dbOpenRequest = window.indexedDB.open("ToDoList", 1);
+        let dbOpenRequest = window.indexedDB.open(this.#databaseName, 1);
         dbOpenRequest.onsuccess = (event) => {
             let db = event.target.result;
-            let transaction = db.transaction("items", "readwrite");
-            let store = transaction.objectStore("items");
+            let transaction = db.transaction(this.#tableName, "readwrite");
+            let store = transaction.objectStore(this.#tableName);
             let deleteRequest = store.delete(this.#items.length);
 
             transaction.oncomplete = () => {
@@ -110,11 +115,11 @@ export class ToDoDatabase {
     }
 
     UpdateItem(data) {
-        let dbOpenRequest = window.indexedDB.open("ToDoList", 1);
+        let dbOpenRequest = window.indexedDB.open(this.#databaseName, 1);
         dbOpenRequest.onsuccess = (event) => {
             let db = event.target.result;
-            let transaction = db.transaction("items", "readwrite");
-            let store = transaction.objectStore("items");
+            let transaction = db.transaction(this.#tableName, "readwrite");
+            let store = transaction.objectStore(this.#tableName);
             let index = this.GetItemIndex(data);
             store.put(data, index);
 
@@ -127,7 +132,7 @@ export class ToDoDatabase {
     #InitializeDatabase(event) {
         if (event.oldVersion == 0) {
             let db = event.target.result;
-            let store = db.createObjectStore("items");
+            let store = db.createObjectStore(this.#tableName);
 
             store.put({ name: "My New ToDo Item", description: "Insert description here" }, 0);
         }
