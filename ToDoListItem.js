@@ -52,12 +52,13 @@ export class ToDoListItem {
                 event.dataTransfer.effectAllowed="move";
             });
 
+            let emptyDiv = document.createElement("div");
+            emptyDiv.className = "toDoItem";
+
             rootNode.addEventListener("dragover", (event) => {
                 console.log(event.dataTransfer.types);
-                if (event.dataTransfer.getData("text") == this.Index)
-                    return true;
-                    
                 event.preventDefault();
+                rootNode.parentNode.insertBefore(emptyDiv, rootNode);
                 event.dataTransfer.dropEffect="move";
                 return false
             });
