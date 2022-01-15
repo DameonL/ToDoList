@@ -6,17 +6,23 @@ export class ToDoList {
     #rootNode = null;
     #ignoreListChanges = false;
     #itemData = [];
+    #createNewItem = null;
 
-    constructor(rootNode) {
-        this.#rootNode = rootNode;
+    constructor(newItemHandler) {
+        this.#rootNode = document.createElement("div");
+        rootNode.id = "toDoListRender";
+
         this.#database = new ToDoDatabase("ToDoList", "items");
         this.#database.AddListChangedHandler((event) => {
             if (!this.#ignoreListChanges) this.RenderToDoListItems();
         });
+        this.#createNewItem = newItemHandler;
     }
 
+    get RootNode() { return this.#rootnode; }
+
     CreateNewItem() {
-        let data = { name: "New ToDo Item", description: "Insert description here", complete: false };
+        let data = this.#createNewItem();
         this.#database.AddItem(data);
         this.#database.InsertItemBefore(data, this.#itemData[0]);
     }

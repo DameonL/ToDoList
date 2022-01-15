@@ -1,7 +1,10 @@
 import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
 import { ToDoList } from "./ToDoList.js";
 
-let toDoList = new ToDoList(document.getElementById("toDoListRender"));
+let newItemHandler = () => { return { name: "New ToDo Item", description: "Insert description here", complete: false } };
+let toDoList = new ToDoList(newItemHandler);
+let body = document.getElementsByClassName("body");
+body.appendChild(toDoList.RootNode);
 Start();
 
 function Start() {
