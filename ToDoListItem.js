@@ -70,26 +70,24 @@ export class ToDoListItem {
             }
 
             let rootNode = this.#CreateRootNode();
+            this.#renderRoot = rootNode;
 
             let handleSpan = document.createElement("span");
             handleSpan.className = "listItemHandle";
 
-            let completeCheck = this.#CreateCompleteCheckBox(itemChanged);
-            this.#elements.push(completeCheck);
+            this.#columnDefinitions.forEach(columnDefinition => {
+                let columnData = this.#backingData[columnDefinition.backingDataName];
+                let columnType = (typeof columnData);
+                let columnInstance = null;
+                if (columnType == "string") {
+                    columnInstance = this.#CreateTextInputSpan(columnDefinition, itemChanged);
+                } else if (columnType == "boolean") {
+                    columnInstance = this.#CreateCheckBoxSpan(columnDefinition, itemChanged);
+                }
 
-            let nameSpan = this.#CreateTextInputSpan(this.#columnDefinitions[1], itemChanged);
-            this.#elements.push(nameSpan);
-
-            let descriptionSpan = this.#CreateDescriptionSpan(itemChanged);
-            this.#elements.push(descriptionSpan);
-
-            rootNode.appendChild(handleSpan);
-            rootNode.appendChild(completeCheck);
-            rootNode.appendChild(nameSpan);
-            rootNode.appendChild(descriptionSpan);
-
-            this.#renderRoot = rootNode;
-            this.#UpdateAppearance();
+                this.#elements.push(columnInstance);
+                rootNode.appendChild(columnInstance);
+            });
         }
 
         return this.#renderRoot;
@@ -112,43 +110,13 @@ export class ToDoListItem {
         return newSpan;
     }
 
-
-    #CreateDescriptionSpan(itemChanged) {
-        let descriptionSpan = document.createElement("span");
-        descriptionSpan.contentEditable = true;
-        descriptionSpan.className = "toDoItemDescription";
-        descriptionSpan.id = "toDoItemDescription" + this.Index;
-        descriptionSpan.innerHTML = this.#backingData.description;
-        descriptionSpan.addEventListener("focusout", itemChanged);
-        return descriptionSpan;
-    }
-
-    #CreateNameSpan(itemChanged) {
-        let nameSpan = document.createElement("span");
-        if (this.#backingData.complete) {
-            nameSpan.style.textDecoration = "line-through";
-        }
-        nameSpan.contentEditable = true;
-        nameSpan.className = "toDoItemName";
-        nameSpan.id = "toDoItemName" + this.Index;
-        nameSpan.innerHTML = this.#backingData.name;
-        nameSpan.addEventListener("focusout", itemChanged);
-        nameSpan.addEventListener("keypress", (event) => {
-            if (event.key == "Enter") {
-                event.preventDefault();
-                event.target.blur();
-            }
-        });
-        return nameSpan;
-    }
-
-    #CreateCompleteCheckBox(itemChanged) {
-        let completeCheck = document.createElement("input");
-        completeCheck.id = "toDoItemComplete" + this.Index;
-        completeCheck.type = "checkbox";
-        completeCheck.checked = this.#backingData.complete;
-        completeCheck.addEventListener("change", itemChanged);
-        return completeCheck;
+    #CreateCheckBoxSpan(columnDefinition, itemChanged) {
+        let newCheckBox = document.createElement("input");
+        newCheckBox.id = columnDefinition.backingDataName + this.Index;
+        newCheckBox.type = "checkbox";
+        newCheckBox.checked = this.#backingData[columnDefinition.backingDataName];
+        newCheckBox.addEventListener("change", itemChanged);
+        return newCheckBox;
     }
 
     #CreateRootNode() {
