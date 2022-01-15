@@ -50,28 +50,10 @@ export class ToDoListItem {
                 event.dataTransfer.effectAllowed="move";
             });
 
-            let emptyDiv = document.createElement("div");
-            emptyDiv.className = "toDoItem";
-            emptyDiv.innerHTML = "&nbsp";
-
             rootNode.addEventListener("dragover", (event) => {
                 event.preventDefault();
                 event.dataTransfer.dropEffect="move";
             });
-
-            rootNode.addEventListener("dragenter", (event) => {
-                event.preventDefault();
-                event.dataTransfer.dropEffect="move";
-                rootNode.parentNode.insertBefore(emptyDiv, rootNode);
-            });
-
-            rootNode.addEventListener("dragleave", (event) => {
-                event.preventDefault();
-                rootNode.parentNode.removeChild(emptyDiv);
-            });
-
-            let blankElement = document.createElement("div");
-            blankElement.style.minHeight = 20;
 
             rootNode.addEventListener("drop", (event) => {
                 if (event.dataTransfer.getData("text") == this.Index)

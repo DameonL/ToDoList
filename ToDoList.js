@@ -38,9 +38,20 @@ export class ToDoList {
         let itemData = this.#database.GetItems();
         this.#itemData = itemData;
 
+        let emptyDiv = document.createElement("div");
+        emptyDiv.className = "toDoItem";
+        emptyDiv.innerHTML = "&nbsp";
+
         for (let i = 0; i < itemData.length; i++) {
+
             let listItem = this.CreateListItem(itemData[i]);
             let renderer = listItem.Renderer;
+            renderer.addEventListener("dragenter", (event) => {
+                event.preventDefault();
+                event.dataTransfer.dropEffect="move";
+                rootNode.parentNode.insertBefore(emptyDiv, renderer);
+            });
+
             this.#rootNode.appendChild(renderer);
         }
     }
