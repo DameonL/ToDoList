@@ -142,7 +142,9 @@ export class ToDoDatabase {
             let db = event.target.result;
             let store = db.createObjectStore(this.#tableName);
 
-            store.put({ name: "My New ToDo Item", description: "Insert description here" }, 0);
+            for (let i = 0; i < 3; i++) {
+                store.put({ name: `My New ToDo Item ${i}`, description: "Insert description here" }, 0);
+            }
         }
     }
 }
