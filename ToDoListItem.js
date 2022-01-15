@@ -57,7 +57,13 @@ export class ToDoListItem {
 
     #UpdateBackingData() {
         for (let i = 0; i < this.#columnDefinitions.length; i++) {
-            this.#backingData[this.#columnDefinitions[i].backingDataName] = this.#elements[i].innerHTML;
+            let columnData = this.#backingData[columnDefinition.backingDataName];
+            let columnType = (typeof columnData);
+            if (columnType == "text") {
+                this.#backingData[this.#columnDefinitions[i].backingDataName] = this.#elements[i].innerHTML;
+            } else if (columnType == "boolean") {
+                this.#backingData[this.#columnDefinitions[i].backingDataName] = this.#elements[i].checked;
+            }
         }
    }
 
@@ -74,6 +80,7 @@ export class ToDoListItem {
 
             let handleSpan = document.createElement("span");
             handleSpan.className = "listItemHandle";
+            rootNode.appendChild(handleSpan);
 
             let columnTemplate = "1.25em ";
             this.#columnDefinitions.forEach(columnDefinition => {
