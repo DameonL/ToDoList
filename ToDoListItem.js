@@ -52,6 +52,7 @@ export class ToDoListItem {
 
             let emptyDiv = document.createElement("div");
             emptyDiv.className = "toDoItem";
+            emptyDiv.innerHTML = "&nbsp";
 
             rootNode.addEventListener("dragover", (event) => {
                 event.preventDefault();
