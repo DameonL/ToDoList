@@ -91,9 +91,17 @@ export class ToDoList {
 
                 let targetIndex = (delta < 0) ? i : i + 1;
                 if (delta < 0) {
+                    if (emptyDiv.parentNode == this.#rootNode)
+                    {
+                        this.#rootNode.removeChild(emptyDiv);
+                    }
                     this.#rootNode.insertBefore(emptyDiv, renderers[i]);
                     emptyDiv.setAttribute("targetIndex", listItem.Index);
                 } else {
+                    if (emptyDiv.parentNode == this.#rootNode)
+                    {
+                        this.#rootNode.removeChild(emptyDiv);
+                    }
                     this.#rootNode.insertBefore(emptyDiv, renderers[i + 1]);
                     emptyDiv.setAttribute("targetIndex", listItem.Index + 1);
                 }

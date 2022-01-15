@@ -94,7 +94,7 @@ export class ToDoDatabase {
         return [...this.#items];
     }
 
-    InsertItemBefore(priorItem, itemToInsert) {
+    InsertItemBefore(itemToInsert, priorItem) {
         let insertIndex = this.GetItemIndex(priorItem);
         let oldIndex = this.GetItemIndex(itemToInsert);
         console.log(`${insertIndex} ${oldIndex}`);
@@ -106,7 +106,12 @@ export class ToDoDatabase {
         else if (insertIndex == -1) {
             this.#items.push(this.#items.splice(oldIndex, 1)[0]);
         } else {
-            this.#items.splice(insertIndex, 0, this.#items.splice(oldIndex, 1)[0]);
+            let removedItem = this.#items[oldIndex];
+            this.#items.splice(oldIndex, 1);
+            if (oldIndex < insertIndex) {
+                insertIndex--;
+            }
+            this.#items.splice(insertIndex, 0, removedItem);
         }
 
         for (let i = 0; i < this.#items.length; i++) {
