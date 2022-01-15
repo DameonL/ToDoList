@@ -56,13 +56,19 @@ export class ToDoListItem {
     }
 
     #UpdateBackingData() {
+        this.#columnDefinitions.forEach(columnDefinition => {
+
+        });
         for (let i = 0; i < this.#columnDefinitions.length; i++) {
+            let columnDefinition = this.#columnDefinitions[i];
+            let element = this.#elements[i];
             let columnData = this.#backingData[columnDefinition.backingDataName];
             let columnType = (typeof columnData);
+            
             if (columnType == "text") {
-                this.#backingData[this.#columnDefinitions[i].backingDataName] = this.#elements[i].innerHTML;
+                this.#backingData[columnDefinition.backingDataName] = element.innerHTML;
             } else if (columnType == "boolean") {
-                this.#backingData[this.#columnDefinitions[i].backingDataName] = this.#elements[i].checked;
+                this.#backingData[columnDefinition.backingDataName] = element.checked;
             }
         }
    }
