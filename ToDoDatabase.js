@@ -11,12 +11,12 @@ export class ToDoDatabase {
         this.#databaseName = databaseName;
         this.#tableName = tableName;
 
-        let dbOpenRequest = window.indexedDB.open(this.#databaseName, 1);
-        dbOpenRequest.onupgradeneeded = this.#InitializeDatabase;
+        let dbOpenRequest = window.indexedDB.open(databaseName, 1);
+        dbOpenRequest.onupgradeneeded = this.#InitializeDatabase.bind(this);
         dbOpenRequest.onsuccess = (event) => {
             let db = event.target.result;
-            let transaction = db.transaction(this.#tableName, "readonly");
-            let store = transaction.objectStore(this.#tableName);
+            let transaction = db.transaction(tableName, "readonly");
+            let store = transaction.objectStore(tableName);
 
             store.getAll().onsuccess = (event) => {
                 this.#items = event.target.result;
