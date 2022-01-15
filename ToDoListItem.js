@@ -72,11 +72,6 @@ export class ToDoListItem {
                 event.dataTransfer.effectAllowed="move";
             });
 
-            rootNode.addEventListener("dragover", (event) => {
-                event.preventDefault();
-                event.dataTransfer.dropEffect="move";
-            });
-
             let completeCheck = document.createElement("input");
             completeCheck.id = "toDoItemComplete" + this.Index;
             completeCheck.type = "checkbox";

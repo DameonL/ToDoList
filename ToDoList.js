@@ -18,7 +18,7 @@ export class ToDoList {
     CreateNewItem() {
         let data = { name: "New ToDo Item", description: "Insert description here", complete: false };
         this.#database.AddItem(data);
-        this.#database.InsertItemBefore(this.#itemData[0], data);
+        this.#database.InsertItemBefore(data, this.#itemData[0]);
     }
 
     CreateListItem(data) {
@@ -50,29 +50,13 @@ export class ToDoList {
             event.preventDefault();
             let droppedIndex = event.dataTransfer.getData("text");
             let targetIndex = emptyDiv.getAttribute("targetIndex");
-            console.log(`${droppedIndex} ${targetIndex}`);
-            this.#database.InsertItemBefore(itemData[targetIndex], itemData[droppedIndex]);
+            this.#database.InsertItemBefore(itemData[droppedIndex], itemData[targetIndex]);
         });
 
         emptyDiv.addEventListener("dragover", (event) => {
             event.preventDefault();
             event.dataTransfer.dropEffect="move";
         });
-
-//        emptyDiv.addEventListener("dragleave", (event) => {
-//            this.#rootNode.removeChild(emptyDiv);
-//        });
-
-//        emptyDiv.style.height = 0;
-
-        let emptyDivAnimation = [
-            { // from
-                height: "0em",
-            },
-            { // to
-                scale: "1.25em",
-            }
-          ];
 
         let renderers = [];
         for (let i = 0; i < itemData.length; i++) {
@@ -85,28 +69,28 @@ export class ToDoList {
             renderer.addEventListener("dragover", (event) => {
                 event.preventDefault();
                 event.dataTransfer.dropEffect="move";
-
-                let delta = event.screenY - lastY;
-                if (delta == 0) return;
+                let rect = renderer.getBoundingClientRect();
+                let deadzone = 5;
+                let delta = event.clientY - (rect.top + (rect.height * 0.5));
+                if (Math.abs(delta) <= deadzone) return;
 
                 let targetIndex = (delta < 0) ? i : i + 1;
-                if (delta < 0) {
-                    if (emptyDiv.parentNode == this.#rootNode)
-                    {
-                        this.#rootNode.removeChild(emptyDiv);
-                    }
-                    this.#rootNode.insertBefore(emptyDiv, renderers[i]);
-                    emptyDiv.setAttribute("targetIndex", listItem.Index);
-                } else {
-                    if (emptyDiv.parentNode == this.#rootNode)
-                    {
-                        this.#rootNode.removeChild(emptyDiv);
-                    }
-                    this.#rootNode.insertBefore(emptyDiv, renderers[i + 1]);
-                    emptyDiv.setAttribute("targetIndex", listItem.Index + 1);
+                if (currentIndex != targetIndex) {
+                    emptyDiv.setAttribute("targetIndex", targetIndex);
+                    this.#rootNode.insertBefore(emptyDiv, renderers[targetIndex]);
+                    emptyDiv.animate(
+                    [
+                      { height: "0em" },
+                      { height: "1.25em" }
+                    ], {
+                      fill: 'forwards',
+                      duration: 100,
+                      iterations: 1
+                    });
+                    currentIndex = targetIndex;
                 }
 
-                lastY = event.screenY;
+                lastY = event.clientY;
             });
 
             renderer.addEventListener("dragend", (event) => { 
@@ -124,4 +108,3 @@ export class ToDoList {
 
     
 }
-
