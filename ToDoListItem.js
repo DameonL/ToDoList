@@ -37,6 +37,8 @@ export class ToDoListItem {
 
     #UpdateAppearance() {
         this.#elements.nameSpan.style.textDecoration = (this.#backingData.complete) ? "line-through" : "";
+        this.#elements.nameSpan.contentEditable = !this.#backingData.complete;
+        this.#elements.descriptionSpan.contentEditable = !this.#backingData.complete;
     }
 
     #UpdateBackingData() {
