@@ -36,6 +36,9 @@ export class ToDoListItem {
                 this.#backingData.name = document.getElementById("toDoItemName" + this.Index).innerHTML;
                 this.#backingData.description = document.getElementById("toDoItemDescription" + this.Index).innerHTML;
                 this.#backingData.complete = document.getElementById("toDoItemComplete" + this.Index).checked == true;
+                if (this.#backingData.complete) {
+                    nameSpan.style.textDecoration = "line-through";
+                }
                 this.#ExecuteChangeHandlers();
             }
 
@@ -46,6 +49,12 @@ export class ToDoListItem {
             rootNode.style.backgroundColor = (this.Index % 2 == 0) ? StyleSettings.ListItemBGColor : StyleSettings.ListItemBGAltColor;
 
             rootNode.addEventListener("dragstart", (event) => {
+                if ((document.activeElement == rootNode) || (document.activeElement.parentNode == rootNode)) {
+                    event.preventDefault();
+                    return true;
+                 }
+                
+
                 event.dataTransfer.setData("text", this.Index);
                 event.dataTransfer.effectAllowed="move";
             });
@@ -60,21 +69,21 @@ export class ToDoListItem {
                     return true;
 
                 event.preventDefault();
-
-                console.log(event);
             });
 
             let completeCheck = document.createElement("input");
             completeCheck.id = "toDoItemComplete" + this.Index;
             completeCheck.type = "checkbox";
-            completeCheck.checked = (this.#backingData.complete == true);
+            completeCheck.checked = this.#backingData.complete;
             completeCheck.addEventListener("change", itemChanged);
 
             let handleSpan = document.createElement("span");
             handleSpan.className = "toDoItemHandle";
-            handleSpan.addEventListener("dragover", (event) => {});
 
             let nameSpan = document.createElement("span");
+            if (this.#backingData.complete) {
+                nameSpan.style.textDecoration = "line-through";
+            }
             nameSpan.contentEditable = true;
             nameSpan.className = "toDoItemName";
             nameSpan.id = "toDoItemName" + this.Index;
