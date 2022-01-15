@@ -66,6 +66,10 @@ export class ToDoDatabase {
         let deletedItem = this.#items[index];
         this.#items.splice(index, 1);
 
+        for (let i = 0; i < this.#items.length; i++) {
+            this.UpdateItem(this.#items[i]);
+        }
+
         let dbOpenRequest = window.indexedDB.open("ToDoList", 1);
         dbOpenRequest.onsuccess = (event) => {
             let db = event.target.result;
