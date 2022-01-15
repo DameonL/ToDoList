@@ -49,7 +49,7 @@ export class ToDoList {
             renderer.addEventListener("dragenter", (event) => {
                 event.preventDefault();
                 event.dataTransfer.dropEffect="move";
-                rootNode.parentNode.insertBefore(emptyDiv, renderer);
+                this.#rootNode.insertBefore(emptyDiv, renderer);
             });
 
             this.#rootNode.appendChild(renderer);
