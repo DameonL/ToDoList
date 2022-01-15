@@ -12,13 +12,13 @@ export class ToDoDatabase {
             let db = event.target.result;
             let transaction = db.transaction("items", "readonly");
             let store = transaction.objectStore("items");
-        
+
             store.getAll().onsuccess = (event) => {
                 this.#items = event.target.result;
                 db.close();
                 this.#listChangedHandlers.forEach(x => {
-                    x({item: [...this.#items]});
-                });        
+                    x({ item: [...this.#items] });
+                });
             };
         }
     }
@@ -57,7 +57,7 @@ export class ToDoDatabase {
         this.#items.push(data);
         this.UpdateItem(data);
         this.#listChangedHandlers.forEach(x => {
-            x({item: [...this.#items]});
+            x({ item: [...this.#items] });
         });
     }
 
@@ -79,7 +79,7 @@ export class ToDoDatabase {
 
             transaction.oncomplete = () => {
                 this.#listChangedHandlers.forEach(x => {
-                    x({item: [...this.#items]});
+                    x({ item: [...this.#items] });
                 });
             }
         }
@@ -93,14 +93,19 @@ export class ToDoDatabase {
         let insertIndex = this.GetItemIndex(priorItem);
         let oldIndex = this.GetItemIndex(itemToInsert);
 
-        this.#items.splice(insertIndex, 0, this.#items.splice(oldIndex, 1)[0]);
+        if (insertIndex == oldIndex + 1) { return; }
+        else if (insertIndex == -1) {
+            this.#items.push(this.#items.splice(oldIndex, 1)[0]);
+        } else {
+            this.#items.splice(insertIndex, 0, this.#items.splice(oldIndex, 1)[0]);
+        }
 
         for (let i = 0; i < this.#items.length; i++) {
             this.UpdateItem(this.#items[i]);
         }
 
         this.#listChangedHandlers.forEach(x => {
-            x({item: [...this.#items]});
+            x({ item: [...this.#items] });
         });
     }
 
@@ -114,17 +119,17 @@ export class ToDoDatabase {
             store.put(data, index);
 
             this.#itemChangedHandlers.forEach(x => {
-                x({item: [...this.#items]});
+                x({ item: [...this.#items] });
             });
-    }
+        }
     }
 
     #InitializeDatabase(event) {
         if (event.oldVersion == 0) {
             let db = event.target.result;
             let store = db.createObjectStore("items");
-    
-            store.put({name: "My New ToDo Item", description: "Insert description here"}, 0);
+
+            store.put({ name: "My New ToDo Item", description: "Insert description here" }, 0);
         }
     }
 }

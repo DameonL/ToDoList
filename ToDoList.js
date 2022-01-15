@@ -31,7 +31,6 @@ export class ToDoList {
     DeleteItem(data) {
         if (typeof data === "number") {
             data = this.#itemData[data];
-            console.log(data);
         }
 
         this.#database.DeleteItem(data); 
