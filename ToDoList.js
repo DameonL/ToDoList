@@ -34,7 +34,7 @@ export class ToDoList {
 
         this.#database = new ToDoDatabase("ToDoList", "items");
         this.#database.AddListChangedHandler((event) => {
-            if (!this.#ignoreListChanges) this.RenderToDoListItems();
+            if (!this.#ignoreListChanges) this.RenderListItems();
         });
         this.#createNewItem = newItemHandler;
     }
@@ -66,7 +66,7 @@ export class ToDoList {
         this.#database.DeleteItem(data);
     }
 
-    RenderToDoListItems() {
+    RenderListItems() {
         while (this.#rootNode.firstChild) {
             this.#rootNode.removeChild(this.#rootNode.firstChild);
         }
@@ -76,12 +76,29 @@ export class ToDoList {
 
         let itemMovementDropPoint = this.#CreateMovementDiv(itemData);
 
+        let labelDiv = this.#CreateLabelDiv();
+        this.#rootNode.appendChild(labelDiv);
+
         let renderers = [];
         for (let i = 0; i < itemData.length; i++) {
             let renderer = this.#CreateChildItem(itemData, i, renderers, itemMovementDropPoint);
             this.#rootNode.appendChild(renderer);
         }
 
+    }
+
+    #CreateLabelDiv() {
+        let labelDiv = document.createElement("div");
+        let columnTemplate = "1.25em ";
+        this.#columnDefinitions.forEach(definition => {
+            columnTemplate += definition.width + " ";
+            let label = document.createElement("span");
+            label.innerText = definition.label;
+            labelDiv.appendChild(label);
+        });
+        columnTemplate += "auto";
+        labelDiv.style.gridTemplateColumns = columnTemplate;
+        return labelDiv;
     }
 
     #CreateChildItem(itemData, i, renderers, itemMovementDropPoint) {
@@ -116,7 +133,7 @@ export class ToDoList {
             }
 
             lastY = event.clientY;
-        };
+        }
 
         renderer.addEventListener("dragover", dragOverHandler);
 
