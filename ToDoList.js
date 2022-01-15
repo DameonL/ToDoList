@@ -71,12 +71,21 @@ export class ToDoList {
             renderer.addEventListener("dragenter", (event) => {
                 event.preventDefault();
                 event.dataTransfer.dropEffect="move";
-                this.#rootNode.insertBefore(emptyDiv, renderer);
+                if (event.movementY > 0) {
+                    this.#rootNode.insertBefore(emptyDiv, renderer);
+                    emptyDiv.setAttribute("targetIndex", listItem.Index);
+                } else {
+                    this.#rootNode.insertAfter(emptyDiv, renderer);
+                    emptyDiv.setAttribute("targetIndex", listItem.Index + 1);
+                }
                 emptyDiv.setAttribute("targetIndex", listItem.Index);
             });
 
             this.#rootNode.appendChild(renderer);
         }
+
+        this.#rootNode.parentNode.appendChild(buttonDiv);
     }
+
     
 }
