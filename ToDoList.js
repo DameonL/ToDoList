@@ -87,6 +87,8 @@ export class ToDoList {
                 lastY = event.clientY;
             });
 
+            renderer.addEventListener("dragend", (event) => { this.#rootNode.removeChild(emptyDiv); });
+
             this.#rootNode.appendChild(renderer);
         }
 
