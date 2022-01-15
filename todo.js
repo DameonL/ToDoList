@@ -3,8 +3,7 @@ import { ToDoList } from "./ToDoList.js";
 
 let newItemHandler = () => { return { name: "New ToDo Item", description: "Insert description here", complete: false } };
 let toDoList = new ToDoList(newItemHandler);
-let body = document.getElementsByClassName("body")[0];
-body.appendChild(toDoList.RootNode);
+document.body.appendChild(toDoList.RootNode);
 Start();
 
 function Start() {
