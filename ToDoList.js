@@ -46,6 +46,7 @@ export class ToDoList {
 
         let emptyDiv = document.createElement("div");
         emptyDiv.className = "toDoItem";
+        emptyDiv.style.border = "1px solid black";
         emptyDiv.addEventListener("drop", (event) => {
             event.preventDefault();
             let droppedIndex = event.dataTransfer.getData("text");
