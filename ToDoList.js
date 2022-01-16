@@ -34,7 +34,6 @@ export class ToDoList {
             this.#itemButtonDefinitions,
             this.#itemIndexHandler
         );
-        newItem.AddChangeListener();
         return newItem;
     }
 
