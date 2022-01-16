@@ -28,7 +28,11 @@ let columnDefinitions = [
         width: "50%",
         backingDataName: "description",
         multiLine: true,
-        updateHandler: (data) => {
+        drawHandler: (element, data) => {
+            element.style.textDecoration = (data.complete) ? "line-through" : "";
+            element.contentEditable = (data.complete) ? false : true;
+       },
+       updateHandler: (data) => {
             database.UpdateItem(data);
         }
     },
