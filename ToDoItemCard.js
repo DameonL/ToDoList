@@ -14,8 +14,9 @@ export class ToDoItemCard {
         
         let newNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
         newNode.innerHTML = this.#cardHtml;
-        documentHider.appendChild(newNode);
-        document.body.appendChild(documentHider);
+        
+        newNode.appendChild(documentHider);
+        document.body.appendChild(newNode);
 
         let propertyNames = Object.keys(this.#backingData);
         propertyNames.forEach(property => {
