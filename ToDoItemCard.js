@@ -11,8 +11,12 @@ export class ToDoItemCard {
                     <input type="checkbox" boundField="complete" id="taskComplete">
                     <label for="taskComplete">Complete</label>
                 </div>
-                <div boundField="name"  class="inputField"contenteditable="true"></div>
+                <div>
+                    <span>Name:</span>
+                    <span boundField="name"  class="inputField"contenteditable="true"></span>
+                </span>
             </div>
+            <div>Description:</description>
             <div boundField="description" class="inputField" contenteditable="true"></div>
         </div>
     </div>
