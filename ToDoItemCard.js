@@ -11,9 +11,9 @@ export class ToDoItemCard {
                     <input type="checkbox" boundField="complete" id="taskComplete">
                     <label for="taskComplete">Complete</label>
                 </div>
-                <div boundField="name" contenteditable="true"></div>
+                <div boundField="name"  class="inputField"contenteditable="true"></div>
             </div>
-            <div class="itemCardDescription" boundField="description" contenteditable="true"></div>
+            <div boundField="description" class="inputField" contenteditable="true"></div>
         </div>
     </div>
     `;
