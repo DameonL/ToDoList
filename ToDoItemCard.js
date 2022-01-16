@@ -1,7 +1,7 @@
 export class ToDoItemCard {
     #backingData = null;
     #cardHtml = `
-    <div boundField="name"></div>
+    <div class="itemDeleteDialogCenter" boundField="name"></div>
     `;
 
     constructor(backingData) {
@@ -11,10 +11,12 @@ export class ToDoItemCard {
     Render() {
         let documentHider = document.createElement("div");
         documentHider.className = "itemDeleteDialog";
-        let newNode = document.createElement("div");
-        documentHider.appendChild(newNode);
-        newNode.className = "itemDeleteDialogCenter";
+        
+        let newNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
         newNode.innerHTML = this.#cardHtml;
+        documentHider.appendChild(newNode);
+        document.body.appendChild(documentHider);
+
         let propertyNames = Object.keys(this.#backingData);
         propertyNames.forEach(property => {
             let boundField = document.querySelector(`[boundField="${property}"]`);
@@ -22,6 +24,5 @@ export class ToDoItemCard {
                 boundField.innerHTML = this.#backingData[property];
             }
         });
-        document.body.appendChild(documentHider);
     }
 }
