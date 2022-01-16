@@ -17,7 +17,7 @@ export class ToDoItemCard {
         newNode.innerHTML = this.#cardHtml;
         let propertyNames = Object.keys(this.#backingData);
         propertyNames.forEach(property => {
-            let boundField = document.querySelector(`boundField="${property}"`);
+            let boundField = document.querySelector(`[boundField="${property}"]`);
             if (boundField) {
                 boundField.innerHTML = this.#backingData[property];
             }
