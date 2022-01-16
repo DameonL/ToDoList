@@ -25,6 +25,7 @@ export class ToDoItemCard {
         document.body.appendChild(cardNode);
 
         documentHider.addEventListener("click", (event) => {
+            this.#UpdateBackingData();
             documentHider.parentNode.removeChild(documentHider);
             cardNode.parentNode.removeChild(cardNode);
         });
