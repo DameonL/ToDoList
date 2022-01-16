@@ -1,7 +1,7 @@
 export class ToDoItemCard {
     #backingData = null;
     #cardHtml = `
-    <div class="itemDeleteDialogCenter" boundField="name"></div>
+    <div class="itemDeleteDialogCenter"><div boundField="name"></div></div>
     `;
 
     constructor(backingData) {
@@ -15,8 +15,8 @@ export class ToDoItemCard {
         let newNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
         newNode.innerHTML = this.#cardHtml;
         
-        newNode.appendChild(documentHider);
-        document.body.appendChild(newNode);
+        documentHider.appendChild(newNode);
+        document.body.appendChild(documentHider);
 
         let propertyNames = Object.keys(this.#backingData);
         propertyNames.forEach(property => {
