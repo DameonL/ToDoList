@@ -32,7 +32,7 @@ export class ToDoListItem {
             let columnData = this.#backingData[columnDefinition.backingDataName];
             let columnType = (typeof columnData);
 
-            if (columnType == "text") {
+            if (columnType == "string") {
                 this.#backingData[columnDefinition.backingDataName] = element.innerHTML;
             } else if (columnType == "boolean") {
                 this.#backingData[columnDefinition.backingDataName] = element.firstChild.checked;
@@ -57,7 +57,7 @@ export class ToDoListItem {
                 let columnData = this.#backingData[columnDefinition.backingDataName];
                 let columnType = (typeof columnData);
                 let columnInstance = null;
-                
+
                 if (columnType == "text") {
                     columnInstance = this.#CreateTextInputSpan(columnDefinition);
                 } else if (columnType == "boolean") {
