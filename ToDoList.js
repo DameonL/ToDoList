@@ -76,6 +76,7 @@ export class ToDoList {
     #CreateLabelDiv() {
         let labelDiv = document.createElement("div");
         labelDiv.className = "toDoItem";
+        labelDiv.style.cursor = "default";
         let columnTemplate = "1.25em ";
         let newItemButton = document.createElement("span");
         newItemButton.innerText = "+";
