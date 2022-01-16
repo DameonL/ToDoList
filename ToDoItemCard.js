@@ -3,7 +3,7 @@ export class ToDoItemCard {
     #cardHtml = `
     <div class="itemDeleteDialogCenter">
         <div>
-            <span boundField="name"></span>
+            <input type="checkbox" boundField="complete"><span boundField="name"></span>
         </div>
         <div boundfield="description"></div>
     </div>
