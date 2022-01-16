@@ -128,9 +128,7 @@ export class ToDoList {
     }
 
     #CreateMovementDiv(itemData) {
-        let dummyDiv = document.createElement("template");
-        dummyDiv.innerHTML = this.#itemMovementTargetHtml.trim();
-        let itemMovementDropPoint = dummyDiv.firstChild;
+        let itemMovementDropPoint = document.createRange().createContextualFragment(this.#itemMovementTargetHtml.trim());
         console.log(itemMovementDropPoint);
         itemMovementDropPoint.addEventListener("drop", (event) => {
             event.preventDefault();
