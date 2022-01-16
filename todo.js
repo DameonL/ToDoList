@@ -14,7 +14,7 @@ let columnDefinitions = [
         }
     },
     {
-        label: "Name",
+        label: `<span class="listItemName">Name</span>`,
         width: "25%",
         backingDataName: "name",
         drawHandler: (element, data) => {
