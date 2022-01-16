@@ -17,31 +17,6 @@ export class ToDoListItem {
         this.#buttonDefinitions = buttonDefinitions;
     }
 
-    #UpdateAppearance() {
-        for (let i = 0; i < this.#elements.length; i++) {
-            if (this.#columnDefinitions[i].drawHandler) {
-                this.#columnDefinitions[i].drawHandler(this.#elements[i], this.#backingData);
-            }
-        }
-    }
-
-    #UpdateBackingData() {
-        for (let i = 0; i < this.#columnDefinitions.length; i++) {
-            let columnDefinition = this.#columnDefinitions[i];
-            let element = this.#elements[i];
-            let columnData = this.#backingData[columnDefinition.backingDataName];
-            let columnType = (typeof columnData);
-
-            if (columnType == "string") {
-                this.#backingData[columnDefinition.backingDataName] = element.innerHTML;
-            } else if (columnType == "boolean") {
-                this.#backingData[columnDefinition.backingDataName] = element.firstChild.checked;
-            }
-        }
-
-        this.#UpdateAppearance();
-    }
-
     get Renderer() {
         if (this.#renderRoot == null) {
             let rootNode = this.#CreateRootNode();
@@ -92,6 +67,23 @@ export class ToDoListItem {
         return this.#renderRoot;
     }
 
+    #CreateCheckBoxSpan(columnDefinition) {
+        let newCheckBox = document.createElement("input");
+        newCheckBox.id = columnDefinition.backingDataName + this.Index;
+        newCheckBox.type = "checkbox";
+        newCheckBox.checked = this.#backingData[columnDefinition.backingDataName];
+        newCheckBox.style.cursor = "default"
+        if (columnDefinition.updateHandler) {
+            newCheckBox.addEventListener("change", () => {
+                this.#UpdateBackingData();
+                columnDefinition.updateHandler(this.#backingData);
+            });
+        }
+        let newSpan = document.createElement("span");
+        newSpan.appendChild(newCheckBox);
+        return newSpan;
+    }
+
     #CreateTextInputSpan(columnDefinition) {
         let newSpan = document.createElement("span");
         newSpan.contentEditable = true;
@@ -113,23 +105,6 @@ export class ToDoListItem {
             });
         }
 
-        return newSpan;
-    }
-
-    #CreateCheckBoxSpan(columnDefinition) {
-        let newCheckBox = document.createElement("input");
-        newCheckBox.id = columnDefinition.backingDataName + this.Index;
-        newCheckBox.type = "checkbox";
-        newCheckBox.checked = this.#backingData[columnDefinition.backingDataName];
-        newCheckBox.style.cursor = "default"
-        if (columnDefinition.updateHandler)  { 
-            newCheckBox.addEventListener("change", () => {
-                this.#UpdateBackingData();
-                columnDefinition.updateHandler(this.#backingData);
-            });
-        }   
-        let newSpan = document.createElement("span");
-        newSpan.appendChild(newCheckBox);
         return newSpan;
     }
 
@@ -157,4 +132,30 @@ export class ToDoListItem {
         });
         return rootNode;
     }
+    
+    #UpdateAppearance() {
+        for (let i = 0; i < this.#elements.length; i++) {
+            if (this.#columnDefinitions[i].drawHandler) {
+                this.#columnDefinitions[i].drawHandler(this.#elements[i], this.#backingData);
+            }
+        }
+    }
+
+    #UpdateBackingData() {
+        for (let i = 0; i < this.#columnDefinitions.length; i++) {
+            let columnDefinition = this.#columnDefinitions[i];
+            let element = this.#elements[i];
+            let columnData = this.#backingData[columnDefinition.backingDataName];
+            let columnType = (typeof columnData);
+
+            if (columnType == "string") {
+                this.#backingData[columnDefinition.backingDataName] = element.innerHTML;
+            } else if (columnType == "boolean") {
+                this.#backingData[columnDefinition.backingDataName] = element.firstChild.checked;
+            }
+        }
+
+        this.#UpdateAppearance();
+    }
+
 }
