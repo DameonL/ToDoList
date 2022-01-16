@@ -37,7 +37,10 @@ let itemButtonDefinitions = [
     {
         label: "🖹",
         tooltip: "Edit this item",
-        clickedHandler: (element, data) => { let  }
+        clickedHandler: (element, data) => {
+             let itemCard = new ToDoItemCard(data);
+             itemCard.Render();
+        }
     },
     {
         label: "🗑",
