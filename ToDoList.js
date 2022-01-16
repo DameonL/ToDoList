@@ -36,7 +36,12 @@ export class ToDoList {
             label: "🗑",
             tooltip: "Delete this item",
             clickedHandler: (element, data) => { new ItemDeleteDialog(() => { this.DeleteItem(data); }); }
-        }
+        },
+        {
+            label: "🖹",
+            tooltip: "Edit this item",
+            clickedHandler: (element, data) => {  }
+        },
     ];
 
 
