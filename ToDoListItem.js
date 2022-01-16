@@ -116,6 +116,7 @@ export class ToDoListItem {
     #CreateTextInputSpan(columnDefinition, changedHandler) {
         let newSpan = document.createElement("span");
         newSpan.contentEditable = true;
+        newSpan.style.cursor = "text"
         if (!this.#backingData.multiLine) {
             newSpan.addEventListener("keypress", (event) => {
                 if (event.key == "Enter") {
@@ -135,6 +136,7 @@ export class ToDoListItem {
         newCheckBox.id = columnDefinition.backingDataName + this.Index;
         newCheckBox.type = "checkbox";
         newCheckBox.checked = this.#backingData[columnDefinition.backingDataName];
+        newCheckBox.style.cursor = "default"
         newCheckBox.addEventListener("change", itemChanged);
         let newSpan = document.createElement("span");
         newSpan.appendChild(newCheckBox);

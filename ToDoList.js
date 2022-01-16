@@ -121,7 +121,6 @@ export class ToDoList {
         let currentIndex = -1;
         let dragOverHandler = (event) => {
             event.preventDefault();
-            event.dataTransfer.dropEffect = "move";
             let rect = renderer.getBoundingClientRect();
             let deadzone = 5;
             let delta = event.clientY - (rect.top + (rect.height * 0.5));
@@ -171,7 +170,6 @@ export class ToDoList {
 
         itemMovementDropPoint.addEventListener("dragover", (event) => {
             event.preventDefault();
-            event.dataTransfer.dropEffect = "move";
         });
         return itemMovementDropPoint;
     }
