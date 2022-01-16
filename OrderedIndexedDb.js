@@ -118,17 +118,13 @@ export class OrderedIndexedDb {
             let index = this.GetItemIndex(data);
             store.put(data, index);
 
-            this.#itemChangedHandlers.forEach(x => {
-                x(data);
-            });
+            this.#itemChangedHandlers.forEach(x => { x(data); });
         }
     }
 
     #ExecuteListChangedHandlers() {
         let itemsCopy = [...this.#items];
-        this.#listChangedHandlers.forEach(x => {
-            x(itemsCopy);
-        });
+        this.#listChangedHandlers.forEach(x => { x(itemsCopy); });
     }
 
     #InitializeDatabase(event) {

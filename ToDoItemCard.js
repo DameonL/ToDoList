@@ -5,7 +5,7 @@ export class ToDoItemCard {
     #documentHider = `<div class="documentHider"></div>`;
     #cardHtml = `
     <div class="cardBackground">
-        <div class="cardBackgroundInner>
+        <div class="cardBackgroundInner">
             <div>
                 <input type="checkbox" boundField="complete"><span boundField="name" contenteditable="true"></span>
             </div>
