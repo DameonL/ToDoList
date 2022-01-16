@@ -7,16 +7,14 @@ export class ToDoItemCard {
     <div class="cardBackground">
         <div class="cardBackgroundInner">
             <div>
-                <div>
-                    <input type="checkbox" boundField="complete" id="taskComplete">
-                    <label for="taskComplete">Complete</label>
-                </div>
-                <div>
-                    <span>Name:</span>
-                    <span boundField="name"  class="inputField"contenteditable="true"></span>
-                </span>
+                <input type="checkbox" boundField="complete" id="taskComplete">
+                <label for="taskComplete">Complete</label>
             </div>
-            <div>Description:</description>
+            <div>
+                <span>Name:</span>
+                <span boundField="name"  class="inputField"contenteditable="true"></span>
+            </div>
+            <div>Description:</div>
             <div boundField="description" class="inputField" contenteditable="true"></div>
         </div>
     </div>
