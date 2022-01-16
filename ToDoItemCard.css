@@ -1,0 +1,19 @@
+.documentHider {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 50%;
+}
+
+.cardBackground {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    min-width: 50%;
+    width: 50%;
+    text-align: center;
+    background-color: white;
+    opacity: 100%;
+}

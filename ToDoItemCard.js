@@ -1,7 +1,8 @@
 export class ToDoItemCard {
     #backingData = null;
+    #documentHider = `<div class="documentHider"></div>`;
     #cardHtml = `
-    <div class="itemDeleteDialogCenter">
+    <div class="cardBackground">
         <div>
             <input type="checkbox" boundField="complete"><span boundField="name"></span>
         </div>
@@ -14,17 +15,14 @@ export class ToDoItemCard {
     }
 
     Render() {
-        let documentHider = document.createElement("div");
-        documentHider.className = "itemDeleteDialog";
-        
+        let documentHider = document.createRange().createContextualFragment(this.#documentHider.trim()).firstChild;
         let cardNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
-        cardNode.innerHTML = this.#cardHtml;
         
         document.body.appendChild(documentHider);
         document.body.appendChild(cardNode);
 
-        documentHider.addEventListener("click", (event) => {
-            documentHider.parentNode.removeChild(documentHider);
+        cardNode.addEventListener("click", (event) => {
+            cardNode.parentNode.removeChild(documentHider);
             cardNode.parentNode.removeChild(cardNode);
         });
 
