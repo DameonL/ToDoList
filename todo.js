@@ -75,5 +75,6 @@ function Start() {
     toDoList = new ToDoList(newItemHandler, insertHandler, itemIndexHandler, columnDefinitions, itemButtonDefinitions);
     database.AddListChangedHandler((newListData) => { toDoList.ItemData = newListData; });
     document.body.appendChild(toDoList.RootNode);
+    toDoList.Render();
 }
 
