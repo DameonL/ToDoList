@@ -103,6 +103,7 @@ export class ToDoListItem {
             let trashButton = document.createElement("span");
             trashButton.innerText = "🗑";
             trashButton.title = "Delete this item";
+            trashButton.style.cursor = "pointer";
             trashButton.addEventListener("click", this.#deleteHandler);
             buttonSpan.appendChild(trashButton);
             

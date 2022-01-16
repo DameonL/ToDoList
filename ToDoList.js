@@ -162,6 +162,7 @@ export class ToDoList {
         let itemMovementDropPoint = document.createElement("div");
         itemMovementDropPoint.className = "toDoItem";
         itemMovementDropPoint.style.border = "1px solid black";
+        itemMovementDropPoint.style.cursor = "grabbing";
         itemMovementDropPoint.addEventListener("drop", (event) => {
             event.preventDefault();
             let droppedIndex = event.dataTransfer.getData("text");
