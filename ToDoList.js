@@ -1,36 +1,30 @@
 import { ToDoListItem } from "./ToDoListItem.js";
-import { ToDoDatabase } from "./ToDoDatabase.js";
 
 export class ToDoList {
-    #database = null;
     #rootNode = null;
-    #ignoreListChanges = false;
     #itemData = [];
-    #createNewItem = null;
+    #CreateNewItem = null;
+    #InsertItem = null;
+    #itemIndexHandler = null;
     #columnDefinitions = [];
     #itemButtonDefinitions = [];
 
-
-    constructor(newItemHandler, columnDefinitions, itemButtonDefinitions) {
+    constructor(newItemHandler, insertHandler, itemIndexHandler, columnDefinitions, itemButtonDefinitions) {
         this.#columnDefinitions = columnDefinitions;
         this.#itemButtonDefinitions = itemButtonDefinitions;
 
         this.#rootNode = document.createElement("div");
         this.#rootNode.id = "toDoListRender";
-
-        this.#database = new ToDoDatabase("ToDoList", "items");
-        this.#database.AddListChangedHandler((event) => {
-            if (!this.#ignoreListChanges) this.RenderListItems();
-        });
-        this.#createNewItem = newItemHandler;
+        this.#CreateNewItem = newItemHandler;
+        this.#InsertItem = insertHandler;
+        this.#itemIndexHandler = itemIndexHandler;
     }
 
     get RootNode() { return this.#rootNode; }
 
-    CreateNewItem() {
-        let data = this.#createNewItem();
-        this.#database.AddItem(data);
-        this.#database.InsertItemBefore(data, this.#itemData[0]);
+    set ItemData(data) {
+         this.#itemData = data; 
+         this.Render();
     }
 
     CreateListItem(data) {
@@ -38,30 +32,19 @@ export class ToDoList {
             data,
             this.#columnDefinitions,
             this.#itemButtonDefinitions,
-            () => this.#database.GetItemIndex(data),
+            this.#itemIndexHandler
         );
-        newItem.AddChangeListener(() => this.#database.UpdateItem(data));
+        newItem.AddChangeListener();
         return newItem;
     }
 
-    DeleteItem(data) {
-        if (typeof data === "number") {
-            data = this.#itemData[data];
-        }
-
-        this.#database.DeleteItem(data);
-    }
-
-    RenderListItems() {
+    Render() {
         while (this.#rootNode.firstChild) {
             this.#rootNode.removeChild(this.#rootNode.firstChild);
         }
 
-        let itemData = this.#database.GetItems();
-        this.#itemData = itemData;
-
+        let itemData = this.#itemData;
         let itemMovementDropPoint = this.#CreateMovementDiv(itemData);
-
         let labelDiv = this.#CreateLabelDiv();
         this.#rootNode.appendChild(labelDiv);
 
@@ -77,12 +60,14 @@ export class ToDoList {
         let labelDiv = document.createElement("div");
         labelDiv.className = "toDoItem";
         labelDiv.style.cursor = "default";
+
         let columnTemplate = "1.25em ";
         let newItemButton = document.createElement("span");
         newItemButton.innerText = "+";
         newItemButton.title = "Create a new item";
         newItemButton.style.cursor = "pointer";
-        newItemButton.addEventListener("click", () => this.CreateNewItem());
+        newItemButton.addEventListener("click", () => this.#CreateNewItem());
+
         labelDiv.appendChild(newItemButton);
 
         this.#columnDefinitions.forEach(definition => {
@@ -91,9 +76,11 @@ export class ToDoList {
             label.innerText = definition.label;
             labelDiv.appendChild(label);
         });
+
         columnTemplate += "auto";
         labelDiv.appendChild(document.createElement("span"));
         labelDiv.style.gridTemplateColumns = columnTemplate;
+
         return labelDiv;
     }
 
@@ -150,7 +137,7 @@ export class ToDoList {
             event.preventDefault();
             let droppedIndex = event.dataTransfer.getData("text");
             let targetIndex = itemMovementDropPoint.getAttribute("targetIndex");
-            this.#database.InsertItemBefore(itemData[droppedIndex], itemData[targetIndex]);
+            this.#InsertItem(itemData[droppedIndex], itemData[targetIndex]);
         });
 
         itemMovementDropPoint.addEventListener("dragover", (event) => {

@@ -1,12 +1,17 @@
 import { ToDoList } from "./ToDoList.js";
+import { ToDoDatabase } from "./ToDoDatabase.js";
 import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
 
 let toDoList = null;
+let database = new ToDoDatabase("ToDoList", "items");
 let columnDefinitions = [
     {
         label: "",
         width: "1.25em",
         backingDataName: "complete",
+        updateHandler: (data) => {
+            database.UpdateItem(data);
+        }
     },
     {
         label: "Name",
@@ -16,12 +21,18 @@ let columnDefinitions = [
              element.style.textDecoration = (data.complete) ? "line-through" : "";
              element.contentEditable = (data.complete) ? false : true;
         },
+        updateHandler: (data) => {
+            database.UpdateItem(data);
+        }
     },
     {
         label: "Description",
         width: "50%",
         backingDataName: "description",
         multiLine: true,
+        updateHandler: (data) => {
+            database.UpdateItem(data);
+        }
     },
 ];
 
@@ -34,7 +45,7 @@ let itemButtonDefinitions = [
     {
         label: "🗑",
         tooltip: "Delete this item",
-        clickedHandler: (element, data) => { new ItemDeleteDialog(() => { toDoList.DeleteItem(data); }); }
+        clickedHandler: (element, data) => { new ItemDeleteDialog(() => { database.DeleteItem(data); }); }
     },
 ];
 
@@ -46,9 +57,23 @@ function Start() {
         return;
     }
 
-    let newItemHandler = () => { return { name: "New ToDo Item", description: "Insert description here", complete: false } };
+    let newItemHandler = () => 
+    {
+        let data = {
+            name: "New ToDo Item",
+            description: "Insert description here",
+            complete: false 
+        };
 
-    toDoList = new ToDoList(newItemHandler, columnDefinitions, itemButtonDefinitions);
+        database.AddItem(data);
+        database.InsertItemBefore(data, database.GetItemAt(0));
+    };
+
+    let itemIndexHandler = () => database.GetItemIndex(data);
+    let insertHandler = database.InsertItemBefore;
+
+    toDoList = new ToDoList(newItemHandler, insertHandler, itemIndexHandler, columnDefinitions, itemButtonDefinitions);
+    database.AddListChangedHandler((newListData) => { toDoList.ItemData = newListData; });
     document.body.appendChild(toDoList.RootNode);
 }
 

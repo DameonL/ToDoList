@@ -116,7 +116,7 @@ export class ToDoListItem {
         return this.#renderRoot;
     }
 
-    #CreateTextInputSpan(columnDefinition, changedHandler) {
+    #CreateTextInputSpan(columnDefinition) {
         let newSpan = document.createElement("span");
         newSpan.contentEditable = true;
         newSpan.style.cursor = "text"
@@ -130,17 +130,19 @@ export class ToDoListItem {
         }
         newSpan.id = columnDefinition.backingDataName + this.Index;
         newSpan.innerHTML = this.#backingData[columnDefinition.backingDataName];
-        newSpan.addEventListener("focusout", changedHandler);
+        if (columnDefinition.updateHandler) newSpan.addEventListener("focusout", columnDefinition.updateHandler);
+
         return newSpan;
     }
 
-    #CreateCheckBoxSpan(columnDefinition, itemChanged) {
+    #CreateCheckBoxSpan(columnDefinition) {
         let newCheckBox = document.createElement("input");
         newCheckBox.id = columnDefinition.backingDataName + this.Index;
         newCheckBox.type = "checkbox";
         newCheckBox.checked = this.#backingData[columnDefinition.backingDataName];
         newCheckBox.style.cursor = "default"
-        newCheckBox.addEventListener("change", itemChanged);
+        if (columnDefinition.updateHandler) newCheckBox.addEventListener("change", columnDefinition.updateHandler);
+        
         let newSpan = document.createElement("span");
         newSpan.appendChild(newCheckBox);
         return newSpan;
