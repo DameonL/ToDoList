@@ -12,11 +12,11 @@ export class ToDoItemCard {
         let documentHider = document.createElement("div");
         documentHider.className = "itemDeleteDialog";
         
-        let newNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
-        newNode.innerHTML = this.#cardHtml;
+        let cardNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
+        cardNode.innerHTML = this.#cardHtml;
         
-        documentHider.appendChild(newNode);
         document.body.appendChild(documentHider);
+        document.body.appendChild(cardNode);
 
         let propertyNames = Object.keys(this.#backingData);
         propertyNames.forEach(property => {
