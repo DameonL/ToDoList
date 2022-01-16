@@ -41,9 +41,6 @@ export class ToDoListItem {
                 this.#columnDefinitions[i].drawHandler(this.#elements[i], this.#backingData);
             }
     }
-//        this.#elements.nameSpan.style.textDecoration = (this.#backingData.complete) ? "line-through" : "";
-//        this.#elements.nameSpan.contentEditable = !this.#backingData.complete;
-//        this.#elements.descriptionSpan.contentEditable = !this.#backingData.complete;
     }
 
     #UpdateBackingData() {
@@ -65,8 +62,8 @@ export class ToDoListItem {
         if (this.#renderRoot == null) {
             let itemChanged = () => {
                 this.#UpdateBackingData();
-                this.#UpdateAppearance();
                 this.#ExecuteChangeHandlers();
+                this.#UpdateAppearance();
             }
 
             let rootNode = this.#CreateRootNode();

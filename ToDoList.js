@@ -18,7 +18,10 @@ export class ToDoList {
             label: "Name",
             width: "25%",
             backingDataName: "name",
-            drawHandler: (element, data) => { if (data.complete) element.style.textDecoration = "line-through"; },
+            drawHandler: (element, data) => {
+                 element.style.textDecoration = (data.complete) ? "line-through" : "";
+                 element.contentEditable = (data.complete) ? false : true;
+            },
         },
         {
             label: "Description",
@@ -92,7 +95,11 @@ export class ToDoList {
         let labelDiv = document.createElement("div");
         labelDiv.className = "toDoItem";
         let columnTemplate = "1.25em ";
-        labelDiv.appendChild(document.createElement("span"));
+        let newItemButton = document.createElement("span");
+        newItemButton.innerText = "+";
+        newItemButton.addEventListener("click", () => this.CreateNewItem());
+        labelDiv.appendChild(newItemButton);
+
         this.#columnDefinitions.forEach(definition => {
             columnTemplate += definition.width + " ";
             let label = document.createElement("span");
