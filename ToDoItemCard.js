@@ -54,8 +54,8 @@ export class ToDoItemCard {
                     boundElement.addEventListener("focusout", (event) => {
                         this.#UpdateBackingData();
                     });
-                    
-                    if (boundElement.getAttribute("multiLine") == true) {
+
+                    if (!boundElement.getAttribute("multiLine")) {
                         boundElement.addEventListener("keypress", (event) => {
                             if (event.key == "Enter") {
                                 event.preventDefault();
