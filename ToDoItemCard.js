@@ -10,13 +10,13 @@ export class ToDoItemCard {
                 <input type="checkbox" boundfield="complete" id="taskComplete">
                 <label for="taskComplete">Complete</label>
             </div>
-            <div style="display:  flex;flex-flow: row;">
+            <div style="display: flex; flex-flow: row; align-items: baseline;">
                 <span>Name:&nbsp;</span>
-                <span boundfield="name" class="inputField" contenteditable="true" style="flex: 1 1 auto;"></span>
+                <span boundfield="name" class="inputField" contenteditable="true"></span>
             </div>
-            <div style="display: flex; flex-flow: column; flex:  1 1 auto;">
+            <div style="display: flex; flex-flow: column; flex: 1 1 auto;">
                 <div>Description:</div>
-                <div boundfield="description" class="inputField" contenteditable="true" style="flex: 1 1 auto;"></div>
+                <div boundfield="description" class="inputField" contenteditable="true"></div>
             </div>
         </div>
     </div>
