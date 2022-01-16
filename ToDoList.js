@@ -24,6 +24,7 @@ export class ToDoList {
 
     set ItemData(data) {
          this.#itemData = data; 
+         console.log(data);
          this.Render();
     }
 
@@ -53,7 +54,6 @@ export class ToDoList {
             let renderer = this.#CreateChildItem(itemData, i, renderers, itemMovementDropPoint);
             this.#rootNode.appendChild(renderer);
         }
-
     }
 
     #CreateLabelDiv() {
