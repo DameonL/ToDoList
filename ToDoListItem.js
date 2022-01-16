@@ -7,15 +7,15 @@ export class ToDoListItem {
     #renderRoot = null;
     #elements = [];
     #columnDefinitions = null;
-    #deleteHandler = null;
+    #buttonDefinitions = null;
 
     get Index() { return this.#indexFunction(); }
 
-    constructor(backingData, columnDefinitions, indexFunction, deleteButtonHandler) {
+    constructor(backingData, columnDefinitions, buttonDefinitions, indexFunction) {
         this.#backingData = backingData;
         this.#columnDefinitions = columnDefinitions;
         this.#indexFunction = indexFunction;
-        this.#deleteHandler = deleteButtonHandler;
+        this.#buttonDefinitions = buttonDefinitions;
     }
 
     AddChangeListener(listener) {
@@ -40,7 +40,7 @@ export class ToDoListItem {
             if (this.#columnDefinitions[i].drawHandler) {
                 this.#columnDefinitions[i].drawHandler(this.#elements[i], this.#backingData);
             }
-    }
+        }
     }
 
     #UpdateBackingData() {
@@ -99,13 +99,15 @@ export class ToDoListItem {
             buttonSpan.style.fontSize = "18px";
             buttonSpan.style.marginLeft = "auto";
             buttonSpan.style.marginRight = 0;
-            
-            let trashButton = document.createElement("span");
-            trashButton.innerText = "🗑";
-            trashButton.title = "Delete this item";
-            trashButton.style.cursor = "pointer";
-            trashButton.addEventListener("click", this.#deleteHandler);
-            buttonSpan.appendChild(trashButton);
+
+            this.#buttonDefinitions.forEach(definition => {
+                let button = document.createElement("span");
+                button.innerText = definition.label;
+                button.title = definition.tooltip;
+                button.style.cursor = "pointer";
+                button.addEventListener("click", (event) => { definition.clickedHandler(button, this.#backingData); });
+                buttonSpan.appendChild(button);
+            });
             
             rootNode.appendChild(buttonSpan);
             rootNode.style.gridTemplateColumns = columnTemplate;

@@ -31,6 +31,14 @@ export class ToDoList {
         },
     ];
 
+    #itemButtonDefinitions = [
+        {
+            label: "🗑",
+            tooltip: "Delete this item",
+            clickedHandler: (element, data) => { new ItemDeleteDialog(() => { this.DeleteItem(data); }); }
+        }
+    ];
+
 
     constructor(newItemHandler) {
         this.#rootNode = document.createElement("div");
@@ -55,8 +63,8 @@ export class ToDoList {
         let newItem = new ToDoListItem(
             data,
             this.#columnDefinitions,
+            this.#itemButtonDefinitions,
             () => this.#database.GetItemIndex(data),
-            () => { new ItemDeleteDialog(() => { this.DeleteItem(data); }); }
         );
         newItem.AddChangeListener(() => this.#database.UpdateItem(data));
         return newItem;
