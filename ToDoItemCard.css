@@ -28,7 +28,10 @@
 }
 
 .inputField {
+    margin-top: 5px;
+    margin-bottom: 5px;
     padding: 5px 5px 5px 5px;
     flex: 1 1 auto;
     border: 1px solid grey;
+    border-radius: 5px;
 }
