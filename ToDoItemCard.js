@@ -12,12 +12,11 @@ export class ToDoItemCard {
             </div>
             <div style="display:  flex;flex-flow: row;">
                 <span>Name:&nbsp;</span>
-                <span boundfield="name" class="inputField" contenteditable="true" style="flex: 1 1 auto;">New ToDo Item2</span>
+                <span boundfield="name" class="inputField" contenteditable="true" style="flex: 1 1 auto;"></span>
             </div>
             <div style="display: flex; flex-flow: column; flex:  1 1 auto;">
                 <div>Description:</div>
-                <div boundfield="description" class="inputField" contenteditable="true" style="flex: 1 1 auto;">This is my description. Behold for it is an amazing description. All shall bow down in awe before my description.
-                </div>
+                <div boundfield="description" class="inputField" contenteditable="true" style="flex: 1 1 auto;"></div>
             </div>
         </div>
     </div>
