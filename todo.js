@@ -27,14 +27,14 @@ let columnDefinitions = [
 
 let itemButtonDefinitions = [
     {
-        label: "🗑",
-        tooltip: "Delete this item",
-        clickedHandler: (element, data) => { new ItemDeleteDialog(() => { toDoList.DeleteItem(data); }); }
-    },
-    {
         label: "🖹",
         tooltip: "Edit this item",
         clickedHandler: (element, data) => {  }
+    },
+    {
+        label: "🗑",
+        tooltip: "Delete this item",
+        clickedHandler: (element, data) => { new ItemDeleteDialog(() => { toDoList.DeleteItem(data); }); }
     },
 ];
 
