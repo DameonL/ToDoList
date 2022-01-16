@@ -1,6 +1,7 @@
 import { ArrangeableList } from "./ArrangeableList.js";
 import { OrderedIndexedDb } from "./OrderedIndexedDb.js";
 import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
+import { ToDoItemCard } from "./ToDoItemCard.js";
 
 let toDoList = null;
 let database = new OrderedIndexedDb("ToDoList", "items");
@@ -36,7 +37,7 @@ let itemButtonDefinitions = [
     {
         label: "🖹",
         tooltip: "Edit this item",
-        clickedHandler: (element, data) => {  }
+        clickedHandler: (element, data) => { let  }
     },
     {
         label: "🗑",
