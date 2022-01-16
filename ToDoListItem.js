@@ -85,10 +85,6 @@ export class ToDoListItem {
                     columnInstance = this.#CreateCheckBoxSpan(columnDefinition, itemChanged);
                 }
 
-                if (columnDefinition.drawHandler) {
-                    columnDefinition.drawHandler(columnInstance, this.#backingData);
-                }
-
                 this.#elements.push(columnInstance);
                 rootNode.appendChild(columnInstance);
             });
