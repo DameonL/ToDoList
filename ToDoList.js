@@ -8,9 +8,7 @@ export class ToDoList {
     #itemIndexHandler = null;
     #columnDefinitions = [];
     #itemButtonDefinitions = [];
-    #itemMovementTargetHtml = `
-    <div class="itemMovementTarget"></div>
-    `;
+    #itemMovementTargetHtml = `<div class="itemMovementTarget"></div>`;
 
     constructor(newItemHandler, insertHandler, itemIndexHandler, columnDefinitions, itemButtonDefinitions) {
         this.#columnDefinitions = columnDefinitions;
