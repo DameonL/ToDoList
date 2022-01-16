@@ -16,6 +16,7 @@ export class ToDoItemCard {
 
     constructor(backingData, closedHandler) {
         this.#backingData = backingData;
+        this.#closedHandler = closedHandler;
     }
 
     Render() {
