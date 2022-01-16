@@ -9,7 +9,7 @@ export class ToDoListItem {
     #columnDefinitions = null;
     #buttonDefinitions = null;
 
-    get Index() { return this.#indexFunction(); }
+    get Index() { return this.#indexFunction(this.#backingData); }
 
     constructor(backingData, columnDefinitions, buttonDefinitions, indexFunction) {
         this.#backingData = backingData;
@@ -130,7 +130,7 @@ export class ToDoListItem {
         }
         newSpan.id = columnDefinition.backingDataName + this.Index;
         newSpan.innerHTML = this.#backingData[columnDefinition.backingDataName];
-        if (columnDefinition.updateHandler) newSpan.addEventListener("focusout", columnDefinition.updateHandler);
+        if (columnDefinition.updateHandler) newSpan.addEventListener("focusout", () => columnDefinition.updateHandler(this.#backingData));
 
         return newSpan;
     }
@@ -141,7 +141,7 @@ export class ToDoListItem {
         newCheckBox.type = "checkbox";
         newCheckBox.checked = this.#backingData[columnDefinition.backingDataName];
         newCheckBox.style.cursor = "default"
-        if (columnDefinition.updateHandler) newCheckBox.addEventListener("change", columnDefinition.updateHandler);
+        if (columnDefinition.updateHandler) newCheckBox.addEventListener("change", () => columnDefinition.updateHandler(this.#backingData));
         
         let newSpan = document.createElement("span");
         newSpan.appendChild(newCheckBox);
