@@ -23,6 +23,11 @@ export class ToDoItemCard {
         document.body.appendChild(documentHider);
         document.body.appendChild(cardNode);
 
+        documentHider.addEventListener("click", (event) => {
+            documentHider.parentNode.removeChild(documentHider);
+            cardNode.parentNode.removeChild(cardNode);
+        });
+
         let propertyNames = Object.keys(this.#backingData);
         propertyNames.forEach(property => {
             let boundField = document.querySelector(`[boundField="${property}"]`);
