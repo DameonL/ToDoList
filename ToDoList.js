@@ -89,9 +89,13 @@ export class ToDoList {
         labelDiv.appendChild(newItemButton);
 
         this.#columnDefinitions.forEach(definition => {
+            let labelText = (definition.label == undefined) 
+                ? definition.backingDataName[0].toUpperCase() + backingDataName.substring(1) 
+                : definition.label;
+            
             columnTemplate += definition.width + " ";
             let label = document.createElement("span");
-            label.innerHTML = definition.label;
+            label.innerHTML = labelText;
             labelDiv.appendChild(label);
         });
 
