@@ -4,37 +4,31 @@ import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
 
 let toDoList = null;
 let database = new ToDoDatabase("ToDoList", "items");
+let textDrawHandler = (element, data) => {
+    element.style.textDecoration = (data.complete) ? "line-through" : "";
+    element.contentEditable = (data.complete) ? false : true;
+}
+let itemUpdatedHandler = (data) => { database.UpdateItem(data); }
+
 let columnDefinitions = [
     {
         label: "",
         width: "1.25em",
         backingDataName: "complete",
-        updateHandler: (data) => {
-            database.UpdateItem(data);
-        }
+        updateHandler: itemUpdatedHandler,
     },
     {
         width: "25%",
         backingDataName: "name",
-        drawHandler: (element, data) => {
-             element.style.textDecoration = (data.complete) ? "line-through" : "";
-             element.contentEditable = (data.complete) ? false : true;
-        },
-        updateHandler: (data) => {
-            database.UpdateItem(data);
-        }
+        drawHandler: textDrawHandler,
+        updateHandler: itemUpdatedHandler
     },
     {
         width: "50%",
         backingDataName: "description",
         multiLine: true,
-        drawHandler: (element, data) => {
-            element.style.textDecoration = (data.complete) ? "line-through" : "";
-            element.contentEditable = (data.complete) ? false : true;
-       },
-       updateHandler: (data) => {
-            database.UpdateItem(data);
-        }
+        drawHandler: textDrawHandler,
+        updateHandler: itemUpdatedHandler
     },
 ];
 
