@@ -68,6 +68,7 @@ export class ToDoListItem {
                 rootNode.appendChild(columnInstance);
             });
 
+            this.#UpdateAppearance();
             columnTemplate += " auto";
             
             let buttonSpan = document.createElement("span");
