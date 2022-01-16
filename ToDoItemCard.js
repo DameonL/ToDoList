@@ -14,8 +14,10 @@ export class ToDoItemCard {
                 <span>Name:</span>
                 <span boundField="name"  class="inputField"contenteditable="true"></span>
             </div>
-            <div>Description:</div>
-            <div boundField="description" class="inputField" contenteditable="true"></div>
+            <div>
+                <div>Description:</div>
+                <div boundField="description" class="inputField" contenteditable="true"></div>
+            </div>
         </div>
     </div>
     `;
