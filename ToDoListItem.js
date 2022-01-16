@@ -58,7 +58,7 @@ export class ToDoListItem {
                 let columnType = (typeof columnData);
                 let columnInstance = null;
 
-                if (columnType == "text") {
+                if (columnType == "string") {
                     columnInstance = this.#CreateTextInputSpan(columnDefinition);
                 } else if (columnType == "boolean") {
                     columnInstance = this.#CreateCheckBoxSpan(columnDefinition);
