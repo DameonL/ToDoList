@@ -38,7 +38,7 @@ let itemButtonDefinitions = [
         label: "🖹",
         tooltip: "Edit this item",
         clickedHandler: (element, data) => {
-             let itemCard = new ToDoItemCard(data);
+             let itemCard = new ToDoItemCard(data, toDoList.Render());
              itemCard.Render();
         }
     },

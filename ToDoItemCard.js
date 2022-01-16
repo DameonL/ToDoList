@@ -1,6 +1,7 @@
 export class ToDoItemCard {
     #bindingName = "boundField"
     #backingData = null;
+    #closedHandler = null;
     #documentHider = `<div class="documentHider"></div>`;
     #cardHtml = `
     <div class="cardBackground">
@@ -13,7 +14,7 @@ export class ToDoItemCard {
 
     #boundElements = [];
 
-    constructor(backingData) {
+    constructor(backingData, closedHandler) {
         this.#backingData = backingData;
     }
 
@@ -28,6 +29,7 @@ export class ToDoItemCard {
             this.#UpdateBackingData();
             documentHider.parentNode.removeChild(documentHider);
             cardNode.parentNode.removeChild(cardNode);
+            this.#closedHandler();
         });
 
         let propertyNames = Object.keys(this.#backingData);
