@@ -68,10 +68,9 @@ export class ToDoDatabase {
 
     DeleteItem(data) {
         let index = this.GetItemIndex(data);
-        let deletedItem = this.#items[index];
         this.#items.splice(index, 1);
 
-        for (let i = 0; i < this.#items.length; i++) {
+        for (let i = index; i < this.#items.length; i++) {
             this.UpdateItem(this.#items[i]);
         }
 
@@ -80,7 +79,7 @@ export class ToDoDatabase {
             let db = event.target.result;
             let transaction = db.transaction(this.#tableName, "readwrite");
             let store = transaction.objectStore(this.#tableName);
-            let deleteRequest = store.delete(this.#items.length);
+            store.delete(this.#items.length);
 
             transaction.oncomplete = () => {
                 this.#listChangedHandlers.forEach(x => {
@@ -100,17 +99,17 @@ export class ToDoDatabase {
         let insertIndex = this.GetItemIndex(priorItem);
         let oldIndex = this.GetItemIndex(itemToInsert);
 
-        if (insertIndex == oldIndex + 1) 
-        {
+        
+        if ((oldIndex > -1) && (insertIndex == oldIndex + 1)) {
             return; 
         }
-        else if (insertIndex == -1) {
-            this.#items.push(this.#items.splice(oldIndex, 1)[0]);
+
+        if (oldIndex > -1) this.#items.splice(oldIndex, 1);
+        
+        if (!priorItem) {
+            this.#items.push(itemToInsert);
         } else {
-            let removedItem = this.#items[oldIndex];
-            this.#items.splice(oldIndex, 1);
-            insertIndex = this.GetItemIndex(priorItem);
-            this.#items.splice(insertIndex, 0, removedItem);
+            this.#items.splice(this.GetItemIndex(priorItem), 0, itemToInsert);
         }
 
         for (let i = 0; i < this.#items.length; i++) {
