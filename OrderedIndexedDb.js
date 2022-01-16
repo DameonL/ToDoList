@@ -7,6 +7,8 @@ export class OrderedIndexedDb {
 
     get count() { return this.#items.length; }
 
+    GetItems() { return [...this.#items]; }
+
     constructor(databaseName, tableName) {
         this.#databaseName = databaseName;
         this.#tableName = tableName;
@@ -81,16 +83,6 @@ export class OrderedIndexedDb {
         }
     }
 
-    #ExecuteListChangedHandlers() {
-        this.#listChangedHandlers.forEach(x => {
-            x([...this.#items]);
-        });
-    }
-
-    GetItems() {
-        return [...this.#items];
-    }
-
     InsertItemBefore(itemToInsert, priorItem) {
         if (itemToInsert == priorItem) return;
         
@@ -130,6 +122,12 @@ export class OrderedIndexedDb {
                 x(data);
             });
         }
+    }
+
+    #ExecuteListChangedHandlers() {
+        this.#listChangedHandlers.forEach(x => {
+            x([...this.#items]);
+        });
     }
 
     #InitializeDatabase(event) {
