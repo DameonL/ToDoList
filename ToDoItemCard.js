@@ -65,8 +65,6 @@ export class ToDoItemCard {
                 this.#backingData[fieldName] = boundElement.checked;
             }
         }
-
-        this.#UpdateAppearance();
     }
 
 }
