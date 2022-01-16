@@ -9,11 +9,18 @@
 
 .cardBackground {
     position: absolute;
+    display: grid;
+    grid-template-rows: 10% 90%;
     top: 25%;
     left: 25%;
     min-width: 50%;
+    min-height: 50%;
     width: 50%;
     text-align: center;
     background-color: white;
     opacity: 100%;
+}
+
+.itemCardDescription {
+
 }

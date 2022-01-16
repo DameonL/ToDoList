@@ -6,7 +6,7 @@ export class ToDoItemCard {
         <div>
             <input type="checkbox" boundField="complete"><span boundField="name"></span>
         </div>
-        <div boundfield="description"></div>
+        <div class="itemCardDescription" boundfield="description"></div>
     </div>
     `;
 
@@ -21,8 +21,8 @@ export class ToDoItemCard {
         document.body.appendChild(documentHider);
         document.body.appendChild(cardNode);
 
-        cardNode.addEventListener("click", (event) => {
-            cardNode.parentNode.removeChild(documentHider);
+        documentHider.addEventListener("click", (event) => {
+            documentHider.parentNode.removeChild(documentHider);
             cardNode.parentNode.removeChild(cardNode);
         });
 
