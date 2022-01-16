@@ -19,6 +19,10 @@
     position: inherit;
 }
 
+.listItemName {
+    color: red;
+}
+
 .itemDeleteDialog {
     position: absolute;
     top: 0;

@@ -91,7 +91,7 @@ export class ToDoList {
         this.#columnDefinitions.forEach(definition => {
             columnTemplate += definition.width + " ";
             let label = document.createElement("span");
-            label.innerText = definition.label;
+            label.innerHTML = definition.label;
             labelDiv.appendChild(label);
         });
 
