@@ -24,7 +24,7 @@
     max-width: 95%;
     max-height: 95%;
     display: grid;
-    grid-template-rows: 10% 90%;
+    grid-template-rows: 10% 10% 10% 70%;
 }
 
 .inputField {
