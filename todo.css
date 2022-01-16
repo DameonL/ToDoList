@@ -1,29 +1,4 @@
-#toDoListRender {
-    display: grid;
-    margin-bottom: 15px;
-}
-
-.buttonList {
-    display: grid;
-    grid-template-columns: max-content max-content;
-}
-
-.listButton {
-    width: 50px;
-    height: 50px;
-    font-size: 40px;
-    text-align: center;
-    border: 1px solid black;
-    cursor: default;
-    user-select: none;
-    position: inherit;
-}
-
-.listItemName {
-    color: red;
-}
-
-.itemDeleteDialog {
+.documentHider {
     position: absolute;
     top: 0;
     width: 100%;
@@ -32,37 +7,26 @@
     opacity: 50%;
 }
 
-.itemDeleteDialogCenter {
-    position: absolute;
-    top: 25%;
-    left: 25%;
-    width: 50%;
-    text-align: center;
-    background-color: white;
+.cardBackground {
+    display: flex;
+    justify-content: center;
     opacity: 100%;
 }
 
-.itemMovementTarget {
-    border: 1px solid black;
-    cursor: grabbing;
-    padding-top: 5px;
-    padding-bottom: 5px;
+.cardBackgroundInner {
+    padding: 10px 10px 10px 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    position: absolute;
+    background-color: white;
+    min-width: 50%;
+    min-height: 50%;
+    max-width: 95%;
+    max-height: 95%;
+    display: flex;
+    flex-flow: column;
 }
 
-.toDoItem {
-    display: grid;
-    cursor: grab;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    grid-template-columns: 1.25em 1.25em 25% 65%;
-    column-gap: 15px;
-}
-
-.listItemHandle {
-    background-color: darkslategrey;
-    border: 1px solid black;
-}
-
-.toDoItemName:focus {
-    outline: 1px grey solid;
+.inputField {
+    border: 1px solid grey;
 }

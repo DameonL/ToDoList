@@ -7,16 +7,17 @@ export class ToDoItemCard {
     <div class="cardBackground">
         <div class="cardBackgroundInner">
             <div>
-                <input type="checkbox" boundField="complete" id="taskComplete">
+                <input type="checkbox" boundfield="complete" id="taskComplete">
                 <label for="taskComplete">Complete</label>
             </div>
-            <div>
-                <span>Name:</span>
-                <span boundField="name"  class="inputField"contenteditable="true"></span>
+            <div style="display:  flex;flex-flow: row;">
+                <span>Name:&nbsp;</span>
+                <span boundfield="name" class="inputField" contenteditable="true" style="flex: 1 1 auto;">New ToDo Item2</span>
             </div>
-            <div>
+            <div style="display: flex; flex-flow: column; flex:  1 1 auto;">
                 <div>Description:</div>
-                <div boundField="description" class="inputField" contenteditable="true"></div>
+                <div boundfield="description" class="inputField" contenteditable="true" style="flex: 1 1 auto;">This is my description. Behold for it is an amazing description. All shall bow down in awe before my description.
+                </div>
             </div>
         </div>
     </div>
