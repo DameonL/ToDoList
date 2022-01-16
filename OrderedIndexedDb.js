@@ -125,8 +125,9 @@ export class OrderedIndexedDb {
     }
 
     #ExecuteListChangedHandlers() {
+        let itemsCopy = [...this.#items];
         this.#listChangedHandlers.forEach(x => {
-            x([...this.#items]);
+            x(itemsCopy);
         });
     }
 
