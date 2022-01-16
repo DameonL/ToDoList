@@ -37,6 +37,7 @@ export class ItemDeleteDialog {
         cancelButton.addEventListener("click", (event) => {
             this.#removeDialogBox();
         });
+        cancelButton.focus();
     }
 
     #removeDialogBox() {
