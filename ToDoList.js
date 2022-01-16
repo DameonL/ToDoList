@@ -130,7 +130,7 @@ export class ToDoList {
     }
 
     #CreateMovementDiv(itemData) {
-        let dummyDiv = document.createElement("div");
+        let dummyDiv = document.createElement("template");
         dummyDiv.innerHTML = this.#itemMovementTargetHtml;
         let itemMovementDropPoint = dummyDiv.firstChild;
         dummyDiv.removeChild(itemMovementDropPoint);
