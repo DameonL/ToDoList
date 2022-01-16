@@ -23,6 +23,7 @@ export class ToDoList {
     get RootNode() { return this.#rootNode; }
 
     set ItemData(data) {
+        console.log(data);
          this.#itemData = data; 
          this.Render();
     }
