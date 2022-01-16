@@ -8,6 +8,9 @@ export class ToDoList {
     #itemIndexHandler = null;
     #columnDefinitions = [];
     #itemButtonDefinitions = [];
+    #itemMovementTargetHtml = `
+    <div class="itemMovementTarget"></div>
+    `;
 
     constructor(newItemHandler, insertHandler, itemIndexHandler, columnDefinitions, itemButtonDefinitions) {
         this.#columnDefinitions = columnDefinitions;
@@ -127,10 +130,11 @@ export class ToDoList {
     }
 
     #CreateMovementDiv(itemData) {
-        let itemMovementDropPoint = document.createElement("div");
-        itemMovementDropPoint.className = "toDoItem";
-        itemMovementDropPoint.style.border = "1px solid black";
-        itemMovementDropPoint.style.cursor = "grabbing";
+        let dummyDiv = document.createElement("div");
+        dummyDiv.innerHTML = this.#itemMovementTargetHtml;
+        let itemMovementDropPoint = dummyDiv.firstChild;
+        dummyDiv.removeChild(itemMovementDropPoint);
+        console.log(itemMovementDropPoint);
         itemMovementDropPoint.addEventListener("drop", (event) => {
             event.preventDefault();
             let droppedIndex = event.dataTransfer.getData("text");

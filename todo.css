@@ -38,6 +38,13 @@
     opacity: 100%;
 }
 
+.itemMovementTarget {
+    border: 1px solid black;
+    cursor: grabbing;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
 .toDoItem {
     display: grid;
     cursor: grab;
