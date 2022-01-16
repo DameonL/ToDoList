@@ -21,9 +21,7 @@ export class ToDoDatabase {
             store.getAll().onsuccess = (event) => {
                 this.#items = event.target.result;
                 db.close();
-                this.#listChangedHandlers.forEach(x => {
-                    x({ item: [...this.#items] });
-                });
+                this.#ExecuteListChangedHandlers();
             };
         }
     }
