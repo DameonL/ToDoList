@@ -9,6 +9,25 @@ export class ToDoList {
     #columnDefinitions = [];
     #itemButtonDefinitions = [];
     #itemMovementTargetHtml = `<div class="itemMovementTarget"></div>`;
+    #itemMovementAppearAnimation = [[
+        { height: "0em" },
+        { height: "1.25em" }
+    ],
+    {
+        fill: 'forwards',
+        duration: 100,
+        iterations: 1
+    }];
+
+
+    set ItemMovementTargetHtml(newHTML) {
+        this.#itemMovementTargetHtml = newHTML;
+        this.Render();
+    }
+
+    get ItemMovementTargetHtml() {
+        return this.#itemMovementTargetHtml;
+    }
 
     constructor(newItemHandler, insertHandler, itemIndexHandler, columnDefinitions, itemButtonDefinitions) {
         this.#columnDefinitions = columnDefinitions;
@@ -24,8 +43,8 @@ export class ToDoList {
     get RootNode() { return this.#rootNode; }
 
     set ItemData(data) {
-         this.#itemData = data; 
-         this.Render();
+        this.#itemData = data;
+        this.Render();
     }
 
     CreateListItem(data) {
@@ -101,15 +120,7 @@ export class ToDoList {
             if (currentIndex != targetIndex) {
                 itemMovementDropPoint.setAttribute("targetIndex", targetIndex);
                 this.#rootNode.insertBefore(itemMovementDropPoint, renderers[targetIndex]);
-                itemMovementDropPoint.animate(
-                    [
-                        { height: "0em" },
-                        { height: "1.25em" }
-                    ], {
-                    fill: 'forwards',
-                    duration: 100,
-                    iterations: 1
-                });
+                itemMovementDropPoint.animate(this.#itemMovementAppearAnimation[0], this.#itemMovementAppearAnimation[1]);
                 currentIndex = targetIndex;
             }
 
@@ -129,7 +140,6 @@ export class ToDoList {
 
     #CreateMovementDiv(itemData) {
         let itemMovementDropPoint = document.createRange().createContextualFragment(this.#itemMovementTargetHtml.trim()).firstChild;
-        console.log(itemMovementDropPoint);
         itemMovementDropPoint.addEventListener("drop", (event) => {
             event.preventDefault();
             let droppedIndex = event.dataTransfer.getData("text");
