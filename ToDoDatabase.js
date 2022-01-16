@@ -29,7 +29,7 @@ export class ToDoDatabase {
     }
 
     GetItemAt(index) {
-        return items[index];
+        return this.#items[index];
     }
 
     GetItemIndex(data) {
@@ -105,7 +105,7 @@ export class ToDoDatabase {
         }
 
         if (oldIndex > -1) this.#items.splice(oldIndex, 1);
-        
+
         if (!priorItem) {
             this.#items.push(itemToInsert);
         } else {
