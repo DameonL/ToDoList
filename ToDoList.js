@@ -1,6 +1,5 @@
 import { ToDoListItem } from "./ToDoListItem.js";
 import { ToDoDatabase } from "./ToDoDatabase.js";
-import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
 
 export class ToDoList {
     #database = null;
@@ -8,44 +7,14 @@ export class ToDoList {
     #ignoreListChanges = false;
     #itemData = [];
     #createNewItem = null;
-    #columnDefinitions = [
-        {
-            label: "",
-            width: "1.25em",
-            backingDataName: "complete",
-        },
-        {
-            label: "Name",
-            width: "25%",
-            backingDataName: "name",
-            drawHandler: (element, data) => {
-                 element.style.textDecoration = (data.complete) ? "line-through" : "";
-                 element.contentEditable = (data.complete) ? false : true;
-            },
-        },
-        {
-            label: "Description",
-            width: "50%",
-            backingDataName: "description",
-            multiLine: true,
-        },
-    ];
-
-    #itemButtonDefinitions = [
-        {
-            label: "🗑",
-            tooltip: "Delete this item",
-            clickedHandler: (element, data) => { new ItemDeleteDialog(() => { this.DeleteItem(data); }); }
-        },
-        {
-            label: "🖹",
-            tooltip: "Edit this item",
-            clickedHandler: (element, data) => {  }
-        },
-    ];
+    #columnDefinitions = [];
+    #itemButtonDefinitions = [];
 
 
-    constructor(newItemHandler) {
+    constructor(newItemHandler, columnDefinitions, itemButtonDefinitions) {
+        this.#columnDefinitions = columnDefinitions;
+        this.#itemButtonDefinitions = itemButtonDefinitions;
+
         this.#rootNode = document.createElement("div");
         this.#rootNode.id = "toDoListRender";
 
