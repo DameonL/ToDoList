@@ -88,7 +88,7 @@ export class ListItem {
         let newSpan = document.createElement("span");
         newSpan.contentEditable = true;
         newSpan.style.cursor = "text"
-        if (!this.#backingData.multiLine) {
+        if (!columnDefinition.multiLine) {
             newSpan.addEventListener("keypress", (event) => {
                 if (event.key == "Enter") {
                     event.preventDefault();

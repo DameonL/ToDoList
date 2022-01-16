@@ -16,7 +16,7 @@ export class ToDoItemCard {
             </div>
             <div style="display: flex; flex-flow: column; flex: 1 1 auto;">
                 <div>Description:</div>
-                <div boundfield="description" class="inputField" contenteditable="true"></div>
+                <div boundfield="description" class="inputField" contenteditable="true" multiLine="true"></div>
             </div>
         </div>
     </div>
@@ -51,10 +51,18 @@ export class ToDoItemCard {
 
                 if ((boundElement.nodeName == "DIV") || (boundElement.nodeName == "SPAN")) {
                     boundElement.innerHTML = this.#backingData[property];
-                    cardNode.addEventListener("focusout", (event) => {
+                    boundElement.addEventListener("focusout", (event) => {
                         this.#UpdateBackingData();
                     });
-        
+                    
+                    if (boundElement.getAttribute("multiLine") == true) {
+                        boundElement.addEventListener("keypress", (event) => {
+                            if (event.key == "Enter") {
+                                event.preventDefault();
+                                event.target.blur();
+                            }
+                        });
+                    }
                 }
                 else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "checkbox")) {
                     boundElement.checked = this.#backingData[property];
