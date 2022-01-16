@@ -1,7 +1,12 @@
 export class ToDoItemCard {
     #backingData = null;
     #cardHtml = `
-    <div class="itemDeleteDialogCenter"><div boundField="name"></div></div>
+    <div class="itemDeleteDialogCenter">
+        <div>
+            <span boundField="name"></span>
+        </div>
+        <div boundfield="description"></div>
+    </div>
     `;
 
     constructor(backingData) {
@@ -22,7 +27,12 @@ export class ToDoItemCard {
         propertyNames.forEach(property => {
             let boundField = document.querySelector(`[boundField="${property}"]`);
             if (boundField) {
-                boundField.innerHTML = this.#backingData[property];
+                if ((boundField.nodeName == "DIV") || (boundField.nodeName == "SPAN")) {
+                    boundField.innerHTML = this.#backingData[property];
+                }
+                else if ((boundField.nodeName == "INPUT") && (boundField.getAttribute("type") == "checkbox")) {
+                    boundField.checked = this.#backingData[property];
+                }
             }
         });
     }
