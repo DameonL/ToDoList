@@ -40,6 +40,7 @@
 
 .toDoItem {
     display: grid;
+    cursor: grab;
     padding-top: 5px;
     padding-bottom: 5px;
     grid-template-columns: 1.25em 1.25em 25% 65%;

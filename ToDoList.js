@@ -97,6 +97,7 @@ export class ToDoList {
         let columnTemplate = "1.25em ";
         let newItemButton = document.createElement("span");
         newItemButton.innerText = "+";
+        newItemButton.style.cursor = "pointer";
         newItemButton.addEventListener("click", () => this.CreateNewItem());
         labelDiv.appendChild(newItemButton);
 
