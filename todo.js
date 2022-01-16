@@ -70,7 +70,7 @@ function Start() {
     };
 
     let itemIndexHandler = (data) => database.GetItemIndex(data);
-    let insertHandler = database.InsertItemBefore;
+    let insertHandler = (itemToInsert, priorItem) => database.InsertItemBefore(itemToInsert, priorItem);
 
     toDoList = new ToDoList(newItemHandler, insertHandler, itemIndexHandler, columnDefinitions, itemButtonDefinitions);
     database.AddListChangedHandler((newListData) => { toDoList.ItemData = newListData; });
