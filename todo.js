@@ -1,5 +1,5 @@
-import { ToDoList } from "./ToDoList.js";
-import { ToDoDatabase } from "./ToDoDatabase.js";
+import { ArrangeableList } from "./ArrangeableList.js";
+import { OrderedIndexedDb } from "./OrderedIndexedDb.js";
 import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
 
 let toDoList = null;
@@ -68,7 +68,7 @@ function Start() {
     let itemIndexHandler = (data) => database.GetItemIndex(data);
     let insertHandler = (itemToInsert, priorItem) => database.InsertItemBefore(itemToInsert, priorItem);
 
-    toDoList = new ToDoList(newItemHandler, insertHandler, itemIndexHandler, columnDefinitions, itemButtonDefinitions);
+    toDoList = new ArrangeableList(newItemHandler, insertHandler, itemIndexHandler, columnDefinitions, itemButtonDefinitions);
     database.AddListChangedHandler((newListData) => { toDoList.ItemData = newListData; });
 
     document.body.appendChild(toDoList.RootNode);
