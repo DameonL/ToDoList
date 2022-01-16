@@ -3,7 +3,7 @@ import { OrderedIndexedDb } from "./OrderedIndexedDb.js";
 import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
 
 let toDoList = null;
-let database = new ToDoDatabase("ToDoList", "items");
+let database = new OrderedIndexedDb("ToDoList", "items");
 let textDrawHandler = (element, data) => {
     element.style.textDecoration = (data.complete) ? "line-through" : "";
     element.contentEditable = (data.complete) ? false : true;
