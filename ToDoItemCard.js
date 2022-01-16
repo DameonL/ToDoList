@@ -5,10 +5,12 @@ export class ToDoItemCard {
     #documentHider = `<div class="documentHider"></div>`;
     #cardHtml = `
     <div class="cardBackground">
-        <div>
-            <input type="checkbox" boundField="complete"><span boundField="name" contenteditable="true"></span>
+        <div class="cardBackgroundInner>
+            <div>
+                <input type="checkbox" boundField="complete"><span boundField="name" contenteditable="true"></span>
+            </div>
+            <div class="itemCardDescription" boundField="description" contenteditable="true"></div>
         </div>
-        <div class="itemCardDescription" boundField="description" contenteditable="true"></div>
     </div>
     `;
 

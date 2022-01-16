@@ -11,13 +11,21 @@
     position: absolute;
     display: grid;
     grid-template-rows: 10% 90%;
-    top: 25%;
-    left: 25%;
+    margin: 5px 5px 5px 5px;
+    border: 2px solid black;
+    border-radius: 5px;
     min-width: 50%;
     min-height: 50%;
-    width: 50%;
+    max-width: 95%;
+    max-height: 95%;
     background-color: white;
     opacity: 100%;
+}
+
+.cardBackgroundInner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .itemCardDescription {
