@@ -5,11 +5,11 @@ body {
 #ArrangeableListRender {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
 }
 
 .listItemButtons {
     flex-shrink: 0;
+    margin-left: auto;
 }
 
 .listButton {
@@ -21,10 +21,6 @@ body {
     cursor: default;
     user-select: none;
     position: inherit;
-}
-
-.listItemName {
-    color: red;
 }
 
 .itemDeleteDialog {
@@ -57,11 +53,8 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-content: flex-start;
+    column-gap: 5px;
     cursor: grab;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    column-gap: 15px;
 }
 
 .listItemHandle {
@@ -69,14 +62,25 @@ body {
     border: 1px solid black;
 }
 
-.toDoItemName:focus {
+.toDoItem:focused {
     outline: 1px grey solid;
 }
 
 .listTextInput {
     white-space: nowrap;
     overflow: hidden;
-    flex-grow: 0;
-    flex-shrink: 0;
-    max-width: 50%;
+}
+
+.nameInputField {
+    flex: 1;
+}
+
+.descriptionInputField {
+    flex: 2;
+}
+
+@media (max-width: 600px) {
+    .descriptionInputField {
+        display: none;
+    }
 }

@@ -94,15 +94,14 @@ export class ArrangeableList {
                 ? definition.backingDataName[0].toUpperCase() + definition.backingDataName.substring(1) 
                 : definition.label;
             
-            columnTemplate += definition.width + " ";
             let label = document.createElement("span");
             label.innerHTML = labelText;
+            if (columnDefinition.className) labelDiv.className += " " + columnDefinition.className;
+
             labelDiv.appendChild(label);
         });
 
-        columnTemplate += "auto";
         labelDiv.appendChild(document.createElement("span"));
-//        labelDiv.style.gridTemplateColumns = columnTemplate;
 
         return labelDiv;
     }
