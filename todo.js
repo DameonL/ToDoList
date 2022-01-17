@@ -25,7 +25,7 @@ let columnDefinitions = [
     },
     {
         backingDataName: "description",
-        className: "nameInputField",
+        className: "descriptionInputField",
         multiLine: true,
         drawHandler: textDrawHandler,
         updateHandler: itemUpdatedHandler
