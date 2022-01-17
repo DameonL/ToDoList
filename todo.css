@@ -8,7 +8,7 @@ body {
     justify-content: flex-start;
 }
 
-.buttonList {
+.listItemButtons {
     flex-shrink: 0;
 }
 

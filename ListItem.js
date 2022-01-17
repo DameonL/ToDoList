@@ -46,8 +46,6 @@ export class ListItem {
             let buttonSpan = document.createElement("span");
             buttonSpan.className = "listItemButtons";
             buttonSpan.style.fontSize = "18px";
-            buttonSpan.style.marginLeft = "auto";
-            buttonSpan.style.marginRight = 0;
 
             this.#buttonDefinitions.forEach(definition => {
                 let button = document.createElement("span");
