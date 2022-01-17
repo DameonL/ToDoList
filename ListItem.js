@@ -26,9 +26,7 @@ export class ListItem {
             handleSpan.className = "listItemHandle";
             rootNode.appendChild(handleSpan);
 
-            let columnTemplate = "1.25em ";
             this.#columnDefinitions.forEach(columnDefinition => {
-                columnTemplate += columnDefinition.width + " ";
                 let columnData = this.#backingData[columnDefinition.backingDataName];
                 let columnType = (typeof columnData);
                 let columnInstance = null;
@@ -44,9 +42,9 @@ export class ListItem {
             });
 
             this.#UpdateAppearance();
-            columnTemplate += " auto";
 
             let buttonSpan = document.createElement("span");
+            buttonSpan.className = "listItemButtons";
             buttonSpan.style.fontSize = "18px";
             buttonSpan.style.marginLeft = "auto";
             buttonSpan.style.marginRight = 0;
@@ -61,7 +59,6 @@ export class ListItem {
             });
 
             rootNode.appendChild(buttonSpan);
-            rootNode.style.gridTemplateColumns = columnTemplate;
         }
 
         return this.#renderRoot;
@@ -72,7 +69,8 @@ export class ListItem {
         newCheckBox.id = columnDefinition.backingDataName + this.Index;
         newCheckBox.type = "checkbox";
         newCheckBox.checked = this.#backingData[columnDefinition.backingDataName];
-        newCheckBox.style.cursor = "default"
+        newCheckBox.style.cursor = "default";
+        newCheckBox.className = "listCheckbox";
         if (columnDefinition.updateHandler) {
             newCheckBox.addEventListener("change", () => {
                 this.#UpdateBackingData();
@@ -87,7 +85,8 @@ export class ListItem {
     #CreateTextInputSpan(columnDefinition) {
         let newSpan = document.createElement("span");
         newSpan.contentEditable = true;
-        newSpan.style.cursor = "text"
+        newSpan.style.cursor = "text";
+        newSpan.className = "listTextInput";
         if (!columnDefinition.multiLine) {
             newSpan.addEventListener("keypress", (event) => {
                 if (event.key == "Enter") {

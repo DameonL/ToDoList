@@ -102,7 +102,7 @@ export class ArrangeableList {
 
         columnTemplate += "auto";
         labelDiv.appendChild(document.createElement("span"));
-        labelDiv.style.gridTemplateColumns = columnTemplate;
+//        labelDiv.style.gridTemplateColumns = columnTemplate;
 
         return labelDiv;
     }

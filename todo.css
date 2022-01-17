@@ -2,9 +2,9 @@ body {
     font-family: "Times New Roman", Times, serif;
 }
 
-#toDoListRender {
-    display: grid;
-    margin-bottom: 15px;
+#ArrangeableListRender {
+    display: flex;
+    flex-direction: column;
 }
 
 .buttonList {
@@ -54,11 +54,10 @@ body {
 }
 
 .toDoItem {
-    display: grid;
+    display: flex;
     cursor: grab;
     padding-top: 5px;
     padding-bottom: 5px;
-    grid-template-columns: 1.25em 1.25em 25% 65%;
     column-gap: 15px;
 }
 
