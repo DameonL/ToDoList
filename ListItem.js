@@ -37,6 +37,8 @@ export class ListItem {
                     columnInstance = this.#CreateCheckBoxSpan(columnDefinition);
                 }
 
+                if (columnDefinition.className) columnInstance.className += " " + columnDefinition.className;
+
                 this.#elements.push(columnInstance);
                 rootNode.appendChild(columnInstance);
             });
@@ -69,7 +71,6 @@ export class ListItem {
         newCheckBox.checked = this.#backingData[columnDefinition.backingDataName];
         newCheckBox.style.cursor = "default";
         newCheckBox.className = "listCheckbox";
-        if (columnDefinition.className) newCheckBox.className += " " + columnDefinition.className;
 
         if (columnDefinition.updateHandler) {
             newCheckBox.addEventListener("change", () => {
@@ -78,6 +79,7 @@ export class ListItem {
             });
         }
         let newSpan = document.createElement("span");
+
         newSpan.appendChild(newCheckBox);
         return newSpan;
     }
@@ -87,7 +89,6 @@ export class ListItem {
         newSpan.contentEditable = true;
         newSpan.style.cursor = "text";
         newSpan.className = "listTextInput";
-        if (columnDefinition.className) newSpan.className += " " + columnDefinition.className;
 
         if (!columnDefinition.multiLine) {
             newSpan.addEventListener("keypress", (event) => {
