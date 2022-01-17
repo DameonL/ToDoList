@@ -35,7 +35,7 @@ let columnDefinitions = [
 
 let itemButtonDefinitions = [
     {
-        label: "🖹",
+        label: "📝",
         tooltip: "Edit this item",
         clickedHandler: (element, data) => {
              let itemCard = new ToDoItemCard(data, () => toDoList.Render());
@@ -43,7 +43,7 @@ let itemButtonDefinitions = [
         }
     },
     {
-        label: "🗑",
+        label: "🗑️",
         tooltip: "Delete this item",
         clickedHandler: (element, data) => { new ItemDeleteDialog(() => { database.DeleteItem(data); }); }
     },
