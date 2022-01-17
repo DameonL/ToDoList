@@ -103,7 +103,9 @@ export class ArrangeableList {
             labelDiv.appendChild(label);
         });
 
-        labelDiv.appendChild(document.createElement("span"));
+        let buttonSpan = document.createElement("span");
+        buttonSpan.className = "listItemButtons";
+        labelDiv.appendChild(buttonSpan);
 
         return labelDiv;
     }
