@@ -87,6 +87,18 @@ body {
 
 .descriptionInputField {
     flex: 2;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 20px;
+}
+
+.descriptionInputField:focus {
+    flex: 2;
+    word-break: break-all;
+    text-overflow: unset;
+    max-height: unset;
+    white-space: normal;
 }
 
 @media (max-width: 600px) {
