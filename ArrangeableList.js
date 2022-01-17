@@ -96,7 +96,7 @@ export class ArrangeableList {
             
             let label = document.createElement("span");
             label.innerHTML = labelText;
-            if (columnDefinition.className) labelDiv.className += " " + columnDefinition.className;
+            if (definition.className) labelDiv.className += " " + definition.className;
 
             labelDiv.appendChild(label);
         });
