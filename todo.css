@@ -8,8 +8,10 @@ body {
 }
 
 .listItemButtons {
-    flex-shrink: 0;
-    margin-left: auto;
+    display: flex;
+    flex: 0.25;
+
+    justify-content: right;
 }
 
 .listButton {
@@ -55,9 +57,11 @@ body {
     flex-wrap: nowrap;
     column-gap: 5px;
     cursor: grab;
+    min-height: 25px;
 }
 
 .listItemHandle {
+    flex: 0.1;
     background-color: darkslategrey;
     border: 1px solid black;
 }
@@ -69,6 +73,10 @@ body {
 .listTextInput {
     white-space: nowrap;
     overflow: hidden;
+}
+
+.completeCheckBox {
+    flex: 0.1;
 }
 
 .nameInputField {
