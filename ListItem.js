@@ -70,7 +70,6 @@ export class ListItem {
         newCheckBox.type = "checkbox";
         newCheckBox.checked = this.#backingData[columnDefinition.backingDataName];
         newCheckBox.style.cursor = "default";
-        newCheckBox.className = "listCheckbox";
 
         if (columnDefinition.updateHandler) {
             newCheckBox.addEventListener("change", () => {
@@ -80,6 +79,7 @@ export class ListItem {
         }
         let newSpan = document.createElement("span");
 
+        newSpan.className = "listCheckbox";
         newSpan.appendChild(newCheckBox);
         return newSpan;
     }
