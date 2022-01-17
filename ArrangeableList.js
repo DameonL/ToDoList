@@ -79,14 +79,16 @@ export class ArrangeableList {
         labelDiv.className = "toDoItem";
         labelDiv.style.cursor = "default";
 
-        let columnTemplate = "1.25em ";
-        let newItemButton = document.createElement("span");
+/*        let newItemButton = document.createElement("span");
         newItemButton.innerText = "+";
         newItemButton.title = "Create a new item";
         newItemButton.style.cursor = "pointer";
         newItemButton.addEventListener("click", () => this.#CreateNewItem());
+        */
 
-        labelDiv.appendChild(newItemButton);
+        let handleSpan = document.createElement("span");
+        handleSpan.className = "listItemHandle";
+        labelDiv.appendChild(handleSpan);
 
         this.#columnDefinitions.forEach(definition => {
             let labelText = 
