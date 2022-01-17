@@ -14,19 +14,18 @@ let itemUpdatedHandler = (data) => { database.UpdateItem(data); }
 let columnDefinitions = [
     {
         label: "",
-        width: "1.25em",
         backingDataName: "complete",
         updateHandler: itemUpdatedHandler,
     },
     {
-        width: "25%",
         backingDataName: "name",
+        className: "nameInputField",
         drawHandler: textDrawHandler,
-        updateHandler: itemUpdatedHandler
+        updateHandler: itemUpdatedHandler,
     },
     {
-        width: "50%",
         backingDataName: "description",
+        className: "nameInputField",
         multiLine: true,
         drawHandler: textDrawHandler,
         updateHandler: itemUpdatedHandler

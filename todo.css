@@ -5,11 +5,11 @@ body {
 #ArrangeableListRender {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
 }
 
 .buttonList {
-    display: grid;
-    grid-template-columns: max-content max-content;
+    flex-shrink: 0;
 }
 
 .listButton {
@@ -55,6 +55,9 @@ body {
 
 .toDoItem {
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: flex-start;
     cursor: grab;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -68,4 +71,12 @@ body {
 
 .toDoItemName:focus {
     outline: 1px grey solid;
+}
+
+.listTextInput {
+    white-space: nowrap;
+    overflow: hidden;
+    flex-grow: 0;
+    flex-shrink: 0;
+    max-width: 50%;
 }

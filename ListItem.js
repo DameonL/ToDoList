@@ -71,6 +71,8 @@ export class ListItem {
         newCheckBox.checked = this.#backingData[columnDefinition.backingDataName];
         newCheckBox.style.cursor = "default";
         newCheckBox.className = "listCheckbox";
+        if (columnDefinition.className) newCheckBox.className += " " + columnDefinition.className;
+
         if (columnDefinition.updateHandler) {
             newCheckBox.addEventListener("change", () => {
                 this.#UpdateBackingData();
@@ -87,6 +89,8 @@ export class ListItem {
         newSpan.contentEditable = true;
         newSpan.style.cursor = "text";
         newSpan.className = "listTextInput";
+        if (columnDefinition.className) newSpan.className += " " + columnDefinition.className;
+
         if (!columnDefinition.multiLine) {
             newSpan.addEventListener("keypress", (event) => {
                 if (event.key == "Enter") {
