@@ -15,6 +15,7 @@ let columnDefinitions = [
     {
         label: "",
         backingDataName: "complete",
+        className: "completeCheckBox",
         updateHandler: itemUpdatedHandler,
     },
     {
