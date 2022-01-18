@@ -79,14 +79,5 @@ function Start() {
     toDoList = new ArrangeableList(insertHandler, itemIndexHandler, columnDefinitions, labelButtonDefinitions, itemButtonDefinitions);
     document.body.appendChild(toDoList.RootNode);
     database.AddListChangedHandler((newListData) => { toDoList.ItemData = newListData; });
-
-    let newItemButton = document.createElement("span");
-    newItemButton.innerText = "+";
-    newItemButton.title = "Create a new item";
-    newItemButton.style.cursor = "pointer";
-    newItemButton.addEventListener("click", newItemHandler);
-
-    let labelHandle = toDoList.renderer.querySelector(".listLabelHandle");
-    labelHandle.appendChild(newItemButton);
 }
 
