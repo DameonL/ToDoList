@@ -38,7 +38,7 @@ export class ArrangeableList {
         let fragmentRoot = document.createElement("div");
         rootFragment.appendChild(fragmentRoot);
         fragmentRoot.innerHTML = this.#listHtml;
-        document.appendChild(rootFragment.firstChild);
+        document.body.appendChild(rootFragment.firstChild);
         console.log(document.querySelector(".arrangeableListRendeTest"));
 
         this.#rootNode = document.createElement("div");
