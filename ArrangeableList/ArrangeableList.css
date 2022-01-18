@@ -17,12 +17,17 @@
 }
 
 .listItem {
+    background-color: #f2fcf9;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     column-gap: 5px;
     cursor: grab;
     min-height: 25px;
+}
+
+.altListItem {
+    background-color: #ebf5f2;
 }
 
 .listItemButtons {
@@ -38,6 +43,9 @@
     max-height: 20px;
     background-color: darkslategrey;
     border: 1px solid black;
+}
+
+.listLabel {
 }
 
 .listLabelHandle {
