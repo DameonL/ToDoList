@@ -10,11 +10,29 @@ let textDrawHandler = (element, data) => {
     element.contentEditable = (data.complete) ? false : true;
 }
 let itemUpdatedHandler = (data) => { database.UpdateItem(data); }
+let itemIndexHandler = (data) => database.GetItemIndex(data);
+let itemInsertHandler = (itemToInsert, priorItem) => database.InsertItemBefore(itemToInsert, priorItem);
 
 let listDefinition = {
-    listHtml: `<div id="toDoListRender">
-        <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div><div class="arrangeableListItem arrangeableListLabel"></div>
-    </div>`,
+    listHtml: `
+        <div id="toDoListRender">
+            <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div>
+        </div>
+    ${itemUpdatedHandler}
+    `,
+
+    labelHtml: `
+        <div class="arrangeableListItem arrangeableListLabel">
+            <div boundColumn="complete"></div>
+            <div boundColumn="name"></div>
+            <div boundColumn="description"></div>
+        </div>
+    `,
+
+    listItemHtml: `
+        <div class="arrangeableListItemHandle"></div><div class="arrangeableListItem"></div>
+    `,
+
     itemMovementTargetHtml: `<div class="itemMovementTarget"></div>`,
 
     columnDefinitions: [
@@ -75,8 +93,8 @@ let listDefinition = {
         },
     ],
 
-    itemIndexHandler: (data) => database.GetItemIndex(data),
-    itemInsertHandler: (itemToInsert, priorItem) => database.InsertItemBefore(itemToInsert, priorItem),
+    itemIndexHandler: itemIndexHandler,
+    itemInsertHandler: itemInsertHandler,
 }
 
 Start();
