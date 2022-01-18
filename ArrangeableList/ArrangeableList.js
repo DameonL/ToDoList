@@ -44,7 +44,6 @@ export class ArrangeableList {
         document.body.appendChild(generatedDiv);
 
         this.#rootNode = generatedDiv;
-        this.#rootNode.id = "ArrangeableListRender";
     }
 
     get RootNode() { return this.#rootNode; }
