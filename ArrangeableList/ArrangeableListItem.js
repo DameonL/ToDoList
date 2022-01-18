@@ -43,7 +43,7 @@ export class ArrangeableListItem {
             buttonSpan.className = "arrangeableListItemButtons";
             buttonSpan.style.fontSize = "18px";
 
-            this.#listDefinition.buttonDefinitions.forEach(definition => {
+            this.#listDefinition.itemButtonDefinitions.forEach(definition => {
                 let button = document.createElement("span");
                 button.innerHTML = definition.label;
                 button.style.cursor = "pointer";
