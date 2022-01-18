@@ -16,16 +16,16 @@ let itemInsertHandler = (itemToInsert, priorItem) => database.InsertItemBefore(i
 let listDefinition = {
     listHtml: `
         <div id="toDoListRender">
-            <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div>
         </div>
-    ${itemUpdatedHandler}
     `,
 
     labelHtml: `
         <div class="arrangeableListItem arrangeableListLabel">
-            <div boundColumn="complete"></div>
-            <div boundColumn="name"></div>
-            <div boundColumn="description"></div>
+            <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div>
+            <div class="arrangeableListCheckbox"></div>
+            <div class="arrangeableListTextInput">Name</div>
+            <div class="arrangeableListTextInput">Description</div>
+            <div class="arrangeableListItemButtons arrangeableListLabelButtons"></div>
         </div>
     `,
 
@@ -72,15 +72,17 @@ let listDefinition = {
 
     labelButtonDefinitions: [
         {
-            label: `<span title="Create a new item" style="cursor: pointer;display: flex;flex-direction: row;justify-content: flex-end;">
-                <div style="
-                position: relative;
-                font-size: 10px;
-                width: 0%;
-                height: 0%;
-                ">➕</div>
-                <div>📄</div>
-            </span>`,
+            label: `
+                <span title="Create a new item" style="cursor: pointer;display: flex;flex-direction: row;justify-content: flex-end;">
+                    <div style="
+                    position: relative;
+                    font-size: 10px;
+                    width: 0%;
+                    height: 0%;
+                    ">➕</div>
+                    <div>📄</div>
+                </span>
+            `,
             clickedHandler: (event) => {
                 let data = {
                     name: "New ToDo Item",

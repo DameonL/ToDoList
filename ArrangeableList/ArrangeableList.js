@@ -53,30 +53,10 @@ export class ArrangeableList {
     }
 
     #CreateLabelDiv() {
-        let labelDiv = document.createElement("div");
-        labelDiv.className = "arrangeableListItem arrangeableListLabel";
-        labelDiv.style.cursor = "default";
+        let generatedFragment = document.createRange().createContextualFragment(listDefinition.labelHtml.trim());
+        let labelDiv = generatedFragment.firstChild;
 
-        let handleSpan = document.createElement("span");
-        handleSpan.className = "arrangeableListItemHandle arrangeableListLabelHandle";
-        labelDiv.appendChild(handleSpan);
-
-        this.#listDefinition.columnDefinitions.forEach(definition => {
-            let labelText = 
-                (definition.label == undefined) 
-                ? definition.backingDataName[0].toUpperCase() + definition.backingDataName.substring(1) 
-                : definition.label;
-            
-            let label = document.createElement("span");
-            label.innerHTML = labelText;
-            if (definition.className) label.className += " " + definition.className;
-
-            labelDiv.appendChild(label);
-        });
-
-        let buttonSpan = document.createElement("span");
-        buttonSpan.className = "arrangeableListItemButtons arrangeableListLabelButtons";
-        buttonSpan.style.fontSize = "18px";
+        let buttonSpan = labelDiv.querySelector(".arrangeableListItemButtons");
 
         this.#listDefinition.labelButtonDefinitions.forEach(definition => {
             let button = document.createElement("span");
@@ -85,8 +65,6 @@ export class ArrangeableList {
             button.addEventListener("click", definition.clickedHandler);
             buttonSpan.appendChild(button);
         });
-
-        labelDiv.appendChild(buttonSpan);
 
         return labelDiv;
     }
