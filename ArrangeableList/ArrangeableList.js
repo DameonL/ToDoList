@@ -11,7 +11,7 @@ export class ArrangeableList {
     #itemButtonDefinitions = [];
     #itemMovementTargetHtml = `<div class="itemMovementTarget"></div>`;
     #listHtml = `
-    <div id="arrangeableListRender">
+    <div id="arrangeableListRendeTest">
         <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div><div class="arrangeableListItem arrangeableListLabel"></div>
     </div>
     `;
@@ -38,7 +38,8 @@ export class ArrangeableList {
         let fragmentRoot = document.createElement("div");
         rootFragment.appendChild(fragmentRoot);
         fragmentRoot.innerHTML = this.#listHtml;
-        console.log(fragmentRoot.querySelector(".arrangeableListRender"));
+        document.appendChild(rootFragment.firstChild);
+        console.log(document.querySelector(".arrangeableListRendeTest"));
 
         this.#rootNode = document.createElement("div");
         this.#rootNode.id = "ArrangeableListRender";
