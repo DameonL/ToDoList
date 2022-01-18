@@ -88,7 +88,6 @@ export class OrderedIndexedDb {
         
         let insertIndex = this.GetItemIndex(priorItem);
         let oldIndex = this.GetItemIndex(itemToInsert);
-
         
         if ((oldIndex > -1) && (insertIndex == oldIndex + 1)) {
             return; 
