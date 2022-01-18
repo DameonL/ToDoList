@@ -12,6 +12,7 @@ export class ToDoItemCard {
         this.#closedHandler = closedHandler;
         
         fetch("ToDoItemCard.html").then(response => {
+            return response.text();
         }).then(text => {
             this.#cardHtml = text;
             this.Render();
