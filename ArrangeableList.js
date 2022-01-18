@@ -104,11 +104,11 @@ export class ArrangeableList {
             button.innerHTML = definition.label;
             button.title = definition.tooltip;
             button.style.cursor = "pointer";
-            button.addEventListener("click", (event) => { definition.clickedHandler(button, this.#backingData); });
+            button.addEventListener("click", (event) => { definition.clickedHandler(event); });
             buttonSpan.appendChild(button);
         });
 
-    labelDiv.appendChild(buttonSpan);
+        labelDiv.appendChild(buttonSpan);
 
         return labelDiv;
     }
