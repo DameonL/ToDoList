@@ -37,7 +37,7 @@ export class ArrangeableList {
         let generatedFragment = document.createRange().createContextualFragment(this.#listHtml.trim());
 
         document.body.appendChild(generatedFragment.firstChild);
-        console.log(document.querySelector(".arrangeableListRenderTest"));
+        console.log(document.querySelector("#arrangeableListRenderTest"));
 
         this.#rootNode = document.createElement("div");
         this.#rootNode.id = "ArrangeableListRender";
