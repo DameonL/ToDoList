@@ -30,13 +30,14 @@ export class ArrangeableList {
     }
 
     constructor(insertHandler, itemIndexHandler, columnDefinitions, labelButtonDefinitions, itemButtonDefinitions) {
+        this.#InsertItem = insertHandler;
+        this.#itemIndexHandler = itemIndexHandler;
         this.#columnDefinitions = columnDefinitions;
+        this.#labelButtonDefinitions = labelButtonDefinitions;
         this.#itemButtonDefinitions = itemButtonDefinitions;
 
         this.#rootNode = document.createElement("div");
         this.#rootNode.id = "ArrangeableListRender";
-        this.#InsertItem = insertHandler;
-        this.#itemIndexHandler = itemIndexHandler;
     }
 
     get RootNode() { return this.#rootNode; }
@@ -104,7 +105,7 @@ export class ArrangeableList {
             button.innerHTML = definition.label;
             button.title = definition.tooltip;
             button.style.cursor = "pointer";
-            button.addEventListener("click", (event) => { definition.clickedHandler(event); });
+            button.addEventListener("click", definition.clickedHandler);
             buttonSpan.appendChild(button);
         });
 
