@@ -1,6 +1,7 @@
 import { ArrangeableListItem } from "./ArrangeableListItem.js";
 
 export class ArrangeableList {
+    #listId = "test";
     #rootNode = null;
     #itemData = [];
     #InsertItem = null;
@@ -9,9 +10,9 @@ export class ArrangeableList {
     #labelButtonDefinitions = [];
     #itemButtonDefinitions = [];
     #itemMovementTargetHtml = `<div class="itemMovementTarget"></div>`;
-    #listHTML = `
+    #listHtml = `
     <div id="arrangeableListRender">
-        <div class="arrangeableListItem arrangeableListLabel"></div>
+        <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div><div class="arrangeableListItem arrangeableListLabel"></div>
     </div>
     `;
     #itemMovementDropPoint = null;
@@ -32,6 +33,12 @@ export class ArrangeableList {
         this.#columnDefinitions = columnDefinitions;
         this.#labelButtonDefinitions = labelButtonDefinitions;
         this.#itemButtonDefinitions = itemButtonDefinitions;
+
+        let rootFragment = new DocumentFragment();
+        let fragmentRoot = document.createElement("div");
+        rootFragment.appendChild(fragmentRoot);
+        fragmentRoot.innerHTML = this.#listHtml;
+        console.log(fragmentRoot.querySelector(".arrangeableListRender"));
 
         this.#rootNode = document.createElement("div");
         this.#rootNode.id = "ArrangeableListRender";
