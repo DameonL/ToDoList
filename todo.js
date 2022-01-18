@@ -11,63 +11,74 @@ let textDrawHandler = (element, data) => {
 }
 let itemUpdatedHandler = (data) => { database.UpdateItem(data); }
 
-let columnDefinitions = [
-    {
-        label: "",
-        backingDataName: "complete",
-        className: "completeCheckBox",
-        updateHandler: itemUpdatedHandler,
-    },
-    {
-        backingDataName: "name",
-        className: "nameInputField",
-        drawHandler: textDrawHandler,
-        updateHandler: itemUpdatedHandler,
-    },
-    {
-        backingDataName: "description",
-        className: "descriptionInputField",
-        multiLine: true,
-        drawHandler: textDrawHandler,
-        updateHandler: itemUpdatedHandler
-    },
-];
+let listDefinition = {
+    listId: "toDoList",
+    listHtml: `<div id="arrangeableListRender${listId}">
+        <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div><div class="arrangeableListItem arrangeableListLabel"></div>
+    </div>`,
+    itemMovementTargetHtml: `<div class="itemMovementTarget"></div>`,
 
-let itemButtonDefinitions = [
-    {
-        label: `<div title="Edit this item">📝</div>`,
-        clickedHandler: (element, data) => {
-             let itemCard = new ToDoItemCard(data, () => toDoList.Render());
-        }
-    },
-    {
-        label: `<div title="Delete this item">🗑️</div>`,
-        clickedHandler: (element, data) => { new ItemDeleteDialog(() => { database.DeleteItem(data); }); }
-    },
-];
+    columnDefinitions: [
+        {
+            label: "",
+            backingDataName: "complete",
+            className: "completeCheckBox",
+            updateHandler: itemUpdatedHandler,
+        },
+        {
+            backingDataName: "name",
+            className: "nameInputField",
+            drawHandler: textDrawHandler,
+            updateHandler: itemUpdatedHandler,
+        },
+        {
+            backingDataName: "description",
+            className: "descriptionInputField",
+            multiLine: true,
+            drawHandler: textDrawHandler,
+            updateHandler: itemUpdatedHandler
+        },
+    ],
 
-let labelButtonDefinitions = [
-    {
-        label: `<span title="Create a new item" style="cursor: pointer;display: flex;flex-direction: row;justify-content: flex-end;">
-            <div style="
-            position: relative;
-            font-size: 10px;
-            width: 0%;
-            height: 0%;
-            ">➕</div>
-            <div>📄</div>
-        </span>`,
-        clickedHandler: (event) => {
-            let data = {
-                name: "New ToDo Item",
-                description: "Insert description here",
-                complete: false 
-            };
-    
-            database.InsertItemBefore(data, database.GetItemAt(0));
-        }
-    },
-];
+    itemButtonDefinitions: [
+        {
+            label: `<div title="Edit this item">📝</div>`,
+            clickedHandler: (element, data) => {
+                 let itemCard = new ToDoItemCard(data, () => toDoList.Render());
+            }
+        },
+        {
+            label: `<div title="Delete this item">🗑️</div>`,
+            clickedHandler: (element, data) => { new ItemDeleteDialog(() => { database.DeleteItem(data); }); }
+        },
+    ],
+
+    labelButtonDefinitions: [
+        {
+            label: `<span title="Create a new item" style="cursor: pointer;display: flex;flex-direction: row;justify-content: flex-end;">
+                <div style="
+                position: relative;
+                font-size: 10px;
+                width: 0%;
+                height: 0%;
+                ">➕</div>
+                <div>📄</div>
+            </span>`,
+            clickedHandler: (event) => {
+                let data = {
+                    name: "New ToDo Item",
+                    description: "Insert description here",
+                    complete: false 
+                };
+        
+                database.InsertItemBefore(data, database.GetItemAt(0));
+            }
+        },
+    ],
+
+    itemIndexHandler: (data) => database.GetItemIndex(data),
+    itemInsertHandler: (itemToInsert, priorItem) => database.InsertItemBefore(itemToInsert, priorItem),
+}
 
 Start();
 
@@ -77,10 +88,7 @@ function Start() {
         return;
     }
 
-    let itemIndexHandler = (data) => database.GetItemIndex(data);
-    let insertHandler = (itemToInsert, priorItem) => database.InsertItemBefore(itemToInsert, priorItem);
-
-    toDoList = new ArrangeableList("test", insertHandler, itemIndexHandler, columnDefinitions, labelButtonDefinitions, itemButtonDefinitions);
+    toDoList = new ArrangeableList(listDefinition);
     document.body.appendChild(toDoList.RootNode);
     database.AddListChangedHandler((newListData) => { toDoList.ItemData = newListData; });
 }

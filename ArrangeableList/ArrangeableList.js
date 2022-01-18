@@ -1,48 +1,17 @@
 import { ArrangeableListItem } from "./ArrangeableListItem.js";
 
 export class ArrangeableList {
-    #listId = "1234";
     #rootNode = null;
     #itemData = [];
-    #InsertItem = null;
-    #itemIndexHandler = null;
-    #columnDefinitions = [];
-    #labelButtonDefinitions = [];
-    #itemButtonDefinitions = [];
-    #itemMovementTargetHtml = `<div class="itemMovementTarget"></div>`;
-    #listHtml = `
-    <div id="arrangeableListRender${this.#listId}">
-        <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div><div class="arrangeableListItem arrangeableListLabel"></div>
-    </div>
-    `;
+    #listDefinition = null;
     #itemMovementDropPoint = null;
 
-    set ItemMovementTargetHtml(newHTML) {
-        this.#itemMovementTargetHtml = newHTML;
-        this.#itemMovementDropPoint = this.#CreateMovementDiv(itemData);
-        this.Render();
-    }
-
-    get ItemMovementTargetHtml() {
-        return this.#itemMovementTargetHtml;
-    }
-
-    constructor(listId, insertHandler, itemIndexHandler, columnDefinitions, labelButtonDefinitions, itemButtonDefinitions) {
-        this.#InsertItem = insertHandler;
-        this.#itemIndexHandler = itemIndexHandler;
-        this.#columnDefinitions = columnDefinitions;
-        this.#labelButtonDefinitions = labelButtonDefinitions;
-        this.#itemButtonDefinitions = itemButtonDefinitions;
-        this.#listId = listId;
-
-        for (property in this) {
-            console.log(property);
-        }
-
-        let generatedFragment = document.createRange().createContextualFragment(this.#listHtml.trim());
+    constructor(listDefinition) {
+        this.#listDefinition = listDefinition;
+        let generatedFragment = document.createRange().createContextualFragment(listDefinition.listHtml.trim());
         let generatedDiv = generatedFragment.firstChild;
+        generatedDiv.id = listDefinition.listId;
         document.body.appendChild(generatedDiv);
-
         this.#rootNode = generatedDiv;
     }
 
@@ -57,9 +26,9 @@ export class ArrangeableList {
     CreateListItem(data) {
         let newItem = new ArrangeableListItem(
             data,
-            this.#columnDefinitions,
-            this.#itemButtonDefinitions,
-            this.#itemIndexHandler
+            this.#listDefinition.columnDefinitions,
+            this.#listDefinition.itemButtonDefinitions,
+            this.#listDefinition.itemIndexHandler
         );
         return newItem;
     }
@@ -93,7 +62,7 @@ export class ArrangeableList {
         handleSpan.className = "arrangeableListItemHandle arrangeableListLabelHandle";
         labelDiv.appendChild(handleSpan);
 
-        this.#columnDefinitions.forEach(definition => {
+        this.#listDefinition.columnDefinitions.forEach(definition => {
             let labelText = 
                 (definition.label == undefined) 
                 ? definition.backingDataName[0].toUpperCase() + definition.backingDataName.substring(1) 
@@ -110,7 +79,7 @@ export class ArrangeableList {
         buttonSpan.className = "arrangeableListItemButtons arrangeableListLabelButtons";
         buttonSpan.style.fontSize = "18px";
 
-        this.#labelButtonDefinitions.forEach(definition => {
+        this.#listDefinition.labelButtonDefinitions.forEach(definition => {
             let button = document.createElement("span");
             button.innerHTML = definition.label;
             button.style.cursor = "pointer";
@@ -161,7 +130,7 @@ export class ArrangeableList {
     }
 
     #CreateMovementDiv(itemData) {
-        let itemMovementDropPoint = document.createRange().createContextualFragment(this.#itemMovementTargetHtml.trim()).firstChild;
+        let itemMovementDropPoint = document.createRange().createContextualFragment(this.#listDefinition.itemMovementTargetHtml.trim()).firstChild;
         itemMovementDropPoint.addEventListener("drop", (event) => {
             event.preventDefault();
             let droppedIndex = event.dataTransfer.getData("text");
