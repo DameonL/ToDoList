@@ -16,10 +16,6 @@ export class ArrangeableListItem {
             let rootNode = this.#CreateRootNode();
             this.#renderRoot = rootNode;
 
-            let handleSpan = document.createElement("span");
-            handleSpan.className = "arrangeableListItemHandle";
-            rootNode.appendChild(handleSpan);
-
             this.#listDefinition.columnDefinitions.forEach(columnDefinition => {
                 let columnData = this.#backingData[columnDefinition.backingDataName];
                 let columnType = (typeof columnData);
