@@ -1,18 +1,14 @@
 export class ArrangeableListItem {
-    #indexFunction = null;
     #backingData = null;
     #renderRoot = null;
+    #listDefinition = null;
     #elements = [];
-    #columnDefinitions = null;
-    #buttonDefinitions = null;
 
     get Index() { return this.#indexFunction(this.#backingData); }
 
     constructor(backingData, listDefinition) {
         this.#backingData = backingData;
-        this.#columnDefinitions = columnDefinitions;
-        this.#indexFunction = indexFunction;
-        this.#buttonDefinitions = buttonDefinitions;
+        this.#listDefinition = listDefinition;
     }
 
     get Renderer() {
@@ -24,7 +20,7 @@ export class ArrangeableListItem {
             handleSpan.className = "arrangeableListItemHandle";
             rootNode.appendChild(handleSpan);
 
-            this.#columnDefinitions.forEach(columnDefinition => {
+            this.#listDefinition.columnDefinitions.forEach(columnDefinition => {
                 let columnData = this.#backingData[columnDefinition.backingDataName];
                 let columnType = (typeof columnData);
                 let columnInstance = null;
@@ -47,7 +43,7 @@ export class ArrangeableListItem {
             buttonSpan.className = "arrangeableListItemButtons";
             buttonSpan.style.fontSize = "18px";
 
-            this.#buttonDefinitions.forEach(definition => {
+            this.#listDefinition.buttonDefinitions.forEach(definition => {
                 let button = document.createElement("span");
                 button.innerHTML = definition.label;
                 button.style.cursor = "pointer";
@@ -134,15 +130,15 @@ export class ArrangeableListItem {
     
     #UpdateAppearance() {
         for (let i = 0; i < this.#elements.length; i++) {
-            if (this.#columnDefinitions[i].drawHandler) {
-                this.#columnDefinitions[i].drawHandler(this.#elements[i], this.#backingData);
+            if (this.#listDefinition.columnDefinitions[i].drawHandler) {
+                this.#listDefinition.columnDefinitions[i].drawHandler(this.#elements[i], this.#backingData);
             }
         }
     }
 
     #UpdateBackingData() {
-        for (let i = 0; i < this.#columnDefinitions.length; i++) {
-            let columnDefinition = this.#columnDefinitions[i];
+        for (let i = 0; i < this.#listDefinition.columnDefinitions.length; i++) {
+            let columnDefinition = this.#listDefinition.columnDefinitions[i];
             let element = this.#elements[i];
             let columnData = this.#backingData[columnDefinition.backingDataName];
             let columnType = (typeof columnData);
