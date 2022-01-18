@@ -62,7 +62,7 @@ export class ArrangeableListItem {
     }
 
     #CreateCheckBoxSpan(columnDefinition) {
-        let newSpan = this.#renderRoot.querySelector(`[boundField="${columnDefinition.backingDataName}"]`);
+        let targetParent = this.#renderRoot.querySelector(`[boundField="${columnDefinition.backingDataName}"]`);
         let newCheckBox = document.createElement("input");
         newCheckBox.id = columnDefinition.backingDataName + this.Index;
         newCheckBox.type = "checkbox";
@@ -75,11 +75,10 @@ export class ArrangeableListItem {
                 columnDefinition.updateHandler(this.#backingData);
             });
         }
-        let newSpan = document.createElement("span");
 
-        newSpan.className = "arrangeableListCheckbox " + newSpan.className;
-        newSpan.appendChild(newCheckBox);
-        return newSpan;
+        targetParent.className = "arrangeableListCheckbox " + targetParent.className;
+        targetParent.appendChild(newCheckBox);
+        return targetParent;
     }
 
     #CreateTextInputSpan(columnDefinition) {
