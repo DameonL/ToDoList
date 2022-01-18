@@ -9,21 +9,19 @@
 }
 
 .cardBackground {
-    display: flex;
-    justify-content: center;
+    position: absolute;
+    left: 1%;
+    right: 1%;
+    top: 5%;
     opacity: 100%;
+    z-index: 100;
 }
 
 .cardBackgroundInner {
     padding: 10px 10px 10px 10px;
     border: 2px solid black;
     border-radius: 10px;
-    position: absolute;
     background-color: white;
-    min-width: 50%;
-    min-height: 50%;
-    max-width: 99%;
-    max-height: 99%;
     display: flex;
     flex-flow: column;
 }
@@ -35,4 +33,6 @@
     flex: 1 1 auto;
     border: 1px solid grey;
     border-radius: 5px;
+    max-height: 75vh;
+    overflow-y: auto;
 }
