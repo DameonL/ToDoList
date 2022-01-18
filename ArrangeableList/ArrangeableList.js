@@ -9,9 +9,11 @@ export class ArrangeableList {
     #labelButtonDefinitions = [];
     #itemButtonDefinitions = [];
     #itemMovementTargetHtml = `<div class="itemMovementTarget"></div>`;
+    #itemMovementDropPoint = null;
 
     set ItemMovementTargetHtml(newHTML) {
         this.#itemMovementTargetHtml = newHTML;
+        this.#itemMovementDropPoint = this.#CreateMovementDiv(itemData);
         this.Render();
     }
 
@@ -34,6 +36,7 @@ export class ArrangeableList {
 
     set ItemData(data) {
         this.#itemData = data;
+        this.#itemMovementDropPoint = null;
         this.Render();
     }
 
@@ -52,14 +55,17 @@ export class ArrangeableList {
             this.#rootNode.removeChild(this.#rootNode.firstChild);
         }
 
+        if (this.#itemMovementDropPoint == null) {
+            this.#itemMovementDropPoint = this.#CreateMovementDiv(itemData);
+        }
+        
         let itemData = this.#itemData;
-        let itemMovementDropPoint = this.#CreateMovementDiv(itemData);
         let labelDiv = this.#CreateLabelDiv();
         this.#rootNode.appendChild(labelDiv);
 
         let renderers = [];
         for (let i = 0; i < itemData.length; i++) {
-            let renderer = this.#CreateChildItem(itemData, i, renderers, itemMovementDropPoint);
+            let renderer = this.#CreateChildItem(itemData, i, renderers, this.#itemMovementDropPoint);
             this.#rootNode.appendChild(renderer);
         }
     }
