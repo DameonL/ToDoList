@@ -53,7 +53,7 @@ export class ArrangeableList {
     }
 
     #CreateLabelDiv() {
-        let generatedFragment = document.createRange().createContextualFragment(listDefinition.labelHtml.trim());
+        let generatedFragment = document.createRange().createContextualFragment(this.#listDefinition.labelHtml.trim());
         let labelDiv = generatedFragment.firstChild;
 
         let buttonSpan = labelDiv.querySelector(".arrangeableListItemButtons");
