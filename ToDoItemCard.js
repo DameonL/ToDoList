@@ -31,7 +31,8 @@ export class ToDoItemCard {
 
     Render() {
         let documentHider = document.createRange().createContextualFragment(this.#documentHider.trim()).firstChild;
-        let cardNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
+//        let cardNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
+        let cardNode = document.createRange().createContextualFragment(<object type="text/html" data="ToDoItemCard.html" ></object>).firstChild.firstChild;
         
         document.body.appendChild(documentHider);
         document.body.appendChild(cardNode);
