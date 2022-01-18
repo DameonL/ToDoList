@@ -82,7 +82,7 @@ function Start() {
     newItemButton.style.cursor = "pointer";
     newItemButton.addEventListener("click", newItemHandler);
 
-    let labelHandle = document.getElementsByClassName("listLabelHandle")[0];
+    let labelHandle = toDoList.renderer.getElementsByClassName("listLabelHandle")[0];
     labelHandle.appendChild(newItemButton);
 }
 
