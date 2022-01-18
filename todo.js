@@ -65,7 +65,7 @@ function Start() {
             complete: false 
         };
 
-        database.AddItem(data);
+//        database.AddItem(data);
         database.InsertItemBefore(data, database.GetItemAt(0));
     };
 
@@ -73,8 +73,16 @@ function Start() {
     let insertHandler = (itemToInsert, priorItem) => database.InsertItemBefore(itemToInsert, priorItem);
 
     toDoList = new ArrangeableList(newItemHandler, insertHandler, itemIndexHandler, columnDefinitions, itemButtonDefinitions);
+    document.body.appendChild(toDoList.RootNode);
     database.AddListChangedHandler((newListData) => { toDoList.ItemData = newListData; });
 
-    document.body.appendChild(toDoList.RootNode);
+    let newItemButton = document.createElement("span");
+    newItemButton.innerText = "+";
+    newItemButton.title = "Create a new item";
+    newItemButton.style.cursor = "pointer";
+    newItemButton.addEventListener("click", newItemHandler);
+
+    let labelHandle = document.getElementsByClassName("listLabelHandle")[0];
+    labelHandle.appendChild(newItemButton);
 }
 

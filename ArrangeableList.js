@@ -79,13 +79,6 @@ export class ArrangeableList {
         labelDiv.className = "toDoItem";
         labelDiv.style.cursor = "default";
 
-/*        let newItemButton = document.createElement("span");
-        newItemButton.innerText = "+";
-        newItemButton.title = "Create a new item";
-        newItemButton.style.cursor = "pointer";
-        newItemButton.addEventListener("click", () => this.#CreateNewItem());
-        */
-
         let handleSpan = document.createElement("span");
         handleSpan.className = "listItemHandle listLabelHandle";
         labelDiv.appendChild(handleSpan);
