@@ -3,36 +3,22 @@ export class ToDoItemCard {
     #backingData = null;
     #closedHandler = null;
     #documentHider = `<div class="documentHider"></div>`;
-    #cardHtml = `
-    <div class="cardBackground">
-        <div class="cardBackgroundInner">
-            <div>
-                <input type="checkbox" boundfield="complete" id="taskComplete">
-                <label for="taskComplete">Complete</label>
-            </div>
-            <div style="display: flex; flex-flow: row; align-items: baseline;">
-                <span>Name:&nbsp;</span>
-                <span boundfield="name" class="inputField" contenteditable="true"></span>
-            </div>
-            <div style="display: flex; flex-flow: column; flex: 1 1 auto;">
-                <div>Description:</div>
-                <div boundfield="description" class="inputField" contenteditable="true" multiLine="true"></div>
-            </div>
-        </div>
-    </div>
-    `;
+    #cardHtml = ``;
 
     #boundElements = [];
 
     constructor(backingData, closedHandler) {
         this.#backingData = backingData;
         this.#closedHandler = closedHandler;
+        
+        fetch("ToDoItemCard.html").then(response => {
+            this.#cardHtml = response.text();
+        });
     }
 
     Render() {
         let documentHider = document.createRange().createContextualFragment(this.#documentHider.trim()).firstChild;
-//        let cardNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
-        let cardNode = document.createRange().createContextualFragment(`<object type="text/html" data="ToDoItemCard.html" ></object>`).firstChild.firstChild;
+        let cardNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
         
         document.body.appendChild(documentHider);
         document.body.appendChild(cardNode);
