@@ -55,14 +55,14 @@ export class ArrangeableList {
             this.#rootNode.removeChild(this.#rootNode.firstChild);
         }
 
-        if (this.#itemMovementDropPoint == null) {
-            this.#itemMovementDropPoint = this.#CreateMovementDiv(itemData);
-        }
-        
         let itemData = this.#itemData;
         let labelDiv = this.#CreateLabelDiv();
         this.#rootNode.appendChild(labelDiv);
 
+        if (this.#itemMovementDropPoint == null) {
+            this.#itemMovementDropPoint = this.#CreateMovementDiv(itemData);
+        }
+        
         let renderers = [];
         for (let i = 0; i < itemData.length; i++) {
             let renderer = this.#CreateChildItem(itemData, i, renderers, this.#itemMovementDropPoint);
