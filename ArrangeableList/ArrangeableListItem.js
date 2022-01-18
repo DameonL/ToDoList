@@ -4,7 +4,7 @@ export class ArrangeableListItem {
     #listDefinition = null;
     #elements = [];
 
-    get Index() { return this.#listDefinition.indexFunction(this.#backingData); }
+    get Index() { return this.#listDefinition.itemIndexHandler(this.#backingData); }
 
     constructor(backingData, listDefinition) {
         this.#backingData = backingData;
