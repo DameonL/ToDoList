@@ -22,9 +22,9 @@ let listDefinition = {
     labelHtml: `
         <div class="arrangeableListItem arrangeableListLabel">
             <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div>
-            <div class="arrangeableListCheckbox"></div>
-            <div class="arrangeableListTextInput">Name</div>
-            <div class="arrangeableListTextInput">Description</div>
+            <div class="arrangeableListCheckbox completeCheckBox"></div>
+            <div class="arrangeableListTextInput nameInputField">Name</div>
+            <div class="arrangeableListTextInput description">Description</div>
             <div class="arrangeableListItemButtons arrangeableListLabelButtons"></div>
         </div>
     `,
