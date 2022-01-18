@@ -68,13 +68,17 @@ body {
     border: 1px solid black;
 }
 
-.toDoItem:focused {
-    outline: 1px grey solid;
-}
-
 .listTextInput {
     white-space: nowrap;
     overflow: hidden;
+}
+
+.listTextInput:focus {
+    outline: 1px solid grey;
+    box-shadow: 1px 1px 2px black inset;
+    border-radius: 5px;
+    padding: 5px 5px 5px 5px;
+    z-index: 100;
 }
 
 .completeCheckBox {
@@ -87,7 +91,6 @@ body {
 
 .descriptionInputField {
     flex: 2;
-    word-break: break-all;
     overflow: hidden;
     text-overflow: ellipsis;
     max-height: 20px;
@@ -95,7 +98,6 @@ body {
 
 .descriptionInputField:focus {
     flex: 2;
-    word-break: break-all;
     text-overflow: unset;
     max-height: unset;
     white-space: normal;

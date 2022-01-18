@@ -100,6 +100,7 @@ export class ListItem {
         }
         newSpan.id = columnDefinition.backingDataName + this.Index;
         newSpan.innerHTML = this.#backingData[columnDefinition.backingDataName];
+
         if (columnDefinition.updateHandler) {
             newSpan.addEventListener("focusout", () => {
                 this.#UpdateBackingData();
