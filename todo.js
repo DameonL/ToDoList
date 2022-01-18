@@ -1,4 +1,4 @@
-import { ArrangeableList } from "./ArrangeableList.js";
+import { ArrangeableList } from "./ArrangeableList/ArrangeableList.js";
 import { OrderedIndexedDb } from "./OrderedIndexedDb.js";
 import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
 import { ToDoItemCard } from "./ToDoItemCard.js";

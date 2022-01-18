@@ -1,4 +1,4 @@
-import { ListItem } from "./ListItem.js";
+import { ArrangeableListItem } from "./ArrangeableListItem.js";
 
 export class ArrangeableList {
     #rootNode = null;
@@ -48,7 +48,7 @@ export class ArrangeableList {
     }
 
     CreateListItem(data) {
-        let newItem = new ListItem(
+        let newItem = new ArrangeableListItem(
             data,
             this.#columnDefinitions,
             this.#itemButtonDefinitions,

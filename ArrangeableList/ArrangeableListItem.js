@@ -1,6 +1,6 @@
 import { StyleSettings } from "./StyleSettings.js";
 
-export class ListItem {
+export class ArrangeableListItem {
     #indexFunction = null;
     #backingData = null;
     #renderRoot = null;
