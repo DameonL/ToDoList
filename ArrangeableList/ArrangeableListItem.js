@@ -21,7 +21,7 @@ export class ArrangeableListItem {
             this.#renderRoot = rootNode;
 
             let handleSpan = document.createElement("span");
-            handleSpan.className = "listItemHandle";
+            handleSpan.className = "arrangeableListItemHandle";
             rootNode.appendChild(handleSpan);
 
             this.#columnDefinitions.forEach(columnDefinition => {
@@ -44,7 +44,7 @@ export class ArrangeableListItem {
             this.#UpdateAppearance();
 
             let buttonSpan = document.createElement("span");
-            buttonSpan.className = "listItemButtons";
+            buttonSpan.className = "arrangeableListItemButtons";
             buttonSpan.style.fontSize = "18px";
 
             this.#buttonDefinitions.forEach(definition => {
@@ -77,7 +77,7 @@ export class ArrangeableListItem {
         }
         let newSpan = document.createElement("span");
 
-        newSpan.className = "listCheckbox";
+        newSpan.className = "arrangeableListCheckbox";
         newSpan.appendChild(newCheckBox);
         return newSpan;
     }
@@ -86,7 +86,7 @@ export class ArrangeableListItem {
         let newSpan = document.createElement("span");
         newSpan.contentEditable = true;
         newSpan.style.cursor = "text";
-        newSpan.className = "listTextInput";
+        newSpan.className = "arrangeableListTextInput";
 
         if (!columnDefinition.multiLine) {
             newSpan.addEventListener("keypress", (event) => {
@@ -111,10 +111,10 @@ export class ArrangeableListItem {
 
     #CreateRootNode() {
         let rootNode = document.createElement("div");
-        rootNode.className = "listItem";
-        rootNode.id = "toDoItem" + this.Index;
+        rootNode.className = "arrangeableListItem";
+        rootNode.id = "arrangeableListItem" + this.Index;
         rootNode.draggable = true;
-        if (this.Index % 2 == 0) { rootNode.className += " altListItem"; }
+        if (this.Index % 2 == 0) { rootNode.className += " arrangeableListItemAlt"; }
         this.#renderRoot = rootNode;
 
         rootNode.addEventListener("dragstart", (event) => {

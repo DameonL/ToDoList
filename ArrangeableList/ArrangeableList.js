@@ -76,11 +76,11 @@ export class ArrangeableList {
 
     #CreateLabelDiv() {
         let labelDiv = document.createElement("div");
-        labelDiv.className = "listItem listLabel";
+        labelDiv.className = "arrangeableListItem arrangeableListLabel";
         labelDiv.style.cursor = "default";
 
         let handleSpan = document.createElement("span");
-        handleSpan.className = "listItemHandle listLabelHandle";
+        handleSpan.className = "arrangeableListItemHandle arrangeableListLabelHandle";
         labelDiv.appendChild(handleSpan);
 
         this.#columnDefinitions.forEach(definition => {
@@ -97,7 +97,7 @@ export class ArrangeableList {
         });
 
         let buttonSpan = document.createElement("span");
-        buttonSpan.className = "listItemButtons listLabelButtons";
+        buttonSpan.className = "arrangeableListItemButtons arrangeableListLabelButtons";
         buttonSpan.style.fontSize = "18px";
 
         this.#labelButtonDefinitions.forEach(definition => {

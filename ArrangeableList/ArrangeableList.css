@@ -1,11 +1,11 @@
-.itemMovementTarget {
+.arrangeableItemMovementTarget {
     border: 1px solid black;
     cursor: grabbing;
     padding-top: 5px;
     padding-bottom: 5px;
 }
 
-.listButton {
+.arrangeableListButton {
     width: 50px;
     height: 50px;
     font-size: 40px;
@@ -16,7 +16,7 @@
     position: inherit;
 }
 
-.listItem {
+.arrangeableListItem {
     background-color: #f2fcf9;
     display: flex;
     flex-direction: row;
@@ -26,18 +26,18 @@
     min-height: 25px;
 }
 
-.altListItem {
+.arrangeableListItemAlt {
     background-color: #ebf5f2;
 }
 
-.listItemButtons {
+.arrangeableListItemButtons {
     display: flex;
     flex: 0.25;
 
     justify-content: right;
 }
 
-.listItemHandle {
+.arrangeableListItemHandle {
     flex: 0.1;
     max-width: 20px;
     max-height: 20px;
@@ -45,20 +45,21 @@
     border: 1px solid black;
 }
 
-.listLabel {
+.arrangeableListLabel {
+    background-color: #f0f0f0
 }
 
-.listLabelHandle {
+.arrangeableListHandle {
     background-color: unset;
     border: unset;
 }
 
-.listTextInput {
+.arrangeableListTextInput {
     white-space: nowrap;
     overflow: hidden;
 }
 
-.listTextInput:focus {
+.arrangeableListTextInput:focus {
     outline: 1px solid grey;
     box-shadow: 1px 1px 2px black inset;
     border-radius: 5px;
