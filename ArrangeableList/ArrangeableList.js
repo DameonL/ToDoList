@@ -11,7 +11,7 @@ export class ArrangeableList {
     #itemButtonDefinitions = [];
     #itemMovementTargetHtml = `<div class="itemMovementTarget"></div>`;
     #listHtml = `
-    <div id="arrangeableListRender${listId}">
+    <div id="arrangeableListRender${this.#listId}">
         <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div><div class="arrangeableListItem arrangeableListLabel"></div>
     </div>
     `;
