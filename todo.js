@@ -35,7 +35,7 @@ let listDefinition = {
             <div class="completeCheckBox" boundField="complete"></div>
             <div class="nameInputField" boundField="name"></div>
             <div class="descriptionInputField" boundField="description">Description</div>
-            <div class="arrangeableListItemButtons arrangeableListLabelButtons"></div>
+            <div class="arrangeableListItemButtons"></div>
         </div>
     `,
 

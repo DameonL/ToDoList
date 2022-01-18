@@ -35,9 +35,7 @@ export class ArrangeableListItem {
 
             this.#UpdateAppearance();
 
-            let buttonSpan = document.createElement("span");
-            buttonSpan.className = "arrangeableListItemButtons";
-            buttonSpan.style.fontSize = "18px";
+            let buttonSpan = this.#renderRoot.querySelector(".arrangeableListItemButtons");
 
             this.#listDefinition.itemButtonDefinitions.forEach(definition => {
                 let button = document.createElement("span");
