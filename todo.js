@@ -53,7 +53,7 @@ let labelButtonDefinitions = [
     {
         label: "<span>📄</span><span>+</span>",
         tooltip: "Create a new item",
-        clickedHandler: (element, data) => {
+        clickedHandler: (event) => {
             let data = {
                 name: "New ToDo Item",
                 description: "Insert description here",
