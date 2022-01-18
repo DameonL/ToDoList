@@ -11,7 +11,7 @@ export class ArrangeableList {
     #itemButtonDefinitions = [];
     #itemMovementTargetHtml = `<div class="itemMovementTarget"></div>`;
     #listHtml = `
-    <div id="arrangeableListRenderTest">
+    <div id="arrangeableListRender${listId}">
         <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div><div class="arrangeableListItem arrangeableListLabel"></div>
     </div>
     `;
@@ -27,19 +27,18 @@ export class ArrangeableList {
         return this.#itemMovementTargetHtml;
     }
 
-    constructor(insertHandler, itemIndexHandler, columnDefinitions, labelButtonDefinitions, itemButtonDefinitions) {
+    constructor(listId, insertHandler, itemIndexHandler, columnDefinitions, labelButtonDefinitions, itemButtonDefinitions) {
         this.#InsertItem = insertHandler;
         this.#itemIndexHandler = itemIndexHandler;
         this.#columnDefinitions = columnDefinitions;
         this.#labelButtonDefinitions = labelButtonDefinitions;
         this.#itemButtonDefinitions = itemButtonDefinitions;
+        this.#listId = listId;
 
         let generatedFragment = document.createRange().createContextualFragment(this.#listHtml.trim());
-
         document.body.appendChild(generatedFragment.firstChild);
-        console.log(document.querySelector("#arrangeableListRenderTest"));
 
-        this.#rootNode = document.createElement("div");
+        this.#rootNode = generatedFragment.firstChild;
         this.#rootNode.id = "ArrangeableListRender";
     }
 

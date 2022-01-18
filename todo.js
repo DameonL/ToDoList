@@ -80,7 +80,7 @@ function Start() {
     let itemIndexHandler = (data) => database.GetItemIndex(data);
     let insertHandler = (itemToInsert, priorItem) => database.InsertItemBefore(itemToInsert, priorItem);
 
-    toDoList = new ArrangeableList(insertHandler, itemIndexHandler, columnDefinitions, labelButtonDefinitions, itemButtonDefinitions);
+    toDoList = new ArrangeableList("test", insertHandler, itemIndexHandler, columnDefinitions, labelButtonDefinitions, itemButtonDefinitions);
     document.body.appendChild(toDoList.RootNode);
     database.AddListChangedHandler((newListData) => { toDoList.ItemData = newListData; });
 }
