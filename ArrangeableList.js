@@ -3,10 +3,10 @@ import { ListItem } from "./ListItem.js";
 export class ArrangeableList {
     #rootNode = null;
     #itemData = [];
-    #CreateNewItem = null;
     #InsertItem = null;
     #itemIndexHandler = null;
     #columnDefinitions = [];
+    #labelButtonDefinitions = [];
     #itemButtonDefinitions = [];
     #itemMovementTargetHtml = `<div class="itemMovementTarget"></div>`;
     #itemMovementAppearAnimation = [[
@@ -29,13 +29,12 @@ export class ArrangeableList {
         return this.#itemMovementTargetHtml;
     }
 
-    constructor(newItemHandler, insertHandler, itemIndexHandler, columnDefinitions, itemButtonDefinitions) {
+    constructor(insertHandler, itemIndexHandler, columnDefinitions, labelButtonDefinitions, itemButtonDefinitions) {
         this.#columnDefinitions = columnDefinitions;
         this.#itemButtonDefinitions = itemButtonDefinitions;
 
         this.#rootNode = document.createElement("div");
         this.#rootNode.id = "ArrangeableListRender";
-        this.#CreateNewItem = newItemHandler;
         this.#InsertItem = insertHandler;
         this.#itemIndexHandler = itemIndexHandler;
     }
@@ -97,8 +96,19 @@ export class ArrangeableList {
         });
 
         let buttonSpan = document.createElement("span");
-        buttonSpan.className = "listItemButtons";
-        labelDiv.appendChild(buttonSpan);
+        buttonSpan.className = "listItemButtons listLabelButtons";
+        buttonSpan.style.fontSize = "18px";
+
+        this.#labelButtonDefinitions.forEach(definition => {
+            let button = document.createElement("span");
+            button.innerHTML = definition.label;
+            button.title = definition.tooltip;
+            button.style.cursor = "pointer";
+            button.addEventListener("click", (event) => { definition.clickedHandler(button, this.#backingData); });
+            buttonSpan.appendChild(button);
+        });
+
+    labelDiv.appendChild(buttonSpan);
 
         return labelDiv;
     }

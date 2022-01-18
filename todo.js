@@ -49,6 +49,22 @@ let itemButtonDefinitions = [
     },
 ];
 
+let labelButtonDefinitions = [
+    {
+        label: "<span>📄</span><span>+</span>",
+        tooltip: "Edit this item",
+        clickedHandler: (element, data) => {
+            let data = {
+                name: "New ToDo Item",
+                description: "Insert description here",
+                complete: false 
+            };
+    
+            database.InsertItemBefore(data, database.GetItemAt(0));
+        }
+    },
+];
+
 Start();
 
 function Start() {
@@ -57,22 +73,13 @@ function Start() {
         return;
     }
 
-    let newItemHandler = () => 
-    {
-        let data = {
-            name: "New ToDo Item",
-            description: "Insert description here",
-            complete: false 
-        };
-
-//        database.AddItem(data);
-        database.InsertItemBefore(data, database.GetItemAt(0));
+    let newItemHandler = () => {
     };
 
     let itemIndexHandler = (data) => database.GetItemIndex(data);
     let insertHandler = (itemToInsert, priorItem) => database.InsertItemBefore(itemToInsert, priorItem);
 
-    toDoList = new ArrangeableList(newItemHandler, insertHandler, itemIndexHandler, columnDefinitions, itemButtonDefinitions);
+    toDoList = new ArrangeableList(newItemHandler, insertHandler, itemIndexHandler, columnDefinitions, labelButtonDefinitions, itemButtonDefinitions);
     document.body.appendChild(toDoList.RootNode);
     database.AddListChangedHandler((newListData) => { toDoList.ItemData = newListData; });
 

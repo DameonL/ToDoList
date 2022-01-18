@@ -51,7 +51,7 @@ export class ListItem {
 
             this.#buttonDefinitions.forEach(definition => {
                 let button = document.createElement("span");
-                button.innerText = definition.label;
+                button.innerHTML = definition.label;
                 button.title = definition.tooltip;
                 button.style.cursor = "pointer";
                 button.addEventListener("click", (event) => { definition.clickedHandler(button, this.#backingData); });
