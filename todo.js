@@ -13,7 +13,7 @@ let itemUpdatedHandler = (data) => { database.UpdateItem(data); }
 
 let listDefinition = {
     listId: "toDoList",
-    listHtml: `<div id="arrangeableListRender${this.listId}">
+    listHtml: `<div id="arrangeableListRender${listDefinition.listId}">
         <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div><div class="arrangeableListItem arrangeableListLabel"></div>
     </div>`,
     itemMovementTargetHtml: `<div class="itemMovementTarget"></div>`,
