@@ -3,6 +3,19 @@
     cursor: grabbing;
     padding-top: 5px;
     padding-bottom: 5px;
+    animation-name: growItem;
+    animation-duration: 100ms;
+    animation-iteration-count: 1;
+}
+
+@keyframes growItem {
+    from {
+        height: 0em;
+    }
+
+    to {
+        height: 1.25em;
+    }
 }
 
 .arrangeableListButton {
