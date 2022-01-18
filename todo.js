@@ -24,13 +24,19 @@ let listDefinition = {
             <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div>
             <div class="arrangeableListCheckbox completeCheckBox"></div>
             <div class="arrangeableListTextInput nameInputField">Name</div>
-            <div class="arrangeableListTextInput description">Description</div>
+            <div class="arrangeableListTextInput descriptionInputField">Description</div>
             <div class="arrangeableListItemButtons arrangeableListLabelButtons"></div>
         </div>
     `,
 
     listItemHtml: `
-        <div class="arrangeableListItemHandle"></div><div class="arrangeableListItem"></div>
+        <div class="arrangeableListItem">
+            <div class="arrangeableListItemHandle"></div>
+            <div class="completeCheckBox" boundField="complete"></div>
+            <div class="nameInputField" boundField="name"></div>
+            <div class="descriptionInputField" boundField="description">Description</div>
+            <div class="arrangeableListItemButtons arrangeableListLabelButtons"></div>
+        </div>
     `,
 
     itemMovementTargetHtml: `<div class="itemMovementTarget"></div>`,

@@ -8,7 +8,7 @@ export class ArrangeableListItem {
 
     get Index() { return this.#indexFunction(this.#backingData); }
 
-    constructor(backingData, columnDefinitions, buttonDefinitions, indexFunction) {
+    constructor(backingData, listDefinition) {
         this.#backingData = backingData;
         this.#columnDefinitions = columnDefinitions;
         this.#indexFunction = indexFunction;
@@ -62,6 +62,7 @@ export class ArrangeableListItem {
     }
 
     #CreateCheckBoxSpan(columnDefinition) {
+        let newSpan = this.#renderRoot.querySelector(`[boundField="${columnDefinition.backingDataName}"]`);
         let newCheckBox = document.createElement("input");
         newCheckBox.id = columnDefinition.backingDataName + this.Index;
         newCheckBox.type = "checkbox";
@@ -76,16 +77,16 @@ export class ArrangeableListItem {
         }
         let newSpan = document.createElement("span");
 
-        newSpan.className = "arrangeableListCheckbox";
+        newSpan.className = "arrangeableListCheckbox " + newSpan.className;
         newSpan.appendChild(newCheckBox);
         return newSpan;
     }
 
     #CreateTextInputSpan(columnDefinition) {
-        let newSpan = document.createElement("span");
+        let newSpan = this.#renderRoot.querySelector(`[boundField="${columnDefinition.backingDataName}"]`);
         newSpan.contentEditable = true;
         newSpan.style.cursor = "text";
-        newSpan.className = "arrangeableListTextInput";
+        newSpan.className = "arrangeableListTextInput " + newSpan.className;
 
         if (!columnDefinition.multiLine) {
             newSpan.addEventListener("keypress", (event) => {
@@ -109,8 +110,7 @@ export class ArrangeableListItem {
     }
 
     #CreateRootNode() {
-        let rootNode = document.createElement("div");
-        rootNode.className = "arrangeableListItem";
+        let rootNode = document.createRange().createContextualFragment(listDefinition.listItemHtml.trim()).firstChild;
         rootNode.id = "arrangeableListItem" + this.Index;
         rootNode.draggable = true;
         if (this.Index % 2 == 0) { rootNode.className += " arrangeableListItemAlt"; }

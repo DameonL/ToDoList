@@ -23,12 +23,7 @@ export class ArrangeableList {
     }
 
     CreateListItem(data) {
-        let newItem = new ArrangeableListItem(
-            data,
-            this.#listDefinition.columnDefinitions,
-            this.#listDefinition.itemButtonDefinitions,
-            this.#listDefinition.itemIndexHandler
-        );
+        let newItem = new ArrangeableListItem(data, this.#listDefinition);
         return newItem;
     }
 
