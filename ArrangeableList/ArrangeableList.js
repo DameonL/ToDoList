@@ -38,7 +38,7 @@ export class ArrangeableList {
         let fragmentRoot = document.createElement("div");
         rootFragment.appendChild(fragmentRoot);
         fragmentRoot.innerHTML = this.#listHtml;
-        console.log(fragmentRoot.querySelector(".arrangeableListRender"));
+        console.log(fragmentRoot.querySelector(".arrangeableListItemHandle"));
 
         this.#rootNode = document.createElement("div");
         this.#rootNode.id = "ArrangeableListRender";
