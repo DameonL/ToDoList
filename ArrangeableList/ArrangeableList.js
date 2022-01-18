@@ -35,6 +35,10 @@ export class ArrangeableList {
         this.#itemButtonDefinitions = itemButtonDefinitions;
         this.#listId = listId;
 
+        for (property in this) {
+            console.log(property);
+        }
+
         let generatedFragment = document.createRange().createContextualFragment(this.#listHtml.trim());
         let generatedDiv = generatedFragment.firstChild;
         document.body.appendChild(generatedDiv);
