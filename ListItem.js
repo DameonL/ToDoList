@@ -113,7 +113,7 @@ export class ListItem {
 
     #CreateRootNode() {
         let rootNode = document.createElement("div");
-        rootNode.className = "toDoItem";
+        rootNode.className = "listItem";
         rootNode.id = "toDoItem" + this.Index;
         rootNode.draggable = true;
         rootNode.style.backgroundColor = (this.Index % 2 == 0) ? StyleSettings.ListItemBGColor : StyleSettings.ListItemBGAltColor;

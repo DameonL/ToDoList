@@ -76,7 +76,7 @@ export class ArrangeableList {
 
     #CreateLabelDiv() {
         let labelDiv = document.createElement("div");
-        labelDiv.className = "toDoItem";
+        labelDiv.className = "toDoItem listLabel";
         labelDiv.style.cursor = "default";
 
         let handleSpan = document.createElement("span");

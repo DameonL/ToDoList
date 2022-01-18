@@ -7,24 +7,6 @@ body {
     flex-direction: column;
 }
 
-.listItemButtons {
-    display: flex;
-    flex: 0.25;
-
-    justify-content: right;
-}
-
-.listButton {
-    width: 50px;
-    height: 50px;
-    font-size: 40px;
-    text-align: center;
-    border: 1px solid black;
-    cursor: default;
-    user-select: none;
-    position: inherit;
-}
-
 .itemDeleteDialog {
     position: absolute;
     top: 0;
@@ -44,48 +26,6 @@ body {
     opacity: 100%;
 }
 
-.itemMovementTarget {
-    border: 1px solid black;
-    cursor: grabbing;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-.toDoItem {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: 5px;
-    cursor: grab;
-    min-height: 25px;
-}
-
-.listItemHandle {
-    flex: 0.1;
-    max-width: 20px;
-    max-height: 20px;
-    background-color: darkslategrey;
-    border: 1px solid black;
-}
-
-.listLabelHandle {
-    background-color: unset;
-    border: unset;
-}
-
-.listTextInput {
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.listTextInput:focus {
-    outline: 1px solid grey;
-    box-shadow: 1px 1px 2px black inset;
-    border-radius: 5px;
-    padding: 5px 5px 5px 5px;
-    z-index: 100;
-}
-
 .completeCheckBox {
     flex: 0.1;
 }
@@ -101,15 +41,15 @@ body {
     max-height: 20px;
 }
 
+@media (max-width: 600px) {
+    .descriptionInputField {
+        display: none;
+    }
+}
+
 .descriptionInputField:focus {
     flex: 2;
     text-overflow: unset;
     max-height: unset;
     white-space: normal;
-}
-
-@media (max-width: 600px) {
-    .descriptionInputField {
-        display: none;
-    }
 }
