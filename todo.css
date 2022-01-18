@@ -68,6 +68,11 @@ body {
     border: 1px solid black;
 }
 
+.listLabelHandle {
+    background-color: unset;
+    border: unset;
+}
+
 .listTextInput {
     white-space: nowrap;
     overflow: hidden;
