@@ -133,6 +133,7 @@ export class ArrangeableList {
                 this.#rootNode.insertBefore(itemMovementDropPoint, renderers[targetIndex]);
                 itemMovementDropPoint.className = itemMovementDropPoint.className.replace("arrangeableItemMovementTarget", "");
                 itemMovementDropPoint.className += " arrangeableItemMovementTarget";
+                console.log("Animating ");
 //                itemMovementDropPoint.animate(this.#itemMovementAppearAnimation[0], this.#itemMovementAppearAnimation[1]);
                 currentIndex = targetIndex;
             }
