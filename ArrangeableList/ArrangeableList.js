@@ -135,7 +135,7 @@ export class ArrangeableList {
             event.preventDefault();
             let droppedIndex = event.dataTransfer.getData("text");
             let targetIndex = itemMovementDropPoint.getAttribute("targetIndex");
-            this.#InsertItem(itemData[droppedIndex], itemData[targetIndex]);
+            this.#listDefinition.itemIndexHandler(itemData[droppedIndex], itemData[targetIndex]);
         });
 
         itemMovementDropPoint.addEventListener("dragover", (event) => {
