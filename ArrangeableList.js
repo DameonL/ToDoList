@@ -103,7 +103,6 @@ export class ArrangeableList {
         this.#labelButtonDefinitions.forEach(definition => {
             let button = document.createElement("span");
             button.innerHTML = definition.label;
-            button.title = definition.tooltip;
             button.style.cursor = "pointer";
             button.addEventListener("click", definition.clickedHandler);
             buttonSpan.appendChild(button);

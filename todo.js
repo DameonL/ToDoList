@@ -51,8 +51,12 @@ let itemButtonDefinitions = [
 
 let labelButtonDefinitions = [
     {
-        label: "<span>📄</span><span>+</span>",
-        tooltip: "Create a new item",
+        label: `<span title="Create a new item" style="cursor: pointer;display: flex;flex-direction: row;justify-content: flex-end;"><div style="
+        position: relative;
+        font-size: 10px;
+        width: 0%;
+        height: 0%;
+        ">➕</div><div>📄</div></span>`,
         clickedHandler: (event) => {
             let data = {
                 name: "New ToDo Item",
