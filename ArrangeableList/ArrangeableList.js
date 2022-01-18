@@ -131,6 +131,7 @@ export class ArrangeableList {
             if (currentIndex != targetIndex) {
                 itemMovementDropPoint.setAttribute("targetIndex", targetIndex);
                 this.#rootNode.insertBefore(itemMovementDropPoint, renderers[targetIndex]);
+                itemMovementDropPoint.style.animation = "none";
                 itemMovementDropPoint.style.animation = "growItem";
 //                itemMovementDropPoint.animate(this.#itemMovementAppearAnimation[0], this.#itemMovementAppearAnimation[1]);
                 currentIndex = targetIndex;
