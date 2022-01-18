@@ -88,6 +88,7 @@ export class ArrangeableList {
 
         let handleSpan = document.createElement("span");
         handleSpan.className = "listItemHandle";
+        handleSpan.style = this.#rootNode.style;
         labelDiv.appendChild(handleSpan);
 
         this.#columnDefinitions.forEach(definition => {
