@@ -13,6 +13,7 @@ export class ToDoItemCard {
         
         fetch("ToDoItemCard.html").then(response => {
             this.#cardHtml = response.text();
+            this.Render();
         });
     }
 
