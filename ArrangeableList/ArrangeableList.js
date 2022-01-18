@@ -8,7 +8,7 @@ export class ArrangeableList {
 
     constructor(listDefinition) {
         this.#listDefinition = listDefinition;
-        let generatedFragment = document.createRange().createContextualFragment(listDefinition.listHtml.trim());
+        let generatedFragment = document.createRange().createContextualFragment(this.#listDefinition.listHtml.trim());
         let generatedDiv = generatedFragment.firstChild;
         document.body.appendChild(generatedDiv);
         this.#rootNode = generatedDiv;
