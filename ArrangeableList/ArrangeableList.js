@@ -9,16 +9,6 @@ export class ArrangeableList {
     #labelButtonDefinitions = [];
     #itemButtonDefinitions = [];
     #itemMovementTargetHtml = `<div class="itemMovementTarget"></div>`;
-    #itemMovementAppearAnimation = [[
-        { height: "0em" },
-        { height: "1.25em" }
-    ],
-    {
-        fill: 'forwards',
-        duration: 100,
-        iterations: 1
-    }];
-
 
     set ItemMovementTargetHtml(newHTML) {
         this.#itemMovementTargetHtml = newHTML;
@@ -133,8 +123,6 @@ export class ArrangeableList {
                 this.#rootNode.insertBefore(itemMovementDropPoint, renderers[targetIndex]);
                 itemMovementDropPoint.className = itemMovementDropPoint.className.replace("arrangeableItemMovementTarget", "");
                 itemMovementDropPoint.className += " arrangeableItemMovementTarget";
-                console.log("Animating ");
-//                itemMovementDropPoint.animate(this.#itemMovementAppearAnimation[0], this.#itemMovementAppearAnimation[1]);
                 currentIndex = targetIndex;
             }
 

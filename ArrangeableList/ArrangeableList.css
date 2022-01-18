@@ -3,13 +3,13 @@
     cursor: grabbing;
     padding-top: 5px;
     padding-bottom: 5px;
-    animation-name: growItem;
-    animation-duration: 100ms;
+    height: 1.25em;
+    animation: 100ms linear 0s growItem;
 }
 
 @keyframes growItem {
     from {
-        height: 0em;
+        height: 0;
     }
 
     to {
