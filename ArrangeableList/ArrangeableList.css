@@ -5,7 +5,6 @@
     padding-bottom: 5px;
     animation-name: growItem;
     animation-duration: 100ms;
-    animation-iteration-count: 1;
 }
 
 @keyframes growItem {
