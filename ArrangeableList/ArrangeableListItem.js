@@ -105,7 +105,7 @@ export class ArrangeableListItem {
     }
 
     #CreateRootNode() {
-        let rootNode = document.createRange().createContextualFragment(listDefinition.listItemHtml.trim()).firstChild;
+        let rootNode = document.createRange().createContextualFragment(this.#listDefinition.listItemHtml.trim()).firstChild;
         rootNode.id = "arrangeableListItem" + this.Index;
         rootNode.draggable = true;
         if (this.Index % 2 == 0) { rootNode.className += " arrangeableListItemAlt"; }
