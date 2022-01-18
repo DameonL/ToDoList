@@ -9,6 +9,11 @@ export class ArrangeableList {
     #labelButtonDefinitions = [];
     #itemButtonDefinitions = [];
     #itemMovementTargetHtml = `<div class="itemMovementTarget"></div>`;
+    #listHTML = `
+    <div id="arrangeableListRender">
+        <div class="arrangeableListItem arrangeableListLabel"></div>
+    </div>
+    `;
     #itemMovementDropPoint = null;
 
     set ItemMovementTargetHtml(newHTML) {

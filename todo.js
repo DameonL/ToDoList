@@ -35,27 +35,28 @@ let columnDefinitions = [
 
 let itemButtonDefinitions = [
     {
-        label: "📝",
-        tooltip: "Edit this item",
+        label: `<div title="Edit this item">📝</div>`,
         clickedHandler: (element, data) => {
              let itemCard = new ToDoItemCard(data, () => toDoList.Render());
         }
     },
     {
-        label: "🗑️",
-        tooltip: "Delete this item",
+        label: `<div title="Delete this item">🗑️</div>`,
         clickedHandler: (element, data) => { new ItemDeleteDialog(() => { database.DeleteItem(data); }); }
     },
 ];
 
 let labelButtonDefinitions = [
     {
-        label: `<span title="Create a new item" style="cursor: pointer;display: flex;flex-direction: row;justify-content: flex-end;"><div style="
-        position: relative;
-        font-size: 10px;
-        width: 0%;
-        height: 0%;
-        ">➕</div><div>📄</div></span>`,
+        label: `<span title="Create a new item" style="cursor: pointer;display: flex;flex-direction: row;justify-content: flex-end;">
+            <div style="
+            position: relative;
+            font-size: 10px;
+            width: 0%;
+            height: 0%;
+            ">➕</div>
+            <div>📄</div>
+        </span>`,
         clickedHandler: (event) => {
             let data = {
                 name: "New ToDo Item",
