@@ -5,6 +5,11 @@ import { ToDoItemCard } from "./ToDoItemCard/ToDoItemCard.js";
 
 let toDoList = null;
 let getNewItem =  () =>{
+    let dueDate = Date.now();
+    let currentTime = Date.now();
+    let hours = currentTime.getHours();
+    dueDate.setHours(hours + 1);
+    
     let data = {
         name: "New ToDo Item",
         description: "Insert description here",
