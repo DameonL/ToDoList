@@ -116,8 +116,10 @@ function Start() {
 
     toDoList = new ArrangeableList(listDefinition);
     document.body.appendChild(toDoList.RootNode);
-    let addButton = document.querySelector("#newItemButton");
-    addButton.addEventListener("click", () => { database.InsertItemBefore(database.GetItemAt(0)); });
-    database.AddListChangedHandler((newListData) => { toDoList.ItemData = newListData; });
+    database.AddListChangedHandler((newListData) => {
+        toDoList.ItemData = newListData; 
+        let addButton = document.querySelector("#newItemButton");
+        addButton.addEventListener("click", () => { database.InsertItemBefore(database.GetItemAt(0)); });    
+    });
 }
 
