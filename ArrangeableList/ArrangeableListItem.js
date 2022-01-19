@@ -30,7 +30,6 @@ export class ArrangeableListItem {
                 if (columnDefinition.className) columnInstance.className += " " + columnDefinition.className;
 
                 this.#elements.push(columnInstance);
-                rootNode.appendChild(columnInstance);
             });
 
             this.#UpdateAppearance();
