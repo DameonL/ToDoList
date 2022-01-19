@@ -74,7 +74,10 @@ let listDefinition = {
             label: `<div title="Edit this item">📝</div>`,
             targetSelector: ".arrangeableListItemButtons",
             clickedHandler: (element, data) => {
-                 let itemCard = new ToDoItemCard(data, () => toDoList.Render());
+                 let itemCard = new ToDoItemCard(data, () => {
+                    database.UpdateItem(data);
+                    toDoList.Render();
+                 });
             }
         },
         {
