@@ -15,7 +15,9 @@ let getNewItem =  () =>{
         description: "Insert description here",
         complete: false ,
         dueDate: dueDate.valueOf(),
-    }   
+    }
+
+    return data;
 };
 
 let database = new OrderedIndexedDb("ToDoList", "items", getNewItem);
