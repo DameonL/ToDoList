@@ -39,7 +39,7 @@ export class ArrangeableList {
                 let comparison = 0;
                 if (a[this.#sortColumn] > b[this.#sortColumn]) comparison = -1;
                 else if (a[this.#sortColumn] > b[this.#sortColumn]) comparison = 1;
-                if (this.#sortDirection != "asc") comparison = -comparison;
+                if (this.#sortDirection != "asc") comparison = (comparison < 0) ? Math.abs(comparison) : -comparison;
 
                 return comparison;
             });
