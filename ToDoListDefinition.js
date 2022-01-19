@@ -19,7 +19,7 @@ export function getNewItem() {
     return data;
 };
 
-let database = new OrderedIndexedDb("ToDoList", "items", getNewItem);
+export let database = new OrderedIndexedDb("ToDoList", "items", getNewItem);
 
 database.AddListChangedHandler((newListData) => {
     let addButtonInterval = setInterval(() => {
