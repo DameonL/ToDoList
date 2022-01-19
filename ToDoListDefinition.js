@@ -1,5 +1,4 @@
 import { OrderedIndexedDb } from "./OrderedIndexedDb.js";
-export let database = new OrderedIndexedDb("ToDoList", "items", getNewItem);
 
 let getNewItem =  () =>{
     let dueDate = new Date(Date.now());
@@ -16,6 +15,8 @@ let getNewItem =  () =>{
 
     return data;
 };
+
+export let database = new OrderedIndexedDb("ToDoList", "items", getNewItem);
 
 let itemDrawHandler = (htmlElement, data) => {
     if (data.dueDate < Date.now()) {
