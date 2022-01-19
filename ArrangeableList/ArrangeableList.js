@@ -5,6 +5,8 @@ export class ArrangeableList {
     #itemData = [];
     #listDefinition = null;
     #itemMovementDropPoint = null;
+    #sortColumn = "";
+    #sortDirection = "asc";
 
     constructor(listDefinition) {
         this.#listDefinition = listDefinition;
@@ -21,6 +23,8 @@ export class ArrangeableList {
         this.#itemMovementDropPoint = null;
         this.Render();
     }
+
+
 
     CreateListItem(data) {
         let newItem = new ArrangeableListItem(data, this.#listDefinition);
@@ -54,16 +58,6 @@ export class ArrangeableList {
     #CreateLabelDiv() {
         let generatedFragment = document.createRange().createContextualFragment(this.#listDefinition.labelHtml.trim());
         let labelDiv = generatedFragment.firstChild;
-
-/*        let buttonSpan = labelDiv.querySelector(".arrangeableListItemButtons");
-
-        this.#listDefinition.labelButtonDefinitions.forEach(definition => {
-            let button = document.createElement("span");
-            button.innerHTML = definition.label;
-            button.style.cursor = "pointer";
-            button.addEventListener("click", definition.clickedHandler);
-            buttonSpan.appendChild(button);
-        }); */
 
         return labelDiv;
     }
