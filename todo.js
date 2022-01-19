@@ -142,6 +142,6 @@ function Start() {
 
     let renderButton = document.createElement("button");
     renderButton.addEventListener("click", () => toDoList.Render());
-
+    document.body.appendChild(renderButton);
 }
 
