@@ -12,7 +12,7 @@ export class ToDoItemCard {
         this.#backingData = backingData;
         this.#closedHandler = closedHandler;
         
-        fetch("ToDoItemCard.html").then(response => {
+        fetch("./ToDoItemCard/ToDoItemCard.html").then(response => {
             return response.text();
         }).then(text => {
             this.#cardHtml = text;
