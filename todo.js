@@ -1,11 +1,21 @@
 import { ArrangeableList } from "./ArrangeableList/ArrangeableList.js";
-import { listDefinition, database } from "./ToDoListDefinition.js";
+import { listDefinition, database, getNewItem, editNewItem } from "./ToDoListDefinition.js";
 
 
 let toDoList = null;
 toDoList = new ArrangeableList(listDefinition);
 document.body.appendChild(toDoList.RootNode);
 database.AddListChangedHandler((newList) => { toDoList.ItemData = newList; })
+database.AddListChangedHandler((newListData) => {
+    let addButton = document.querySelector("#newItemButton");
+    if (addButton) {
+        addButton.addEventListener("click", () => {
+            let newItem = getNewItem();
+            editNewItem(newItem);
+        });
+    }
+});
+
 toDoList.ItemData = database.Items;
 
 let renderButton = document.createElement("button");

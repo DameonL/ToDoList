@@ -20,21 +20,18 @@ export function getNewItem() {
 };
 
 export let database = new OrderedIndexedDb("ToDoList", "items", getNewItem);
-
-database.AddListChangedHandler((newListData) => {
-    let addButtonInterval = setInterval(() => {
-        let addButton = document.querySelector("#newItemButton");
-        if (addButton) {
-            addButton.addEventListener("click", () => {
-                let newItem = getNewItem();
-                editNewItem(newItem);
-            });
-
-            clearInterval(addButtonInterval);
-        }
+export let editItem = (data) => {
+    let itemCard = new ToDoItemCard(data, () => {
+       database.UpdateItem(data);
     });
+}
 
-});
+export let editNewItem = (data) => {
+    let itemCard = new ToDoItemCard(data, () => {
+        database.InsertItemBefore(data, database.GetItemAt(0));
+     });
+}
+
 
 let itemDrawHandler = (htmlElement, data) => {
     if (data.dueDate < Date.now()) {
@@ -49,17 +46,6 @@ let textDrawHandler = (element, data) => {
 let itemUpdatedHandler = (data) => { database.UpdateItem(data); }
 let itemIndexHandler = (data) => database.GetItemIndex(data);
 let itemInsertHandler = (itemToInsert, priorItem) => database.InsertItemBefore(itemToInsert, priorItem);
-let editItem = (data) => {
-    let itemCard = new ToDoItemCard(data, () => {
-       database.UpdateItem(data);
-    });
-}
-
-let editNewItem = (data) => {
-    let itemCard = new ToDoItemCard(data, () => {
-        database.InsertItemBefore(data, database.GetItemAt(0));
-     });
-}
 
 export let listDefinition = {
     listHtml: `
