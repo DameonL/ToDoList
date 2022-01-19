@@ -29,9 +29,7 @@ export class ArrangeableList {
         return newItem;
     }
 
-    get IndexOf(data) {
-        return this.#listDefinition.itemIndexHandler(data);
-    }
+    IndexOf = (data) => this.#listDefinition.itemIndexHandler(data);
 
     Render() {
         while (this.#rootNode.firstChild) {
