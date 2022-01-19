@@ -43,8 +43,6 @@ export class ArrangeableListItem {
                 button.addEventListener("click", (event) => { definition.clickedHandler(button, this.#backingData); });
                 buttonSpan.appendChild(button);
             });
-
-            rootNode.appendChild(buttonSpan);
         }
 
         return this.#renderRoot;
