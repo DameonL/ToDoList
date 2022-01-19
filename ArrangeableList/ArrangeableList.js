@@ -44,7 +44,7 @@ export class ArrangeableList {
                 return comparison;
             });
         }
-        
+
         let itemData = this.#itemData;
         let labelDiv = this.#CreateLabelDiv();
         this.#rootNode.appendChild(labelDiv);
