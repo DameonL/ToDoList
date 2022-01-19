@@ -68,7 +68,7 @@ export class ArrangeableList {
         boundElements.forEach(element => {
             let sortColumn = element.getAttribute("boundField");
             if (sortColumn == this.#sortColumn) {
-                element.innerText += (this.#sortDirection = "asc") ? "⬆️" : "⬇️";
+                element.innerText += (this.#sortDirection = "asc") ? "⬇" : "⬆";
             }
 
             element.addEventListener("click", (event) => {
