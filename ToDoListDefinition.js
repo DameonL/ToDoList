@@ -1,6 +1,22 @@
 import { OrderedIndexedDb } from "./OrderedIndexedDb.js";
 export let database = new OrderedIndexedDb("ToDoList", "items", getNewItem);
 
+let getNewItem =  () =>{
+    let dueDate = new Date(Date.now());
+    let currentTime = new Date(Date.now());
+    let hours = currentTime.getHours();
+    dueDate.setHours(hours + 1);
+
+    let data = {
+        name: "New ToDo Item",
+        description: "Insert description here",
+        complete: false ,
+        dueDate: dueDate.valueOf(),
+    }
+
+    return data;
+};
+
 let itemDrawHandler = (htmlElement, data) => {
     if (data.dueDate < Date.now()) {
         htmlElement.style.backgroundColor = "#ffe7e6";

@@ -4,23 +4,6 @@ import { ToDoItemCard } from "./ToDoItemCard/ToDoItemCard.js";
 import { listDefinition, database } from "./ToDoListDefinition.js";
 
 let toDoList = null;
-let getNewItem =  () =>{
-    let dueDate = new Date(Date.now());
-    let currentTime = new Date(Date.now());
-    let hours = currentTime.getHours();
-    dueDate.setHours(hours + 1);
-
-    let data = {
-        name: "New ToDo Item",
-        description: "Insert description here",
-        complete: false ,
-        dueDate: dueDate.valueOf(),
-    }
-
-    return data;
-};
-
-
 
 Start();
 
