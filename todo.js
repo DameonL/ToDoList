@@ -1,9 +1,14 @@
 import { ArrangeableList } from "./ArrangeableList/ArrangeableList.js";
 import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
-
+import { listDefinition, database } from "./ToDoListDefinition.js";
+    
 let toDoList = null;
-
-Start();
+toDoList = new ArrangeableList(listDefinition);
+document.body.appendChild(toDoList.RootNode);
+database.AddListChangedHandler((newList) => { toDoList.ItemData = newList; });
+let renderButton = document.createElement("button");
+renderButton.addEventListener("click", () => toDoList.Render());
+document.body.appendChild(renderButton);
 
 function Start() {
     if (!('indexedDB' in window)) {
@@ -11,13 +16,6 @@ function Start() {
         return;
     }
 
-    toDoList = new ArrangeableList(listDefinition);
-    document.body.appendChild(toDoList.RootNode);
-    import { listDefinition, database } from "./ToDoListDefinition.js";
-    database.AddListChangedHandler((newList) => { toDoList.ItemData = newList; });
 
-    let renderButton = document.createElement("button");
-    renderButton.addEventListener("click", () => toDoList.Render());
-    document.body.appendChild(renderButton);
 }
 
