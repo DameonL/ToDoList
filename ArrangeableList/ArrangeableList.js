@@ -24,6 +24,9 @@ export class ArrangeableList {
         this.Render();
     }
 
+    get SortColumn() { return this.#sortColumn; }
+    set SortColumn(newColumn) { }
+
     CreateListItem(data) {
         let newItem = new ArrangeableListItem(data, this.#listDefinition);
         return newItem;
