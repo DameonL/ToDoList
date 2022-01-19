@@ -132,7 +132,7 @@ export class OrderedIndexedDb {
             let store = db.createObjectStore(this.#tableName);
 
             for (let i = 0; i < 3; i++) {
-                store.put({ name: `My New ToDo Item ${i}`, description: "Insert description here", complete: false }, i);
+                store.put({ name: `My New ToDo Item ${i}`, description: "Insert description here", complete: false, dueDate: Date.now(), }, i);
             }
         }
     }
