@@ -1,5 +1,7 @@
 import { OrderedIndexedDb } from "./OrderedIndexedDb.js";
 import { ToDoItemCard } from "./ToDoItemCard/ToDoItemCard.js";
+import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
+
 
 export function getNewItem() {
     let dueDate = new Date(Date.now());
@@ -17,19 +19,22 @@ export function getNewItem() {
     return data;
 };
 
-export let database = new OrderedIndexedDb("ToDoList", "items", getNewItem);
-setTimeout(() => {
-    database.AddListChangedHandler((newListData) => {
+let database = new OrderedIndexedDb("ToDoList", "items", getNewItem);
+
+database.AddListChangedHandler((newListData) => {
+    let addButtonInterval = setInterval(() => {
         let addButton = document.querySelector("#newItemButton");
         if (addButton) {
             addButton.addEventListener("click", () => {
                 let newItem = getNewItem();
                 editNewItem(newItem);
             });
+
+            clearInterval(addButtonInterval);
         }
     });
-    
-}, 100);
+
+});
 
 let itemDrawHandler = (htmlElement, data) => {
     if (data.dueDate < Date.now()) {

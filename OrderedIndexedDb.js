@@ -25,6 +25,7 @@ export class OrderedIndexedDb {
             store.getAll().onsuccess = (event) => {
                 this.#items = event.target.result;
                 db.close();
+                
                 this.#ExecuteListChangedHandlers();
             };
         }
