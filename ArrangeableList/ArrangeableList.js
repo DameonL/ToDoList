@@ -87,7 +87,7 @@ export class ArrangeableList {
         
         for (let i = 0; i < itemData.length; i++) {
             let listItem = this.#CreateChildItem(itemData[i], this.#itemMovementDropPoint);
-            let renderer = listItem.renderer;
+            let renderer = listItem.Renderer;
             if (this.#listDefinition.itemDrawHandler) {
                 this.#listDefinition.itemDrawHandler(renderer, itemData[i]);
             }
