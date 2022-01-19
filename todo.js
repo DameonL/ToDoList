@@ -5,8 +5,9 @@ import { listDefinition, database, getNewItem, editNewItem } from "./ToDoListDef
 let toDoList = null;
 toDoList = new ArrangeableList(listDefinition);
 document.body.appendChild(toDoList.RootNode);
-database.AddListChangedHandler((newList) => { toDoList.ItemData = newList; })
+
 database.AddListChangedHandler((newListData) => {
+    toDoList.ItemData = newListData;
     let addButton = document.querySelector("#newItemButton");
     if (addButton) {
         addButton.addEventListener("click", () => {

@@ -41,8 +41,8 @@ export class ArrangeableList {
         this.#listItems.forEach(item => {
             this.#rootNode.removeChild(item.renderer);
         });
-        this.#rootNode.removeChild(this.#listLabel);
-        this.#rootNode.removeChild(this.#itemMovementDropPoint);
+        if (this.#listLabel) this.#rootNode.removeChild(this.#listLabel);
+        if (this.#itemMovementDropPoint) this.#rootNode.removeChild(this.#itemMovementDropPoint);
 
         this.#listItems = [];
 
