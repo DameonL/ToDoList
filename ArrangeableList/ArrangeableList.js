@@ -58,7 +58,7 @@ export class ArrangeableList {
         }
         else {
             this.#itemData.sort((a, b) => {
-                a = IndexOf(a);
+                a = this.IndexOf(a);
                 b = this.IndexOf(b);
                 let comparison = 0;
                 if (a > b) comparison = -1;

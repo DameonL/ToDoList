@@ -139,5 +139,9 @@ function Start() {
             editNewItem(newItem);
         });    
     });
+
+    let renderButton = document.createElement("button");
+    renderButton.addEventListener("click", () => toDoList.Render());
+
 }
 
