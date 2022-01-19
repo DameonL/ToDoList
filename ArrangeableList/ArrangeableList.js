@@ -29,6 +29,10 @@ export class ArrangeableList {
         return newItem;
     }
 
+    get IndexOf(data) {
+        return this.#listDefinition.itemIndexHandler(data);
+    }
+
     Render() {
         while (this.#rootNode.firstChild) {
             this.#rootNode.removeChild(this.#rootNode.firstChild);
@@ -56,8 +60,8 @@ export class ArrangeableList {
         }
         else {
             this.#itemData.sort((a, b) => {
-                a = a.Index;
-                b = b.Index;
+                a = IndexOf(a);
+                b = this.IndexOf(b);
                 let comparison = 0;
                 if (a > b) comparison = -1;
                 else if (b > a) comparison = 1;
