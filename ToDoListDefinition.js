@@ -1,3 +1,5 @@
+export let database = new OrderedIndexedDb("ToDoList", "items", getNewItem);
+
 let itemDrawHandler = (htmlElement, data) => {
     if (data.dueDate < Date.now()) {
         htmlElement.style.backgroundColor = "#ffe7e6";
@@ -16,6 +18,13 @@ let editItem = (data) => {
        database.UpdateItem(data);
        toDoList.Render();
     });
+}
+
+let editNewItem = (data) => {
+    let itemCard = new ToDoItemCard(data, () => {
+        database.InsertItemBefore(data, database.GetItemAt(0));
+        toDoList.Render();
+     });
 }
 
 export let listDefinition = {

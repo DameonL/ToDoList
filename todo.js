@@ -2,7 +2,7 @@ import { ArrangeableList } from "./ArrangeableList/ArrangeableList.js";
 import { OrderedIndexedDb } from "./OrderedIndexedDb.js";
 import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
 import { ToDoItemCard } from "./ToDoItemCard/ToDoItemCard.js";
-import { listDefinition } from "./ToDoListDefinition.js";
+import { listDefinition, database } from "./ToDoListDefinition.js";
 
 let toDoList = null;
 let getNewItem =  () =>{
@@ -21,7 +21,6 @@ let getNewItem =  () =>{
     return data;
 };
 
-let database = new OrderedIndexedDb("ToDoList", "items", getNewItem);
 
 
 Start();
@@ -32,13 +31,6 @@ function Start() {
         return;
     }
 
-    let editNewItem = (data) => {
-        let itemCard = new ToDoItemCard(data, () => {
-            database.InsertItemBefore(data, database.GetItemAt(0));
-            toDoList.Render();
-         });
-    }
-    
     toDoList = new ArrangeableList(listDefinition);
     document.body.appendChild(toDoList.RootNode);
     database.AddListChangedHandler((newListData) => {
