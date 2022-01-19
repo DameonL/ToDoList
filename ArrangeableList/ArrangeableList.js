@@ -57,8 +57,8 @@ export class ArrangeableList {
         let generatedFragment = document.createRange().createContextualFragment(this.#listDefinition.labelHtml.trim());
         let labelDiv = generatedFragment.firstChild;
 
-        let boundElements = labelDiv.querySelectorAll(`[boundField*=""]`);
-        boundElements.foreach(element => {
+        let boundElements = labelDiv.querySelectorAll(`not([boundField=""])`);
+        boundElements.forEach(element => {
             console.log(element);
         });
 
