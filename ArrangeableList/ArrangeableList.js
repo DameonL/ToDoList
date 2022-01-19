@@ -24,8 +24,6 @@ export class ArrangeableList {
         this.Render();
     }
 
-
-
     CreateListItem(data) {
         let newItem = new ArrangeableListItem(data, this.#listDefinition);
         return newItem;
@@ -59,7 +57,7 @@ export class ArrangeableList {
         let generatedFragment = document.createRange().createContextualFragment(this.#listDefinition.labelHtml.trim());
         let labelDiv = generatedFragment.firstChild;
 
-        let boundElements = labelDiv.querySelector("[boundField=*]");
+        let boundElements = labelDiv.querySelectorAll(`[boundField*=""]`);
         boundElements.foreach(element => {
             console.log(element);
         });
