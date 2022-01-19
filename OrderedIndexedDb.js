@@ -73,6 +73,12 @@ export class OrderedIndexedDb {
 
     DeleteItem(data) {
         let index = this.GetItemIndex(data);
+        if (index == -1) {
+            console.warn("Attempt to remove an item from the database when it isn't present.");
+            console.warn(data);
+            return;
+        }
+
         this.#items.splice(index, 1);
 
         for (let i = index; i < this.#items.length; i++) {
