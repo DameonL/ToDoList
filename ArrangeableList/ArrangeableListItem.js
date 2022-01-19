@@ -39,7 +39,7 @@ export class ArrangeableListItem {
                 let button = document.createElement("span");
                 button.innerHTML = definition.label;
                 button.style.cursor = "pointer";
-                button.addEventListener("click", (event) => { definition.clickedHandler(buttonSpan, this.#backingData); });
+                button.addEventListener("click", (event) => { definition.clickedHandler(this.#backingData); });
                 buttonSpan.appendChild(button);
             });
         }

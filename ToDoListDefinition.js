@@ -111,7 +111,7 @@ export let listDefinition = {
         {
             label: `<div title="Delete this item">🗑️</div>`,
             targetSelector: ".arrangeableListItemButtons",
-            clickedHandler: (element, data) => { new ItemDeleteDialog(() => { database.DeleteItem(data); }); }
+            clickedHandler: (data) => { new ItemDeleteDialog(() => { database.DeleteItem(data); }); }
         },
     ],
 
