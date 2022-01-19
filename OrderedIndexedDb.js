@@ -2,6 +2,7 @@ export class OrderedIndexedDb {
     #databaseName = "";
     #tableName = "";
     #items = [];
+    #createItemHandler = null;
     #itemChangedHandlers = [];
     #listChangedHandlers = [];
 
@@ -9,7 +10,7 @@ export class OrderedIndexedDb {
 
     GetItems() { return [...this.#items]; }
 
-    constructor(databaseName, tableName) {
+    constructor(databaseName, tableName, createItemHandler) {
         this.#databaseName = databaseName;
         this.#tableName = tableName;
 
@@ -59,6 +60,10 @@ export class OrderedIndexedDb {
     }
 
     AddItem(data) {
+        if (data == undefined) {
+            data = this.#createItemHandler();
+        }
+
         this.#items.push(data);
         this.UpdateItem(data);
         this.#ExecuteListChangedHandlers();
@@ -84,7 +89,12 @@ export class OrderedIndexedDb {
     }
 
     InsertItemBefore(itemToInsert, priorItem) {
-        if (itemToInsert == priorItem) return;
+        if (priorItem === undefined) {
+            priorItem = itemToInsert;
+            itemToInsert = this.#createItemHandler();
+        } else if (itemToInsert == priorItem) {
+            return;
+        }
         
         let insertIndex = this.GetItemIndex(priorItem);
         let oldIndex = this.GetItemIndex(itemToInsert);
@@ -131,9 +141,7 @@ export class OrderedIndexedDb {
             let db = event.target.result;
             let store = db.createObjectStore(this.#tableName);
 
-            for (let i = 0; i < 3; i++) {
-                store.put({ name: `My New ToDo Item ${i}`, description: "Insert description here", complete: false, dueDate: Date.now(), }, i);
-            }
+            store.put(this.#createItemHandler(), 0);
         }
     }
 }

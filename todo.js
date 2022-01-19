@@ -4,7 +4,16 @@ import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
 import { ToDoItemCard } from "./ToDoItemCard/ToDoItemCard.js";
 
 let toDoList = null;
-let database = new OrderedIndexedDb("ToDoList", "items");
+let getNewItem =  () =>{
+    let data = {
+        name: "New ToDo Item",
+        description: "Insert description here",
+        complete: false ,
+        dueDate: Date.now().setHours(Date.now().getHours() + 1),
+    }   
+};
+
+let database = new OrderedIndexedDb("ToDoList", "items", getNewItem);
 let itemDrawHandler = (htmlElement, data) => {
     if (data.dueDate < Date.now()) {
         htmlElement.style.backgroundColor = "#ffe7e6";
@@ -31,7 +40,12 @@ let listDefinition = {
             <div class="arrangeableListCheckbox completeCheckBox"></div>
             <div class="arrangeableListTextInput nameInputField">Name</div>
             <div class="arrangeableListTextInput descriptionInputField">Description</div>
-            <div class="arrangeableListItemButtons arrangeableListLabelButtons"></div>
+            <div class="arrangeableListItemButtons arrangeableListLabelButtons">
+                <span title="Create a new item" id="newItemButton" style="cursor: pointer;display: flex;flex-direction: row;justify-content: flex-end;">
+                    <div style="position: relative;font-size: 10px;width: 0%;height: 0%;">➕</div>
+                    <div>📄</div>
+                </span>
+            </div>
         </div>
     `,
 
@@ -101,13 +115,7 @@ let listDefinition = {
                 </span>
             `,
             clickedHandler: (event) => {
-                let data = {
-                    name: "New ToDo Item",
-                    description: "Insert description here",
-                    complete: false 
-                };
-        
-                database.InsertItemBefore(data, database.GetItemAt(0));
+                database.InsertItemBefore(database.GetItemAt(0));
             }
         },
     ],

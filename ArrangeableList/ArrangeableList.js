@@ -55,7 +55,7 @@ export class ArrangeableList {
         let generatedFragment = document.createRange().createContextualFragment(this.#listDefinition.labelHtml.trim());
         let labelDiv = generatedFragment.firstChild;
 
-        let buttonSpan = labelDiv.querySelector(".arrangeableListItemButtons");
+/*        let buttonSpan = labelDiv.querySelector(".arrangeableListItemButtons");
 
         this.#listDefinition.labelButtonDefinitions.forEach(definition => {
             let button = document.createElement("span");
@@ -63,7 +63,7 @@ export class ArrangeableList {
             button.style.cursor = "pointer";
             button.addEventListener("click", definition.clickedHandler);
             buttonSpan.appendChild(button);
-        });
+        }); */
 
         return labelDiv;
     }
