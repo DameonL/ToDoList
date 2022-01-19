@@ -67,18 +67,22 @@ export class ArrangeableList {
         let boundElements = labelDiv.querySelectorAll(`[boundField]`);
         boundElements.forEach(element => {
             let sortColumn = element.getAttribute("boundField");
+
+            let clickedHandler = (event) => {
+                if (this.#sortColumn == sortColumn) {
+                    this.#sortDirection = (this.#sortDirection == "asc") ? "desc" : "asc";   
+                }
+    
+                this.#sortColumn = sortColumn;
+                this.Render();
+            }
+        
+            clickedHandler = clickedHandler.bind(this);
             if (sortColumn == this.#sortColumn) {
                 element.innerText += (this.#sortDirection = "asc") ? "⬇" : "⬆";
             }
 
-            element.addEventListener("click", (event) => {
-                if (this.#sortColumn == sortColumn) {
-                    this.#sortDirection = (this.#sortDirection == "asc") ? "desc" : "asc";   
-                }
-
-                this.#sortColumn = sortColumn;
-                this.Render();
-            });
+            element.addEventListener("click", clickedHandler);
         });
 
         return labelDiv;
