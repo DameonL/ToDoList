@@ -35,9 +35,8 @@ export class ArrangeableListItem {
 
             this.#UpdateAppearance();
 
-            let buttonSpan = this.#renderRoot.querySelector(".arrangeableListItemButtons");
-
             this.#listDefinition.itemButtonDefinitions.forEach(definition => {
+                let buttonSpan = this.#renderRoot.querySelector();
                 let button = document.createElement("span");
                 button.innerHTML = definition.label;
                 button.style.cursor = "pointer";
