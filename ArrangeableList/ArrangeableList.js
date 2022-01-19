@@ -37,6 +37,7 @@ export class ArrangeableList {
         if (this.#sortColumn != "") {
             this.#itemData.sort((a, b) => {
                 let comparison = 0;
+                console.log(`${a[this.#sortColumn]} ${b[this.#sortColumn]}`);
                 if (a[this.#sortColumn] > b[this.#sortColumn]) comparison = -1;
                 else if (a[this.#sortColumn] > b[this.#sortColumn]) comparison = 1;
                 if (this.#sortDirection != "asc") comparison = (comparison < 0) ? Math.abs(comparison) : -comparison;
