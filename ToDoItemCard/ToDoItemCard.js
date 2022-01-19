@@ -63,7 +63,7 @@ export class ToDoItemCard {
                     });
                 }
                 else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "datetime-local")) {
-                    let htmlDate = this.#backingData[property];
+                    let htmlDate = new Date(this.#backingData[property]);
                     htmlDate.setMinutes(htmlDate.getMinutes() - htmlDate.getTimezoneOffset());
                     htmlDate = htmlDate.toISOString().slice(0,16);
                     boundElement.value = htmlDate;
