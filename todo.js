@@ -7,7 +7,7 @@ toDoList = new ArrangeableList(listDefinition);
 document.body.appendChild(toDoList.RootNode);
 setTimeout(() => {
     database.AddListChangedHandler((newList) => { toDoList.ItemData = newList; })
-    toDoList.Render();
+    toDoList.ItemData = database.Items;
 }, 100);
 
 let renderButton = document.createElement("button");

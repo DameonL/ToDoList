@@ -6,9 +6,9 @@ export class OrderedIndexedDb {
     #itemChangedHandlers = [];
     #listChangedHandlers = [];
 
-    get count() { return this.#items.length; }
+    get Count() { return this.#items.length; }
 
-    GetItems() { return [...this.#items]; }
+    get Items() { return [...this.#items]; }
 
     constructor(databaseName, tableName, createItemHandler) {
         this.#databaseName = databaseName;
