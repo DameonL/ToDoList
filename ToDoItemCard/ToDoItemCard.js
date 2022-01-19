@@ -32,6 +32,7 @@ export class ToDoItemCard {
             this.#UpdateBackingData();
             documentHider.parentNode.removeChild(documentHider);
             cardNode.parentNode.removeChild(cardNode);
+            this.#UpdateBackingData();
             this.#closedHandler();
         });
 
@@ -43,10 +44,6 @@ export class ToDoItemCard {
 
                 if ((boundElement.nodeName == "DIV") || (boundElement.nodeName == "SPAN")) {
                     boundElement.innerHTML = this.#backingData[property];
-                    boundElement.addEventListener("focusout", (event) => {
-                        this.#UpdateBackingData();
-                    });
-
                     if (!boundElement.getAttribute("multiLine")) {
                         boundElement.addEventListener("keypress", (event) => {
                             if (event.key == "Enter") {
@@ -58,18 +55,12 @@ export class ToDoItemCard {
                 }
                 else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "checkbox")) {
                     boundElement.checked = this.#backingData[property];
-                    boundElement.addEventListener("click", (event) => {
-                        this.#UpdateBackingData();
-                    });
                 }
                 else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "datetime-local")) {
                     let htmlDate = new Date(this.#backingData[property]);
                     htmlDate.setMinutes(htmlDate.getMinutes() - htmlDate.getTimezoneOffset());
                     htmlDate = htmlDate.toISOString().slice(0,16);
                     boundElement.value = htmlDate;
-                    boundElement.addEventListener("click", (event) => {
-                        this.#UpdateBackingData();
-                    });
                 }
             }
         });
