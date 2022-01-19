@@ -1,6 +1,7 @@
 import { OrderedIndexedDb } from "./OrderedIndexedDb.js";
+import { ToDoItemCard } from "./ToDoItemCard/ToDoItemCard.js";
 
-let getNewItem =  () =>{
+let getNewItem =  () => {
     let dueDate = new Date(Date.now());
     let currentTime = new Date(Date.now());
     let hours = currentTime.getHours();
@@ -17,6 +18,14 @@ let getNewItem =  () =>{
 };
 
 export let database = new OrderedIndexedDb("ToDoList", "items", getNewItem);
+database.AddListChangedHandler((newListData) => {
+    toDoList.ItemData = newListData; 
+    let addButton = document.querySelector("#newItemButton");
+    addButton.addEventListener("click", () => {
+        let newItem = getNewItem();
+        editNewItem(newItem);
+    });    
+});
 
 let itemDrawHandler = (htmlElement, data) => {
     if (data.dueDate < Date.now()) {
