@@ -1,7 +1,7 @@
 import { ArrangeableList } from "./ArrangeableList/ArrangeableList.js";
 import { OrderedIndexedDb } from "./OrderedIndexedDb.js";
 import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
-import { ToDoItemCard } from "./ToDoItemCard.js";
+import { ToDoItemCard } from "./ToDoItemCard/ToDoItemCard.js";
 
 let toDoList = null;
 let database = new OrderedIndexedDb("ToDoList", "items");

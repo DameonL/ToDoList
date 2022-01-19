@@ -82,6 +82,7 @@ export class ArrangeableList {
             if (currentIndex != targetIndex) {
                 itemMovementDropPoint.setAttribute("targetIndex", targetIndex);
                 this.#rootNode.insertBefore(itemMovementDropPoint, renderers[targetIndex]);
+                // Trigger animations
                 itemMovementDropPoint.className = itemMovementDropPoint.className.replace("arrangeableItemMovementTarget", "");
                 itemMovementDropPoint.className += " arrangeableItemMovementTarget";
                 currentIndex = targetIndex;
