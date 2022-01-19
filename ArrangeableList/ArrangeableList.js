@@ -34,11 +34,13 @@ export class ArrangeableList {
             this.#rootNode.removeChild(this.#rootNode.firstChild);
         }
 
-        this.#itemData.sort((a, b) => {
-            if (a[this.#sortColumn] > b[this.#sortColumn]) return -1;
-            else if (a[this.#sortColumn] > b[this.#sortColumn]) return 1;
-            return 0;
-        });
+        if (this.#sortColumn != "") {
+            this.#itemData.sort((a, b) => {
+                if (a[this.#sortColumn] > b[this.#sortColumn]) return -1;
+                else if (a[this.#sortColumn] > b[this.#sortColumn]) return 1;
+                return 0;
+            });
+        }
         let itemData = this.#itemData;
         let labelDiv = this.#CreateLabelDiv();
         this.#rootNode.appendChild(labelDiv);
