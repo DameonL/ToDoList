@@ -1,3 +1,4 @@
+import { OrderedIndexedDb } from "./OrderedIndexedDb.js";
 export let database = new OrderedIndexedDb("ToDoList", "items", getNewItem);
 
 let itemDrawHandler = (htmlElement, data) => {
