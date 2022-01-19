@@ -25,7 +25,7 @@ let editNewItem = (data) => {
      });
 }
 
-let listDefinition = {
+export let listDefinition = {
     listHtml: `
         <div id="toDoListRender">
         </div>
