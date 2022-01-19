@@ -127,6 +127,7 @@ export class OrderedIndexedDb {
             let store = transaction.objectStore(this.#tableName);
             let index = this.GetItemIndex(data);
             if (index == -1) index = this.#items.length;
+            
             store.put(data, index);
 
             this.#itemChangedHandlers.forEach(x => { x(data); });

@@ -41,6 +41,13 @@ let editItem = (data) => {
     });
 }
 
+let editNewItem = (data) => {
+    let itemCard = new ToDoItemCard(data, () => {
+        database.InsertItemBefore(database.GetItemAt(0));
+        toDoList.Render();
+     });
+}
+
 let listDefinition = {
     listHtml: `
         <div id="toDoListRender">
@@ -129,7 +136,7 @@ function Start() {
         let addButton = document.querySelector("#newItemButton");
         addButton.addEventListener("click", () => {
             let newItem = getNewItem();
-            editItem(newItem);
+            editNewItem(newItem);
         });    
     });
 }
