@@ -36,8 +36,8 @@ export class ArrangeableList {
 
         if (this.#sortColumn != "") {
             this.#itemData.sort((a, b) => {
-                if (a[this.#sortColumn] > b[this.#sortColumn]) return -1;
-                else if (a[this.#sortColumn] > b[this.#sortColumn]) return 1;
+                if (a[this.#sortColumn] > b[this.#sortColumn]) return (this.#sortDirection == "asc") ? -1 : 1;
+                else if (a[this.#sortColumn] > b[this.#sortColumn]) return (this.#sortDirection == "asc") ? 1 : -1;
                 return 0;
             });
         }
@@ -67,7 +67,12 @@ export class ArrangeableList {
         let boundElements = labelDiv.querySelectorAll(`[boundField]`);
         boundElements.forEach(element => {
             element.addEventListener("click", (event) => {
-                this.#sortColumn = element.getAttribute("boundField");
+                let sortColumn = element.getAttribute("boundField");
+                if (this.#sortColumn == sortColumn) {
+                    this.#sortDirection = (this.#sortDirection == "asc") ? "desc" : "asc";   
+                }
+
+                this.#sortColumn = sortColumn;
                 this.Render();
             });
         });
