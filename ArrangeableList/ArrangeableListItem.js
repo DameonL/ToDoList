@@ -112,12 +112,8 @@ export class ArrangeableListItem {
 
             event.dataTransfer.setData("text", this.Index);
             event.dataTransfer.effectAllowed = "move";
-            rootNode.style.cursor = "grabbing";
         });
 
-        rootNode.addEventListener("dragend", (event) => {
-            rootNode.style.cursor = "grab";
-        });
         return rootNode;
     }
     
