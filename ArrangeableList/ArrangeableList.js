@@ -39,7 +39,7 @@ export class ArrangeableList {
 
     Render() {
         this.#listItems.forEach(item => {
-            this.#rootNode.removeChild(item.renderer);
+            this.#rootNode.removeChild(item.Renderer);
         });
         if (this.#listLabel) this.#rootNode.removeChild(this.#listLabel);
         if (this.#itemMovementDropPoint) this.#rootNode.removeChild(this.#itemMovementDropPoint);
