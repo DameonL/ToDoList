@@ -34,6 +34,12 @@ let textDrawHandler = (element, data) => {
 let itemUpdatedHandler = (data) => { database.UpdateItem(data); }
 let itemIndexHandler = (data) => database.GetItemIndex(data);
 let itemInsertHandler = (itemToInsert, priorItem) => database.InsertItemBefore(itemToInsert, priorItem);
+let editItem = (data) => {
+    let itemCard = new ToDoItemCard(data, () => {
+       database.UpdateItem(data);
+       toDoList.Render();
+    });
+}
 
 let listDefinition = {
     listHtml: `
@@ -94,12 +100,7 @@ let listDefinition = {
         {
             label: `<div title="Edit this item">📝</div>`,
             targetSelector: ".arrangeableListItemButtons",
-            clickedHandler: (element, data) => {
-                 let itemCard = new ToDoItemCard(data, () => {
-                    database.UpdateItem(data);
-                    toDoList.Render();
-                 });
-            }
+            clickedHandler: editItem,
         },
         {
             label: `<div title="Delete this item">🗑️</div>`,
@@ -126,7 +127,10 @@ function Start() {
     database.AddListChangedHandler((newListData) => {
         toDoList.ItemData = newListData; 
         let addButton = document.querySelector("#newItemButton");
-        addButton.addEventListener("click", () => { database.InsertItemBefore(database.GetItemAt(0)); });    
+        addButton.addEventListener("click", () => {
+            let newItem = getNewItem();
+            editItem(newItem);
+        });    
     });
 }
 
