@@ -18,13 +18,6 @@ let editItem = (data) => {
     });
 }
 
-let editNewItem = (data) => {
-    let itemCard = new ToDoItemCard(data, () => {
-        database.InsertItemBefore(data, database.GetItemAt(0));
-        toDoList.Render();
-     });
-}
-
 export let listDefinition = {
     listHtml: `
         <div id="toDoListRender">

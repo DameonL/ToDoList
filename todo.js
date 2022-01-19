@@ -32,6 +32,13 @@ function Start() {
         return;
     }
 
+    let editNewItem = (data) => {
+        let itemCard = new ToDoItemCard(data, () => {
+            database.InsertItemBefore(data, database.GetItemAt(0));
+            toDoList.Render();
+         });
+    }
+    
     toDoList = new ArrangeableList(listDefinition);
     document.body.appendChild(toDoList.RootNode);
     database.AddListChangedHandler((newListData) => {
