@@ -37,8 +37,8 @@ export class ArrangeableList {
         if (this.#sortColumn != "") {
             this.#itemData.sort((a, b) => {
                 let comparison = 0;
-                let a = a[this.#sortColumn];
-                let b = b[this.#sortColumn];
+                a = a[this.#sortColumn];
+                b = b[this.#sortColumn];
 
                 console.log(`${a[this.#sortColumn]} ${b[this.#sortColumn]}`);
                 if ((typeof a) == "string")
