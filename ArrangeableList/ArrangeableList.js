@@ -4,10 +4,12 @@ export class ArrangeableList {
     #rootNode = null;
     #itemData = [];
     #listDefinition = null;
-    #itemMovementDropPoint = null;
     #sortColumn = "";
     #sortDirection = "asc";
-    #generatedElements = [];
+
+    #listLabel = null;
+    #listItems = [];
+    #itemMovementDropPoint = null;
 
     constructor(listDefinition) {
         this.#listDefinition = listDefinition;
@@ -26,7 +28,7 @@ export class ArrangeableList {
     }
 
     get SortColumn() { return this.#sortColumn; }
-    set SortColumn(newColumn) { }
+    set SortColumn(newColumn) { this.#sortColumn = newColumn; }
 
     CreateListItem(data) {
         let newItem = new ArrangeableListItem(data, this.#listDefinition);
@@ -36,11 +38,13 @@ export class ArrangeableList {
     IndexOf = (data) => this.#listDefinition.itemIndexHandler(data);
 
     Render() {
-        this.#generatedElements.forEach(element => {
-            this.#rootNode.removeChild(element);
+        this.#listItems.forEach(item => {
+            this.#rootNode.removeChild(item.renderer);
         });
+        this.#rootNode.removeChild(this.#listLabel);
+        this.#rootNode.removeChild(this.#itemMovementDropPoint);
 
-        this.#generatedElements = [];
+        this.#listItems = [];
 
         if (this.#sortColumn != "") {
             this.#itemData.sort((a, b) => {
@@ -74,22 +78,21 @@ export class ArrangeableList {
         }
 
         let itemData = this.#itemData;
-        let labelDiv = this.#CreateLabelDiv();
-        this.#generatedElements.push(labelDiv);
-        this.#rootNode.appendChild(labelDiv);
+        this.#listLabel = this.#CreateLabelDiv();
+        this.#rootNode.appendChild(this.#listLabel);
 
         if (this.#itemMovementDropPoint == null) {
             this.#itemMovementDropPoint = this.#CreateMovementDiv(itemData);
         }
         
-        let renderers = [];
         for (let i = 0; i < itemData.length; i++) {
-            let renderer = this.#CreateChildItem(itemData, i, renderers, this.#itemMovementDropPoint);
+            let listItem = this.#CreateChildItem(itemData[i], this.#itemMovementDropPoint);
+            let renderer = listItem.renderer;
             if (this.#listDefinition.itemDrawHandler) {
                 this.#listDefinition.itemDrawHandler(renderer, itemData[i]);
             }
             
-            this.#generatedElements.push(renderer);
+            this.#listItems.push(listItem);
             this.#rootNode.appendChild(renderer);
         }
     }
@@ -123,10 +126,9 @@ export class ArrangeableList {
         return labelDiv;
     }
 
-    #CreateChildItem(itemData, i, renderers, itemMovementDropPoint) {
-        let listItem = this.CreateListItem(itemData[i]);
+    #CreateChildItem(itemData, itemMovementDropPoint) {
+        let listItem = this.CreateListItem(itemData);
         let renderer = listItem.Renderer;
-        renderers.push(renderer);
         let lastY = 0;
         let currentIndex = -1;
         let dragOverHandler = (event) => {
@@ -140,7 +142,7 @@ export class ArrangeableList {
             let targetIndex = (delta < 0) ? i : i + 1;
             if (currentIndex != targetIndex) {
                 itemMovementDropPoint.setAttribute("targetIndex", targetIndex);
-                this.#rootNode.insertBefore(itemMovementDropPoint, renderers[targetIndex]);
+                this.#rootNode.insertBefore(itemMovementDropPoint, this.#listItems[targetIndex].renderer);
                 // Trigger animations
                 itemMovementDropPoint.className = itemMovementDropPoint.className.replace("arrangeableItemMovementTarget", "");
                 itemMovementDropPoint.className += " arrangeableItemMovementTarget";
@@ -158,7 +160,7 @@ export class ArrangeableList {
                 currentIndex = -1;
             }
         });
-        return renderer;
+        return listItem;
     }
 
     #CreateMovementDiv(itemData) {
