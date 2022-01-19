@@ -4,6 +4,7 @@ export class ToDoItemCard {
     #closedHandler = null;
     #documentHider = `<div class="documentHider"></div>`;
     #cardHtml = ``;
+    #rootNode = null;
 
     #boundElements = [];
 
@@ -25,6 +26,7 @@ export class ToDoItemCard {
         
         document.body.appendChild(documentHider);
         document.body.appendChild(cardNode);
+        this.#rootNode = cardNode;
 
         documentHider.addEventListener("click", (event) => {
             this.#UpdateBackingData();
@@ -35,7 +37,7 @@ export class ToDoItemCard {
 
         let propertyNames = Object.keys(this.#backingData);
         propertyNames.forEach(property => {
-            let boundElement = document.querySelector(`[${this.#bindingName}="${property}"]`);
+            let boundElement = this.#rootNode.querySelector(`[${this.#bindingName}="${property}"]`);
             if (boundElement) {
                 this.#boundElements.push(boundElement);
 
