@@ -57,6 +57,8 @@ export class ToDoItemCard {
                     boundElement.checked = this.#backingData[property];
                 }
                 else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "datetime-local")) {
+                    boundElement.setAttribute("min", Date.now());
+                    boundElement.setAttribute("max", "");
                     boundElement.valueAsNumber = this.#backingData[property];
                 }
             }
