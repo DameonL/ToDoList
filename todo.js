@@ -1,6 +1,5 @@
 import { ArrangeableList } from "./ArrangeableList/ArrangeableList.js";
 import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
-import { listDefinition, database } from "./ToDoListDefinition.js";
 
 let toDoList = null;
 
@@ -14,6 +13,7 @@ function Start() {
 
     toDoList = new ArrangeableList(listDefinition);
     document.body.appendChild(toDoList.RootNode);
+    import { listDefinition, database } from "./ToDoListDefinition.js";
     database.AddListChangedHandler((newList) => { toDoList.ItemData = newList; });
 
     let renderButton = document.createElement("button");
