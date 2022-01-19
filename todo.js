@@ -15,7 +15,4 @@ function Start() {
         document.getRootNode().innerHTML = "Sorry, your browser does not support indexedDB";
         return;
     }
-
-
 }
-
