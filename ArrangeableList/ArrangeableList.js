@@ -53,8 +53,8 @@ export class ArrangeableList {
                 {
                     comparison = a.localeCompare(b);
                 } else {
-                    if (a > b) comparison = -1;
-                    else if (b > a) comparison = 1;
+                    if (a < b) comparison = -1;
+                    else if (a > b) comparison = 1;
                 }
 
                 if (this.#sortDirection != "asc") comparison = (comparison > 0) ? -comparison :  Math.abs(comparison);
@@ -67,8 +67,8 @@ export class ArrangeableList {
                 a = this.IndexOf(a);
                 b = this.IndexOf(b);
                 let comparison = 0;
-                if (a > b) comparison = -1;
-                else if (b > a) comparison = 1;
+                if (a < b) comparison = -1;
+                else if (a > b) comparison = 1;
                 return comparison;
             });
         }
