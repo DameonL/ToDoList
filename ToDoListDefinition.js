@@ -18,15 +18,18 @@ export function getNewItem() {
 };
 
 export let database = new OrderedIndexedDb("ToDoList", "items", getNewItem);
-database.AddListChangedHandler((newListData) => {
-    let addButton = document.querySelector("#newItemButton");
-    if (addButton) {
-        addButton.addEventListener("click", () => {
-            let newItem = getNewItem();
-            editNewItem(newItem);
-        });
-    }
-});
+setTimeout(() => {
+    database.AddListChangedHandler((newListData) => {
+        let addButton = document.querySelector("#newItemButton");
+        if (addButton) {
+            addButton.addEventListener("click", () => {
+                let newItem = getNewItem();
+                editNewItem(newItem);
+            });
+        }
+    });
+    
+}, 100);
 
 let itemDrawHandler = (htmlElement, data) => {
     if (data.dueDate < Date.now()) {
