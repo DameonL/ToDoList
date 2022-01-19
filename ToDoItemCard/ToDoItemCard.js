@@ -62,6 +62,15 @@ export class ToDoItemCard {
                         this.#UpdateBackingData();
                     });
                 }
+                else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "datetime-local")) {
+                    let htmlDate = this.#backingData[property];
+                    htmlDate.setMinutes(htmlDate.getMinutes() - htmlDate.getTimezoneOffset());
+                    htmlDate = htmlDate.toISOString().slice(0,16);
+                    boundElement.value = htmlDate;
+                    boundElement.addEventListener("click", (event) => {
+                        this.#UpdateBackingData();
+                    });
+                }
             }
         });
     }
@@ -73,12 +82,14 @@ export class ToDoItemCard {
             let fieldData = this.#backingData[fieldName];
             let fieldType = (typeof fieldData);
 
-            if (fieldType == "string") {
+            if ((boundElement.nodeName == "DIV") || (boundElement.nodeName == "SPAN")) {
                 this.#backingData[fieldName] = boundElement.innerHTML;
-            } else if (fieldType == "boolean") {
+            } else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "checkbox")) {
                 this.#backingData[fieldName] = boundElement.checked;
+            } else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "datetime-local")) {
+                this.#backingData[fieldName] = Date.parse(boundElement.value);
             }
-        }
+    }
     }
 
 }
