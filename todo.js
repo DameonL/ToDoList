@@ -101,25 +101,6 @@ let listDefinition = {
         },
     ],
 
-    labelButtonDefinitions: [
-        {
-            label: `
-                <span title="Create a new item" style="cursor: pointer;display: flex;flex-direction: row;justify-content: flex-end;">
-                    <div style="
-                    position: relative;
-                    font-size: 10px;
-                    width: 0%;
-                    height: 0%;
-                    ">➕</div>
-                    <div>📄</div>
-                </span>
-            `,
-            clickedHandler: (event) => {
-                database.InsertItemBefore(database.GetItemAt(0));
-            }
-        },
-    ],
-
     itemDrawHandler: itemDrawHandler,
     itemIndexHandler: itemIndexHandler,
     itemInsertHandler: itemInsertHandler,
@@ -135,6 +116,8 @@ function Start() {
 
     toDoList = new ArrangeableList(listDefinition);
     document.body.appendChild(toDoList.RootNode);
+    let addButton = document.querySelector("#newItemButton");
+    addButton.addEventListener("click", () => { database.InsertItemBefore(database.GetItemAt(0)); });
     database.AddListChangedHandler((newListData) => { toDoList.ItemData = newListData; });
 }
 
