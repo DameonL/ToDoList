@@ -14,7 +14,7 @@ let getNewItem =  () =>{
         name: "New ToDo Item",
         description: "Insert description here",
         complete: false ,
-        dueDate: dueDate,
+        dueDate: dueDate.valueOf(),
     }   
 };
 
