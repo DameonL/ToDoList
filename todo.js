@@ -57,9 +57,9 @@ let listDefinition = {
     labelHtml: `
         <div class="arrangeableListItem arrangeableListLabel">
             <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div>
-            <div class="arrangeableListCheckbox completeCheckBox"></div>
-            <div class="arrangeableListTextInput nameInputField">Name</div>
-            <div class="arrangeableListTextInput descriptionInputField">Description</div>
+            <div class="arrangeableListCheckbox completeCheckBox" boundField="complete"></div>
+            <div class="arrangeableListTextInput nameInputField" boundField="name">Name</div>
+            <div class="arrangeableListTextInput descriptionInputField" boundField="description">Description</div>
             <div class="arrangeableListItemButtons arrangeableListLabelButtons">
                 <span title="Create a new item" id="newItemButton" style="cursor: pointer;display: flex;flex-direction: row;justify-content: flex-end;">
                     <div style="position: relative;font-size: 10px;width: 0%;height: 0%;">➕</div>
