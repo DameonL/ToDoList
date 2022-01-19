@@ -40,11 +40,10 @@ export class ArrangeableList {
                 a = a[this.#sortColumn];
                 b = b[this.#sortColumn];
 
-                console.log(`${a[this.#sortColumn]} ${b[this.#sortColumn]}`);
+
                 if ((typeof a) == "string")
                 {
                     comparison = a.localeCompare(b);
-
                 } else {
                     comparison = (a > b) ? -1 : 1;
                 }
