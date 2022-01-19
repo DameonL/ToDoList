@@ -13,6 +13,7 @@ export class OrderedIndexedDb {
     constructor(databaseName, tableName, createItemHandler) {
         this.#databaseName = databaseName;
         this.#tableName = tableName;
+        this.#createItemHandler = createItemHandler;
 
         let dbOpenRequest = window.indexedDB.open(databaseName, 1);
         dbOpenRequest.onupgradeneeded = this.#InitializeDatabase.bind(this);
