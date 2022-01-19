@@ -43,6 +43,10 @@ export class ArrangeableList {
         let renderers = [];
         for (let i = 0; i < itemData.length; i++) {
             let renderer = this.#CreateChildItem(itemData, i, renderers, this.#itemMovementDropPoint);
+            if (this.#listDefinition.itemDrawHandler) {
+                this.#listDefinition.itemDrawHandler(renderer, itemData[i]);
+            }
+            
             this.#rootNode.appendChild(renderer);
         }
     }

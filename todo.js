@@ -5,6 +5,12 @@ import { ToDoItemCard } from "./ToDoItemCard/ToDoItemCard.js";
 
 let toDoList = null;
 let database = new OrderedIndexedDb("ToDoList", "items");
+let itemDrawHandler = (htmlElement, data) => {
+    if (data.dueDate < Date.now()) {
+        htmlElement.style.backgroundColor = "#ffe7e6";
+    }
+}
+
 let textDrawHandler = (element, data) => {
     element.style.textDecoration = (data.complete) ? "line-through" : "";
     element.contentEditable = (data.complete) ? false : true;
@@ -103,6 +109,7 @@ let listDefinition = {
         },
     ],
 
+    itemDrawHandler: itemDrawHandler,
     itemIndexHandler: itemIndexHandler,
     itemInsertHandler: itemInsertHandler,
 }
