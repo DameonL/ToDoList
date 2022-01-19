@@ -34,6 +34,11 @@ export class ArrangeableList {
             this.#rootNode.removeChild(this.#rootNode.firstChild);
         }
 
+        this.#itemData.sort((a, b) => {
+            if (a[this.#sortColumn] > b[this.#sortColumn]) return -1;
+            else if (a[this.#sortColumn] > b[this.#sortColumn]) return 1;
+            return 0;
+        });
         let itemData = this.#itemData;
         let labelDiv = this.#CreateLabelDiv();
         this.#rootNode.appendChild(labelDiv);
@@ -59,7 +64,10 @@ export class ArrangeableList {
 
         let boundElements = labelDiv.querySelectorAll(`[boundField]`);
         boundElements.forEach(element => {
-            console.log(element);
+            element.addEventListener("click", (event) => {
+                this.#sortColumn = element.getAttribute("boundField");
+                this.Render();
+            });
         });
 
         return labelDiv;
