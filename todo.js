@@ -14,6 +14,7 @@ function Start() {
 
     toDoList = new ArrangeableList(listDefinition);
     document.body.appendChild(toDoList.RootNode);
+    database.AddListChangedHandler((newList) => { toDoList.ItemData = newList; });
 
     let renderButton = document.createElement("button");
     renderButton.addEventListener("click", () => toDoList.Render());

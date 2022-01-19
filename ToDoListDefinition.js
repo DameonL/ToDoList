@@ -19,12 +19,11 @@ let getNewItem =  () => {
 
 export let database = new OrderedIndexedDb("ToDoList", "items", getNewItem);
 database.AddListChangedHandler((newListData) => {
-    toDoList.ItemData = newListData; 
     let addButton = document.querySelector("#newItemButton");
     addButton.addEventListener("click", () => {
         let newItem = getNewItem();
         editNewItem(newItem);
-    });    
+    });
 });
 
 let itemDrawHandler = (htmlElement, data) => {
@@ -43,14 +42,12 @@ let itemInsertHandler = (itemToInsert, priorItem) => database.InsertItemBefore(i
 let editItem = (data) => {
     let itemCard = new ToDoItemCard(data, () => {
        database.UpdateItem(data);
-       toDoList.Render();
     });
 }
 
 let editNewItem = (data) => {
     let itemCard = new ToDoItemCard(data, () => {
         database.InsertItemBefore(data, database.GetItemAt(0));
-        toDoList.Render();
      });
 }
 
