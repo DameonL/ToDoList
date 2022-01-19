@@ -9,12 +9,12 @@ let getNewItem =  () =>{
     let currentTime = Date.now();
     let hours = currentTime.getHours();
     dueDate.setHours(hours + 1);
-    
+
     let data = {
         name: "New ToDo Item",
         description: "Insert description here",
         complete: false ,
-        dueDate: Date.now().setHours(Date.now().getHours() + 1),
+        dueDate: dueDate,
     }   
 };
 
