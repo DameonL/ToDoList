@@ -45,11 +45,22 @@ export class ArrangeableList {
                 {
                     comparison = a.localeCompare(b);
                 } else {
-                    comparison = (a > b) ? -1 : 1;
+                    if (a > b) comparison = -1;
+                    else if (b > a) comparison = 1;
                 }
 
                 if (this.#sortDirection != "asc") comparison = (comparison > 0) ? -comparison :  Math.abs(comparison);
 
+                return comparison;
+            });
+        }
+        else {
+            this.#itemData.sort((a, b) => {
+                a = a.Index;
+                b = b.Index;
+                let comparison = 0;
+                if (a > b) comparison = -1;
+                else if (b > a) comparison = 1;
                 return comparison;
             });
         }
@@ -83,8 +94,9 @@ export class ArrangeableList {
 
             let clickedHandler = (event) => {
                 if (this.#sortColumn == sortColumn) {
-                    this.#sortDirection = (this.#sortDirection == "asc") ? "desc" : "asc";   
-                }
+                        if (this.#sortDirection == "desc") { sortColumn = ""; }
+                        this.#sortDirection = (this.#sortDirection == "asc") ? "desc" : "asc";   
+                    }
     
                 this.#sortColumn = sortColumn;
                 this.Render();
