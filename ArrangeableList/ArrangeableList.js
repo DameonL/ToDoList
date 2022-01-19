@@ -36,9 +36,12 @@ export class ArrangeableList {
 
         if (this.#sortColumn != "") {
             this.#itemData.sort((a, b) => {
-                if (a[this.#sortColumn] > b[this.#sortColumn]) return (this.#sortDirection == "asc") ? -1 : 1;
-                else if (a[this.#sortColumn] > b[this.#sortColumn]) return (this.#sortDirection == "asc") ? 1 : -1;
-                return 0;
+                let comparison = 0;
+                if (a[this.#sortColumn] > b[this.#sortColumn]) comparison = -1;
+                else if (a[this.#sortColumn] > b[this.#sortColumn]) comparison = 1;
+                if (this.#sortDirection != "asc") comparison = -comparison;
+
+                return comparison;
             });
         }
         let itemData = this.#itemData;
@@ -79,7 +82,7 @@ export class ArrangeableList {
         
             clickedHandler = clickedHandler.bind(this);
             if (sortColumn == this.#sortColumn) {
-                element.innerText += (this.#sortDirection = "asc") ? "⬇" : "⬆";
+                element.innerText += (this.#sortDirection == "asc") ? "⬇" : "⬆";
             }
 
             element.addEventListener("click", clickedHandler);
