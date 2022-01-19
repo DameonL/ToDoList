@@ -66,12 +66,14 @@ let listDefinition = {
     itemButtonDefinitions: [
         {
             label: `<div title="Edit this item">📝</div>`,
+            targetSelector: "[arrangeableListItemButtons]",
             clickedHandler: (element, data) => {
                  let itemCard = new ToDoItemCard(data, () => toDoList.Render());
             }
         },
         {
             label: `<div title="Delete this item">🗑️</div>`,
+            targetSelector: "[arrangeableListItemButtons]",
             clickedHandler: (element, data) => { new ItemDeleteDialog(() => { database.DeleteItem(data); }); }
         },
     ],
