@@ -27,6 +27,17 @@ export class ToDoItemCard {
         document.body.appendChild(documentHider);
         document.body.appendChild(cardNode);
         this.#rootNode = cardNode;
+        let insertListButton = this.#rootNode.querySelector("#insertList");
+        insertListButton.addEventListener("click", (event) => {
+            let descriptionInput = this.#rootNode.querySelector(`[boundField="name"]`);
+            let myList = ["eat", "sleep", "etc"];
+            descriptionInput.innerHTML = descriptionInput.innerHTML + 
+            "<ul>" + 
+                myList.map(element => {
+                    return "<li>" + element +"</li>";
+                })
+            + "</ul>";
+        });
 
         documentHider.addEventListener("click", (event) => {
             this.#UpdateBackingData();
