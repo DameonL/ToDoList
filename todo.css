@@ -46,7 +46,8 @@ body {
 
 .dateTimeInputField {
     font-family: unset;
-    flex: 0.5;
+    flex: 1;
+    overflow: hidden;
 }
 
 .descriptionInputField {
@@ -56,10 +57,17 @@ body {
     max-height: 20px;
 }
 
+@media (max-width: 800px) {
+    .dateTimeInputField {
+        display: none;
+    }
+}
+
 @media (max-width: 600px) {
     .descriptionInputField {
         display: none;
     }
+
 }
 
 .descriptionInputField:focus {
