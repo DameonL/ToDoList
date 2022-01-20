@@ -56,7 +56,7 @@ export let listDefinition = {
     labelHtml: `
         <div class="arrangeableListItem arrangeableListLabel">
             <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div>
-            <div class="arrangeableListCheckbox completeCheckBox" boundField="complete">◻</div>
+            <div class="arrangeableListCheckbox completeCheckBox" boundField="complete" style="text-align: center">◻</div>
             <div class="arrangeableListTextInput nameInputField" boundField="name">Name</div>
             <div class="arrangeableListTextInput descriptionInputField" boundField="description">Description</div>
             <div class="arrangeableListItemButtons arrangeableListLabelButtons">
