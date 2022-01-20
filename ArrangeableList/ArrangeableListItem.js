@@ -151,7 +151,7 @@ export class ArrangeableListItem {
     #UpdateBackingData() {
         for (let i = 0; i < this.#boundElements.length; i++) {
             let boundElement = this.#boundElements[i];
-            let fieldName = boundElement.getAttribute(this.#bindingName);
+            let fieldName = boundElement.getAttribute("boundField");
 
             if ((boundElement.nodeName == "DIV") || (boundElement.nodeName == "SPAN")) {
                 this.#backingData[fieldName] = boundElement.innerHTML;
@@ -162,6 +162,9 @@ export class ArrangeableListItem {
             }
         }
 
+        if (this.#listDefinition.itemUpdatedHandler) {
+            this.#listDefinition.itemUpdatedHandler(this.#backingData);
+        }
         this.Redraw();
         this.#UpdateAppearance();
     }
