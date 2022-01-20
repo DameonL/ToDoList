@@ -25,6 +25,8 @@ let renderButton = document.createElement("button");
 renderButton.addEventListener("click", () => toDoList.Render());
 document.body.appendChild(renderButton);
 
+setInterval(() => toDoList.Render(), 5000);
+
 function Start() {
     if (!('indexedDB' in window)) {
         document.getRootNode().innerHTML = "Sorry, your browser does not support indexedDB";
