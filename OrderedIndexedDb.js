@@ -97,10 +97,7 @@ export class OrderedIndexedDb {
     }
 
     InsertItemBefore(itemToInsert, priorItem) {
-        if (priorItem === undefined) {
-            priorItem = itemToInsert;
-            itemToInsert = this.#createItemHandler();
-        } else if (itemToInsert == priorItem) {
+        if (itemToInsert == priorItem) {
             return;
         }
         
