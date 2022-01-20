@@ -145,7 +145,7 @@ export class ArrangeableList {
                 let targetRenderer = undefined;
                 if (targetIndex < this.#listItems.length) targetRenderer = this.#listItems[targetIndex].renderer;
                 
-                this.#rootNode.insertBefore(itemMovementDropPoint, this.#listItems[targetIndex].Renderer);
+                this.#rootNode.insertBefore(itemMovementDropPoint, targetRenderer);
                 // Trigger animations
                 itemMovementDropPoint.className = itemMovementDropPoint.className.replace("arrangeableItemMovementTarget", "");
                 itemMovementDropPoint.className += " arrangeableItemMovementTarget";
