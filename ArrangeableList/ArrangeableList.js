@@ -86,7 +86,7 @@ export class ArrangeableList {
         }
         
         for (let i = 0; i < itemData.length; i++) {
-            let listItem = this.#CreateChildItem(itemData[i], this.#itemMovementDropPoint);
+            let listItem = this.#CreateChildItem(itemData, i, this.#itemMovementDropPoint);
             let renderer = listItem.Renderer;
             if (this.#listDefinition.itemDrawHandler) {
                 this.#listDefinition.itemDrawHandler(renderer, itemData[i]);
@@ -126,8 +126,8 @@ export class ArrangeableList {
         return labelDiv;
     }
 
-    #CreateChildItem(itemData, itemMovementDropPoint) {
-        let listItem = this.CreateListItem(itemData);
+    #CreateChildItem(itemData, i, itemMovementDropPoint) {
+        let listItem = this.CreateListItem(itemData[i]);
         let renderer = listItem.Renderer;
         let lastY = 0;
         let currentIndex = -1;
