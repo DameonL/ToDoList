@@ -39,10 +39,11 @@ export class ArrangeableList {
 
     Render() {
         this.#listItems.forEach(item => {
-            this.#rootNode.removeChild(item.Renderer);
+            if (item.parentNode == this.#rootNode) this.#rootNode.removeChild(item.Renderer);
         });
-        if (this.#listLabel) this.#rootNode.removeChild(this.#listLabel);
-        if (this.#itemMovementDropPoint) this.#rootNode.removeChild(this.#itemMovementDropPoint);
+
+        if (this.#listLabel && this.#listLabel.parentNode == this.#rootNode) this.#rootNode.removeChild(this.#listLabel);
+        if (this.#itemMovementDropPoint && this.#itemMovementDropPoint.parentNode == this.#rootNode) this.#rootNode.removeChild(this.#itemMovementDropPoint);
 
         this.#listItems = [];
 
@@ -56,6 +57,10 @@ export class ArrangeableList {
                 if ((typeof a) == "string")
                 {
                     comparison = a.localeCompare(b);
+                } else if ((typeof a) == "boolean")
+                {
+                    if (a == true && b == false) comparison = -1;
+                    else if (a == false && b == true) comparison = -1;
                 } else {
                     if (a < b) comparison = -1;
                     else if (a > b) comparison = 1;
