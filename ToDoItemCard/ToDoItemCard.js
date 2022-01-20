@@ -48,7 +48,7 @@ export class ToDoItemCard {
             let checkbox = document.createElement("input");
             checkbox.type = "checkbox";
             defaultItem.appendChild(checkbox);
-            defaultItem.innerHTML = "My new list item";
+            defaultItem.innerHTML += "My new list item";
             listElement.appendChild(defaultItem);
             descriptionInput.appendChild(listElement);
             let endDiv = document.createElement("div");
@@ -80,6 +80,29 @@ export class ToDoItemCard {
                             }
                         });
                     }
+
+                    boundElement.addEventListener("keypress", (event) => {
+                        if (event.key == "Enter") {
+                            var sel = document.getSelection();
+    
+                            var pos = sel.toString().length;
+                            if(sel.anchorNode != undefined) sel.collapseToEnd();
+                        
+                            return pos;
+                        }
+                    });
+
+                    let checkboxes = boundElement.querySelectorAll(`input[type="checkbox"]`);
+                    checkboxes.forEach(checkbox => {
+                        checkbox.addEventListener("click", (event) => {
+                            if (checkbox.checked)
+                            {
+                                checkbox.setAttribute("checked", "");
+                            } else {
+                                checkbox.removeAttribute("checked");
+                            }
+                        });
+                    });
                 }
                 else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "checkbox")) {
                     boundElement.checked = this.#backingData[property];
