@@ -8,6 +8,7 @@ export function getNewItem() {
     let currentTime = new Date(Date.now());
     let hours = currentTime.getHours();
     dueDate.setHours(hours + 1);
+    dueDate = new Date(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getHours(), dueDate.getMinutes());
 
     let data = {
         name: "New ToDo Item",

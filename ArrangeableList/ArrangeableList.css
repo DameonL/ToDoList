@@ -70,7 +70,6 @@
 
 .arrangeableListTextInput {
     white-space: nowrap;
-    overflow: hidden;
 }
 
 .arrangeableListTextInput:focus {
