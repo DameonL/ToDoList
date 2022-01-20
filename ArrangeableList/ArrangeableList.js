@@ -142,6 +142,9 @@ export class ArrangeableList {
             let targetIndex = (delta < 0) ? i : i + 1;
             if (currentIndex != targetIndex) {
                 itemMovementDropPoint.setAttribute("targetIndex", targetIndex);
+                let targetRenderer = undefined;
+                if (targetIndex < this.#listItems.length) targetRenderer = this.#listItems[targetIndex].renderer;
+                
                 this.#rootNode.insertBefore(itemMovementDropPoint, this.#listItems[targetIndex].Renderer);
                 // Trigger animations
                 itemMovementDropPoint.className = itemMovementDropPoint.className.replace("arrangeableItemMovementTarget", "");
