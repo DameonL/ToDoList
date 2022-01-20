@@ -60,7 +60,7 @@ export class ArrangeableList {
                 } else if ((typeof a) == "boolean")
                 {
                     if (a == true && b == false) comparison = -1;
-                    else if (a == false && b == true) comparison = -1;
+                    else if (a == false && b == true) comparison = 1;
                 } else {
                     if (a < b) comparison = -1;
                     else if (a > b) comparison = 1;
