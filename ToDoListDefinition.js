@@ -82,7 +82,7 @@ export let listDefinition = {
 
     columnDefinitions: [
         {
-            label: "",
+            label: "◻",
             backingDataName: "complete",
             className: "completeCheckBox",
             updateHandler: itemUpdatedHandler,
