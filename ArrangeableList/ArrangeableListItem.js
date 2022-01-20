@@ -4,36 +4,30 @@ export class ArrangeableListItem {
     #listDefinition = null;
     #boundElements = [];
     #buttonRoot = null;
+    #boundEventHandlers = [];
 
     get Index() { return this.#listDefinition.itemIndexHandler(this.#backingData); }
 
     constructor(backingData, listDefinition) {
         this.#backingData = backingData;
         this.#listDefinition = listDefinition;
+        this.#renderRoot = this.#CreateRootNode();
+        this.#CreateButtonSpan();
+        this.Redraw();
     }
 
     get Renderer() {
-        if (this.#renderRoot == null) {
-            let rootNode = this.#CreateRootNode();
-            this.#renderRoot = rootNode;
-
-            if (this.#buttonRoot == null) this.#CreateButtonSpan();
-
-            this.Redraw();
-        }
-
         return this.#renderRoot;
     }
 
     #CreateButtonSpan() {
         this.#buttonRoot = document.createElement("div");
-        buttonSpan = this.#buttonRoot;
         this.#listDefinition.itemButtonDefinitions.forEach(definition => {
             let button = document.createElement("span");
             button.innerHTML = definition.label;
             button.style.cursor = "pointer";
             button.addEventListener("click", (event) => { definition.clickedHandler(this.#backingData); });
-            buttonSpan.appendChild(button);
+            this.#buttonRoot.appendChild(button);
         });
     }
 
@@ -44,7 +38,7 @@ export class ArrangeableListItem {
 
         let propertyNames = Object.keys(this.#backingData);
         propertyNames.forEach(property => {
-            let boundElement = this.#renderRoot.querySelector(`[${this.#bindingName}="${property}"]`);
+            let boundElement = this.#renderRoot.querySelector(`[boundField="${property}"]`);
             if (boundElement) {
                 this.#boundElements.push(boundElement);
 
@@ -58,20 +52,29 @@ export class ArrangeableListItem {
                             }
                         });
                     }
+                    let focusout = () => { 
+                        this.#UpdateBackingData(); 
+                    }
+                    boundElement.addEventListener("focusout", focusout);
                 }
                 else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "checkbox")) {
                     boundElement.checked = this.#backingData[property];
+                    boundElement.addEventListener("change", () => {
+                        this.#UpdateBackingData();
+                    });
                 }
                 else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "datetime-local")) {
                     boundElement.setAttribute("min", Date.now());
                     boundElement.setAttribute("max", "");
                     boundElement.valueAsNumber = this.#backingData[property];
+                    boundElement.addEventListener("change", () => {
+                        this.#UpdateBackingData();
+                    });
                 }
             }
         });
 
         this.#UpdateAppearance();
-
     }
 
     #CreateCheckBoxSpan(columnDefinition) {
@@ -141,10 +144,8 @@ export class ArrangeableListItem {
     }
     
     #UpdateAppearance() {
-        for (let i = 0; i < this.#elements.length; i++) {
-            if (this.#listDefinition.columnDefinitions[i].drawHandler) {
-                this.#listDefinition.columnDefinitions[i].drawHandler(this.#elements[i], this.#backingData);
-            }
+        if (this.#listDefinition.itemDrawHandler) {
+            this.#listDefinition.itemDrawHandler(this.#renderRoot, this.#backingData);
         }
     }
 
@@ -165,7 +166,7 @@ export class ArrangeableListItem {
         if (this.#listDefinition.itemUpdatedHandler) {
             this.#listDefinition.itemUpdatedHandler(this.#backingData);
         }
-        this.Redraw();
+
         this.#UpdateAppearance();
     }
 

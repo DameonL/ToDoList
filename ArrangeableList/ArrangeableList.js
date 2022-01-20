@@ -186,6 +186,7 @@ export class ArrangeableList {
         itemMovementDropPoint.addEventListener("dragover", (event) => {
             event.preventDefault();
         });
+        
         return itemMovementDropPoint;
     }
 }

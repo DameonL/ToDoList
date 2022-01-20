@@ -34,9 +34,15 @@ export let editNewItem = (data) => {
 
 
 let itemDrawHandler = (htmlElement, data) => {
-    if (!data.complete && data.dueDate < Date.now()) {
+    let currentTime = new Date(Date.now());
+    currentTime = currentTime.valueOf() - (currentTime.getTimezoneOffset() * 60000);
+    if (!data.complete && data.dueDate < currentTime) {
         htmlElement.style.backgroundColor = "#ffe7e6";
+    } else {
+        htmlElement.style.backgroundColor = "";
     }
+
+    htmlElement.style.textDecoration = (data.complete) ? "line-through" : "";
 }
 
 let textDrawHandler = (element, data) => {
@@ -58,7 +64,7 @@ export let listDefinition = {
             <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div>
             <div class="arrangeableListCheckbox completeCheckBox" boundField="complete" style="text-align: center">◻</div>
             <div class="arrangeableListTextInput nameInputField" boundField="name">Name</div>
-            <input class="dateTimeInputField" type="datetime-local" boundfield="dueDate">
+            <div class="dateTimeInputField" boundfield="dueDate">Due Date</div>
             <div class="arrangeableListTextInput descriptionInputField" boundField="description">Description</div>
             <div class="arrangeableListItemButtons arrangeableListLabelButtons">
                 <span title="Create a new item" id="newItemButton" style="cursor: pointer;display: flex;flex-direction: row;justify-content: flex-end;">
@@ -73,9 +79,9 @@ export let listDefinition = {
         <div class="arrangeableListItem">
             <div class="arrangeableListItemHandle"></div>
             <input type="checkbox" class="completeCheckbox" boundField="complete">
-            <div class="nameInputField" boundField="name"></div>
+            <div class="nameInputField" boundField="name" contenteditable="true"></div>
             <input class="dateTimeInputField" type="datetime-local" boundfield="dueDate">
-            <div class="descriptionInputField" boundField="description" multiline="true">Description</div>
+            <div class="descriptionInputField" boundField="description" multiline="true" contenteditable="true">Description</div>
         </div>
     `,
 

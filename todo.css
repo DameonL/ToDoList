@@ -34,6 +34,11 @@ body {
     flex: 1;
 }
 
+.dateTimeInputField {
+    font-family: unset;
+    flex: 0.5;
+}
+
 .descriptionInputField {
     flex: 2;
     overflow: hidden;
@@ -52,4 +57,11 @@ body {
     text-overflow: unset;
     max-height: unset;
     white-space: normal;
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    width: 0px;
+    height: 0px;
+    color: transparent;
+    background: transparent;
 }

@@ -134,7 +134,7 @@ export class OrderedIndexedDb {
             
             store.put(data, index);
 
-            this.#itemChangedHandlers.forEach(x => { x(data); });
+//            this.#itemChangedHandlers.forEach(x => { x(data); });
         }
     }
 
