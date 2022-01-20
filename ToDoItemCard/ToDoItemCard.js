@@ -69,8 +69,6 @@ export class ToDoItemCard {
         for (let i = 0; i < this.#boundElements.length; i++) {
             let boundElement = this.#boundElements[i];
             let fieldName = boundElement.getAttribute(this.#bindingName);
-            let fieldData = this.#backingData[fieldName];
-            let fieldType = (typeof fieldData);
 
             if ((boundElement.nodeName == "DIV") || (boundElement.nodeName == "SPAN")) {
                 this.#backingData[fieldName] = boundElement.innerHTML;

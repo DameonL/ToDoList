@@ -58,6 +58,7 @@ export let listDefinition = {
             <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div>
             <div class="arrangeableListCheckbox completeCheckBox" boundField="complete" style="text-align: center">◻</div>
             <div class="arrangeableListTextInput nameInputField" boundField="name">Name</div>
+            <input class="dateTimeInputField" type="datetime-local" boundfield="dueDate">
             <div class="arrangeableListTextInput descriptionInputField" boundField="description">Description</div>
             <div class="arrangeableListItemButtons arrangeableListLabelButtons">
                 <span title="Create a new item" id="newItemButton" style="cursor: pointer;display: flex;flex-direction: row;justify-content: flex-end;">
@@ -71,31 +72,14 @@ export let listDefinition = {
     listItemHtml: `
         <div class="arrangeableListItem">
             <div class="arrangeableListItemHandle"></div>
-            <div class="completeCheckBox" boundField="complete"></div>
+            <input type="checkbox" class="completeCheckbox" boundField="complete">
             <div class="nameInputField" boundField="name"></div>
-            <div class="descriptionInputField" boundField="description">Description</div>
+            <input class="dateTimeInputField" type="datetime-local" boundfield="dueDate">
+            <div class="descriptionInputField" boundField="description" multiline="true">Description</div>
         </div>
     `,
 
     itemMovementTargetHtml: `<div class="itemMovementTarget"></div>`,
-
-    columnDefinitions: [
-        {
-            backingDataName: "complete",
-            updateHandler: itemUpdatedHandler,
-        },
-        {
-            backingDataName: "name",
-            drawHandler: textDrawHandler,
-            updateHandler: itemUpdatedHandler,
-        },
-        {
-            backingDataName: "description",
-            multiLine: true,
-            drawHandler: textDrawHandler,
-            updateHandler: itemUpdatedHandler
-        },
-    ],
 
     itemButtonDefinitions: [
         {
@@ -108,6 +92,7 @@ export let listDefinition = {
         },
     ],
 
+    itemUpdatedHandler: itemUpdatedHandler,
     itemDrawHandler: itemDrawHandler,
     itemIndexHandler: itemIndexHandler,
     itemInsertHandler: itemInsertHandler,
