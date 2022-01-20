@@ -29,14 +29,31 @@ export class ToDoItemCard {
         this.#rootNode = cardNode;
         let insertListButton = this.#rootNode.querySelector("#insertList");
         insertListButton.addEventListener("click", (event) => {
-            let descriptionInput = this.#rootNode.querySelector(`[boundField="name"]`);
-            let myList = ["eat", "sleep", "etc"];
-            descriptionInput.innerHTML = descriptionInput.innerHTML + 
-            "<ul>" + 
-                myList.map(element => {
-                    return "<li>" + element +"</li>";
-                })
-            + "</ul>";
+            let descriptionInput = this.#rootNode.querySelector(`[boundField="description"]`);
+            let listElement = document.createElement("ul");
+            let defaultItem = document.createElement("li");
+            defaultItem.innerHTML = "My new list item";
+            listElement.appendChild(defaultItem);
+            descriptionInput.appendChild(listElement);
+            let endDiv = document.createElement("div");
+            endDiv.innerHTML = "&nbsp";
+            descriptionInput.appendChild(endDiv);
+        });
+
+        let insertCheckListButton = this.#rootNode.querySelector("#insertList");
+        insertCheckListButton.addEventListener("click", (event) => {
+            let descriptionInput = this.#rootNode.querySelector(`[boundField="description"]`);
+            let listElement = document.createElement("ul");
+            let defaultItem = document.createElement("li");
+            let checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            defaultItem.appendChild(checkbox);
+            defaultItem.innerHTML = "My new list item";
+            listElement.appendChild(defaultItem);
+            descriptionInput.appendChild(listElement);
+            let endDiv = document.createElement("div");
+            endDiv.innerHTML = "&nbsp";
+            descriptionInput.appendChild(endDiv);
         });
 
         documentHider.addEventListener("click", (event) => {
