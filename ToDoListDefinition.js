@@ -34,7 +34,7 @@ export let editNewItem = (data) => {
 
 
 let itemDrawHandler = (htmlElement, data) => {
-    if (data.dueDate < Date.now()) {
+    if (!data.complete && data.dueDate < Date.now()) {
         htmlElement.style.backgroundColor = "#ffe7e6";
     }
 }
