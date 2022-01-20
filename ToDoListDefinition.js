@@ -56,7 +56,7 @@ export let listDefinition = {
     labelHtml: `
         <div class="arrangeableListItem arrangeableListLabel">
             <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div>
-            <div class="arrangeableListCheckbox completeCheckBox" boundField="complete"></div>
+            <div class="arrangeableListCheckbox completeCheckBox" boundField="complete">◻</div>
             <div class="arrangeableListTextInput nameInputField" boundField="name">Name</div>
             <div class="arrangeableListTextInput descriptionInputField" boundField="description">Description</div>
             <div class="arrangeableListItemButtons arrangeableListLabelButtons">
@@ -82,20 +82,16 @@ export let listDefinition = {
 
     columnDefinitions: [
         {
-            label: "◻",
             backingDataName: "complete",
-            className: "completeCheckBox",
             updateHandler: itemUpdatedHandler,
         },
         {
             backingDataName: "name",
-            className: "nameInputField",
             drawHandler: textDrawHandler,
             updateHandler: itemUpdatedHandler,
         },
         {
             backingDataName: "description",
-            className: "descriptionInputField",
             multiLine: true,
             drawHandler: textDrawHandler,
             updateHandler: itemUpdatedHandler
