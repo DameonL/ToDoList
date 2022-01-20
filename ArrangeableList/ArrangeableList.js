@@ -39,7 +39,7 @@ export class ArrangeableList {
 
     Render() {
         this.#listItems.forEach(item => {
-            if (item.parentNode == this.#rootNode) this.#rootNode.removeChild(item.Renderer);
+            if (item.Renderer.parentNode == this.#rootNode) this.#rootNode.removeChild(item.Renderer);
         });
 
         if (this.#listLabel && this.#listLabel.parentNode == this.#rootNode) this.#rootNode.removeChild(this.#listLabel);
