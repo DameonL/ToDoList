@@ -21,7 +21,7 @@ export class ArrangeableListItem {
     }
 
     #CreateButtonSpan() {
-        this.#buttonRoot = this.#renderRoot.querySelector("arrangeableListItemButtons");
+        this.#buttonRoot = this.#renderRoot.querySelector(".arrangeableListItemButtons");
         this.#listDefinition.itemButtonDefinitions.forEach(definition => {
             let button = document.createElement("span");
             button.innerHTML = definition.label;
@@ -129,7 +129,7 @@ export class ArrangeableListItem {
         let rootNode = document.createRange().createContextualFragment(this.#listDefinition.listItemHtml.trim()).firstChild;
         rootNode.id = "arrangeableListItem" + this.Index;
         rootNode.draggable = true;
-        if (this.Index % 2 == 0) { rootNode.className += " arrangeableListItemAlt"; }
+        if (this.Index % 2 == 1) { rootNode.className += " arrangeableListItemAlt"; }
         this.#renderRoot = rootNode;
 
         rootNode.addEventListener("dragstart", (event) => {
