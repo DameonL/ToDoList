@@ -5,9 +5,8 @@ import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
 
 export function getNewItem() {
     let dueDate = new Date(Date.now());
-    let currentTime = new Date(Date.now());
-    let hours = currentTime.getHours();
-    dueDate.setHours(hours + 1);
+    dueDate.setMinutes(dueDate.getMinutes() - dueDate.getTimezoneOffset());
+    dueDate.setHours(dueDate.getHours() + 1);
     dueDate.setSeconds(0, 0);
 
     let data = {
