@@ -3,6 +3,7 @@ export class ArrangeableListItem {
     #renderRoot = null;
     #listDefinition = null;
     #elements = [];
+    #buttonRoot = null;
 
     get Index() { return this.#listDefinition.itemIndexHandler(this.#backingData); }
 
@@ -16,35 +17,45 @@ export class ArrangeableListItem {
             let rootNode = this.#CreateRootNode();
             this.#renderRoot = rootNode;
 
-            this.#listDefinition.columnDefinitions.forEach(columnDefinition => {
-                let columnData = this.#backingData[columnDefinition.backingDataName];
-                let columnType = (typeof columnData);
-                let columnInstance = null;
+            if (this.#buttonRoot == null) this.#CreateButtonSpan();
 
-                if (columnType == "string") {
-                    columnInstance = this.#CreateTextInputSpan(columnDefinition);
-                } else if (columnType == "boolean") {
-                    columnInstance = this.#CreateCheckBoxSpan(columnDefinition);
-                }
-
-                if (columnDefinition.className) columnInstance.className += " " + columnDefinition.className;
-
-                this.#elements.push(columnInstance);
-            });
-
-            this.#UpdateAppearance();
-
-            this.#listDefinition.itemButtonDefinitions.forEach(definition => {
-                let buttonSpan = this.#renderRoot.querySelector(definition.targetSelector);
-                let button = document.createElement("span");
-                button.innerHTML = definition.label;
-                button.style.cursor = "pointer";
-                button.addEventListener("click", (event) => { definition.clickedHandler(this.#backingData); });
-                buttonSpan.appendChild(button);
-            });
+            this.Redraw();
         }
 
         return this.#renderRoot;
+    }
+
+    #CreateButtonSpan() {
+        this.#buttonRoot = document.createElement("div");
+        buttonSpan = this.#buttonRoot;
+        this.#listDefinition.itemButtonDefinitions.forEach(definition => {
+            let button = document.createElement("span");
+            button.innerHTML = definition.label;
+            button.style.cursor = "pointer";
+            button.addEventListener("click", (event) => { definition.clickedHandler(this.#backingData); });
+            buttonSpan.appendChild(button);
+        });
+    }
+
+    Redraw() {
+        this.#listDefinition.columnDefinitions.forEach(columnDefinition => {
+            let columnData = this.#backingData[columnDefinition.backingDataName];
+            let columnType = (typeof columnData);
+            let columnInstance = null;
+
+            if (columnType == "string") {
+                columnInstance = this.#CreateTextInputSpan(columnDefinition);
+            } else if (columnType == "boolean") {
+                columnInstance = this.#CreateCheckBoxSpan(columnDefinition);
+            }
+
+            if (columnDefinition.className) columnInstance.className += " " + columnDefinition.className;
+
+            this.#elements.push(columnInstance);
+        });
+
+        this.#UpdateAppearance();
+
     }
 
     #CreateCheckBoxSpan(columnDefinition) {

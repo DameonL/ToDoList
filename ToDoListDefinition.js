@@ -74,7 +74,6 @@ export let listDefinition = {
             <div class="completeCheckBox" boundField="complete"></div>
             <div class="nameInputField" boundField="name"></div>
             <div class="descriptionInputField" boundField="description">Description</div>
-            <div class="arrangeableListItemButtons"></div>
         </div>
     `,
 
@@ -101,12 +100,10 @@ export let listDefinition = {
     itemButtonDefinitions: [
         {
             label: `<div title="Edit this item">📝</div>`,
-            targetSelector: ".arrangeableListItemButtons",
             clickedHandler: editItem,
         },
         {
             label: `<div title="Delete this item">🗑️</div>`,
-            targetSelector: ".arrangeableListItemButtons",
             clickedHandler: (data) => { new ItemDeleteDialog(() => { database.DeleteItem(data); }); }
         },
     ],
