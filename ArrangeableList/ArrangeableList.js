@@ -10,6 +10,7 @@ export class ArrangeableList {
     #listLabel = null;
     #listItems = [];
     #itemMovementDropPoint = null;
+    #renderHandlers = [];
 
     constructor(listDefinition) {
         this.#listDefinition = listDefinition;
@@ -29,6 +30,23 @@ export class ArrangeableList {
 
     get SortColumn() { return this.#sortColumn; }
     set SortColumn(newColumn) { this.#sortColumn = newColumn; }
+
+    AddRenderListener(listener) {
+        this.#renderHandlers.push(listener);
+    }
+
+    RemoveRenderListener(listener) {
+        let toRemove = [];
+        this.#renderHandlers.forEach(handler => {
+            if (handler === listener) {
+                toRemove.push(handler);
+            }
+        });
+
+        toRemove.forEach(handler => {
+            this.#renderHandlers.splice(this.#renderHandlers.indexOf(handler), 1);
+        });
+    }
 
     CreateListItem(data) {
         let newItem = new ArrangeableListItem(data, this.#listDefinition);
@@ -100,6 +118,10 @@ export class ArrangeableList {
             this.#listItems.push(listItem);
             this.#rootNode.appendChild(renderer);
         }
+
+        this.#renderHandlers.forEach(handler => {
+            handler(this.#rootNode);
+        });
     }
 
     #CreateLabelDiv() {

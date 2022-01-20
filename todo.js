@@ -8,7 +8,10 @@ document.body.appendChild(toDoList.RootNode);
 
 database.AddListChangedHandler((newListData) => {
     toDoList.ItemData = newListData;
-    let addButton = document.querySelector("#newItemButton");
+});
+
+toDoList.AddRenderListener(rootNode => {
+    let addButton = rootNode.querySelector("#newItemButton");
     if (addButton) {
         addButton.addEventListener("click", () => {
             let newItem = getNewItem();
@@ -16,7 +19,6 @@ database.AddListChangedHandler((newListData) => {
         });
     }
 });
-
 toDoList.ItemData = database.Items;
 
 let renderButton = document.createElement("button");
