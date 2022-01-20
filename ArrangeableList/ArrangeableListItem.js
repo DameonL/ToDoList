@@ -74,6 +74,8 @@ export class ArrangeableListItem {
             }
         });
 
+        this.#renderRoot.appendChild(this.#buttonRoot);
+
         this.#UpdateAppearance();
     }
 

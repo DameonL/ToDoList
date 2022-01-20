@@ -80,7 +80,7 @@ export let listDefinition = {
             <div class="arrangeableListItemHandle"></div>
             <input type="checkbox" class="completeCheckbox" boundField="complete">
             <div class="nameInputField" boundField="name" contenteditable="true"></div>
-            <input class="dateTimeInputField" type="datetime-local" boundfield="dueDate">
+            <div><input class="dateTimeInputField" type="datetime-local" boundfield="dueDate"></div>
             <div class="descriptionInputField" boundField="description" multiline="true" contenteditable="true">Description</div>
         </div>
     `,
