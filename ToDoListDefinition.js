@@ -82,7 +82,7 @@ export let listDefinition = {
             <div class="nameInputField" boundField="name" contenteditable="true"></div>
             <div class="dateTimeInputField"><input type="datetime-local" boundfield="dueDate"></div>
             <div class="descriptionInputField" boundField="description" multiline="true" contenteditable="true">Description</div>
-            <div class="arrangeableListItemButtons"></div>
+            <div class="arrangeableListItemButtons" style="text-decoration: none;"></div>
         </div>
     `,
 

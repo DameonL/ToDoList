@@ -4,7 +4,6 @@ export class ArrangeableListItem {
     #listDefinition = null;
     #boundElements = [];
     #buttonRoot = null;
-    #boundEventHandlers = [];
 
     get Index() { return this.#listDefinition.itemIndexHandler(this.#backingData); }
 
