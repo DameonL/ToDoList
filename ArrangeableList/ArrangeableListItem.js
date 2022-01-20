@@ -33,6 +33,7 @@ export class ArrangeableListItem {
 
     Redraw() {
         this.#renderRoot = this.#CreateRootNode();
+        this.#CreateButtonSpan();
 
         this.#boundElements = [];
 
