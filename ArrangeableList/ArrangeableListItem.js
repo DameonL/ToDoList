@@ -2,7 +2,7 @@ export class ArrangeableListItem {
     #backingData = null;
     #renderRoot = null;
     #listDefinition = null;
-    #elements = [];
+    #boundElements = [];
     #buttonRoot = null;
 
     get Index() { return this.#listDefinition.itemIndexHandler(this.#backingData); }
@@ -38,20 +38,36 @@ export class ArrangeableListItem {
     }
 
     Redraw() {
-        this.#listDefinition.columnDefinitions.forEach(columnDefinition => {
-            let columnData = this.#backingData[columnDefinition.backingDataName];
-            let columnType = (typeof columnData);
-            let columnInstance = null;
+        this.#renderRoot = this.#CreateRootNode();
 
-            if (columnType == "string") {
-                columnInstance = this.#CreateTextInputSpan(columnDefinition);
-            } else if (columnType == "boolean") {
-                columnInstance = this.#CreateCheckBoxSpan(columnDefinition);
+        this.#boundElements = [];
+
+        let propertyNames = Object.keys(this.#backingData);
+        propertyNames.forEach(property => {
+            let boundElement = this.#rootNode.querySelector(`[${this.#bindingName}="${property}"]`);
+            if (boundElement) {
+                this.#boundElements.push(boundElement);
+
+                if ((boundElement.nodeName == "DIV") || (boundElement.nodeName == "SPAN")) {
+                    boundElement.innerHTML = this.#backingData[property];
+                    if (!boundElement.getAttribute("multiLine")) {
+                        boundElement.addEventListener("keypress", (event) => {
+                            if (event.key == "Enter") {
+                                event.preventDefault();
+                                event.target.blur();
+                            }
+                        });
+                    }
+                }
+                else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "checkbox")) {
+                    boundElement.checked = this.#backingData[property];
+                }
+                else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "datetime-local")) {
+                    boundElement.setAttribute("min", Date.now());
+                    boundElement.setAttribute("max", "");
+                    boundElement.valueAsNumber = this.#backingData[property];
+                }
             }
-
-            if (columnDefinition.className) columnInstance.className += " " + columnDefinition.className;
-
-            this.#elements.push(columnInstance);
         });
 
         this.#UpdateAppearance();
@@ -59,7 +75,6 @@ export class ArrangeableListItem {
     }
 
     #CreateCheckBoxSpan(columnDefinition) {
-        let targetParent = this.#renderRoot.querySelector(`[boundField="${columnDefinition.backingDataName}"]`);
         let newCheckBox = document.createElement("input");
         newCheckBox.id = columnDefinition.backingDataName + this.Index;
         newCheckBox.type = "checkbox";
@@ -75,7 +90,7 @@ export class ArrangeableListItem {
 
         targetParent.className = "arrangeableListCheckbox " + targetParent.className;
         targetParent.appendChild(newCheckBox);
-        return targetParent;
+        return newCheckBox;
     }
 
     #CreateTextInputSpan(columnDefinition) {
@@ -134,19 +149,20 @@ export class ArrangeableListItem {
     }
 
     #UpdateBackingData() {
-        for (let i = 0; i < this.#listDefinition.columnDefinitions.length; i++) {
-            let columnDefinition = this.#listDefinition.columnDefinitions[i];
-            let element = this.#elements[i];
-            let columnData = this.#backingData[columnDefinition.backingDataName];
-            let columnType = (typeof columnData);
+        for (let i = 0; i < this.#boundElements.length; i++) {
+            let boundElement = this.#boundElements[i];
+            let fieldName = boundElement.getAttribute(this.#bindingName);
 
-            if (columnType == "string") {
-                this.#backingData[columnDefinition.backingDataName] = element.innerHTML;
-            } else if (columnType == "boolean") {
-                this.#backingData[columnDefinition.backingDataName] = element.firstChild.checked;
+            if ((boundElement.nodeName == "DIV") || (boundElement.nodeName == "SPAN")) {
+                this.#backingData[fieldName] = boundElement.innerHTML;
+            } else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "checkbox")) {
+                this.#backingData[fieldName] = boundElement.checked;
+            } else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "datetime-local")) {
+                this.#backingData[fieldName] = boundElement.valueAsNumber;
             }
         }
 
+        this.Redraw();
         this.#UpdateAppearance();
     }
 
