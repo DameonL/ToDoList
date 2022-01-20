@@ -21,7 +21,7 @@ export class ArrangeableListItem {
     }
 
     #CreateButtonSpan() {
-        this.#buttonRoot = document.createElement("div");
+        this.#buttonRoot = this.#renderRoot.querySelector("arrangeableListItemButtons");
         this.#listDefinition.itemButtonDefinitions.forEach(definition => {
             let button = document.createElement("span");
             button.innerHTML = definition.label;
