@@ -81,3 +81,9 @@
     max-height: 75vh;
     overflow: auto;
 }
+
+input[type="datetime-local" i]::-webkit-calendar-picker-indicator {
+    margin-inline: unset;
+    padding-inline: unset;
+    padding: unset;
+}
