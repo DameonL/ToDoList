@@ -44,7 +44,7 @@ export class ArrangeableListItem {
 
         let propertyNames = Object.keys(this.#backingData);
         propertyNames.forEach(property => {
-            let boundElement = this.#rootNode.querySelector(`[${this.#bindingName}="${property}"]`);
+            let boundElement = this.#renderRoot.querySelector(`[${this.#bindingName}="${property}"]`);
             if (boundElement) {
                 this.#boundElements.push(boundElement);
 
