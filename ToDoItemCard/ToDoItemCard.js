@@ -44,14 +44,9 @@ export class ToDoItemCard {
         insertCheckListButton.addEventListener("click", (event) => {
             let descriptionInput = this.#rootNode.querySelector(`[boundField="description"]`);
             let listElement = document.createElement("ul");
-            let defaultItem = document.createElement("li");
-            let checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            defaultItem.appendChild(checkbox);
-            defaultItem.innerHTML += "My new list item";
+            let defaultItem = this.#CreateCheckmarkListItem();
             listElement.appendChild(defaultItem);
             descriptionInput.appendChild(listElement);
-            let endDiv = document.createElement("div");
             endDiv.innerHTML = "&nbsp";
             descriptionInput.appendChild(endDiv);
         });
@@ -83,12 +78,14 @@ export class ToDoItemCard {
 
                     boundElement.addEventListener("keypress", (event) => {
                         if (event.key == "Enter") {
-                            var sel = document.getSelection();
-    
-                            var pos = sel.toString().length;
-                            if(sel.anchorNode != undefined) sel.collapseToEnd();
-                        
-                            return pos;
+                            let selection = document.getSelection();
+                            if ((selection.anchorNode != undefined)) {
+                                let parent = selection.anchorNode.parentElement;
+                                if (parent.firstChild.nodeName == "INPUT" && parent.firstChild.type == "checkbox") {
+                                    let newCheckbox = this.#CreateCheckmarkListItem();
+                                    parent.parent.appendChild(newCheckbox);
+                                }
+                            }
                         }
                     });
 
@@ -114,6 +111,15 @@ export class ToDoItemCard {
                 }
             }
         });
+    }
+
+    #CreateCheckmarkListItem() {
+        let defaultItem = document.createElement("li");
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        defaultItem.appendChild(checkbox);
+        defaultItem.innerHTML += "&nbsp";
+        return defaultItem;
     }
 
     #UpdateBackingData() {
