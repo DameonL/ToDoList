@@ -56,7 +56,7 @@ export class TextEditor {
         boundElement.addEventListener("keypress", (event) => {
             if (event.key == "Enter") {
                 let selection = document.getSelection();
-                if ((selection.anchorNode != undefined)) {
+                if (selection.anchorNode != undefined) {
                     let listNode = selection.anchorNode.parentElement;
                     if (listNode.firstChild.nodeName == "INPUT" && listNode.firstChild.type == "checkbox") {
                         if (listNode.innerText.trim() == "") {
@@ -100,15 +100,13 @@ export class TextEditor {
         });
 
         let checkboxes = boundElement.querySelectorAll(`input[type="checkbox"]`);
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener("click", (event) => {
-                if (checkbox.checked)
-                {
-                    checkbox.setAttribute("checked", "");
-                } else {
-                    checkbox.removeAttribute("checked");
-                }
-            });
+        checkboxes.forEach(checkbox => this.#AddCheckBoxListener(checkbox));
+    }
+
+    #AddCheckBoxListener(checkbox) {
+        checkbox.addEventListener("click", (event) => {
+            if (checkbox.checked) { checkbox.setAttribute("checked", ""); }
+            else { checkbox.removeAttribute("checked"); }
         });
     }
 
