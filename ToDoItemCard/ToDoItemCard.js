@@ -1,3 +1,5 @@
+import { TextEditor } from "../TextEditor/TextEditor";
+
 export class ToDoItemCard {
     #bindingName = "boundField"
     #backingData = null;
@@ -59,30 +61,6 @@ export class ToDoItemCard {
             document.addEventListener("keydown", this.#backspaceListener);
         }
 
-        let insertListButton = this.#rootNode.querySelector("#insertList");
-        insertListButton.addEventListener("click", (event) => {
-            if (event.relatedTarget) {
-                let selection = document.selection;
-                let descriptionInput = this.#rootNode.querySelector(`[boundField="description"]`);
-                let listElement = document.createElement("ul");
-                let defaultItem = document.createElement("li");
-                defaultItem.innerHTML = "My new list item";
-                listElement.appendChild(defaultItem);
-                descriptionInput.appendChild(listElement);
-                document.getSelection().collapse(defaultItem, 1);
-            }
-        });
-
-        let insertCheckListButton = this.#rootNode.querySelector("#insertCheckList");
-        insertCheckListButton.addEventListener("click", (event) => {
-            let descriptionInput = this.#rootNode.querySelector(`[boundField="description"]`);
-            let listElement = document.createElement("ul");
-            let defaultItem = this.#CreateCheckmarkListItem();
-            listElement.appendChild(defaultItem);
-            this.#lastFocusedField.after(listElement);
-            document.getSelection().collapse(defaultItem, 1);
-        });
-
         documentHiderInstance.addEventListener("click", () => window.location.hash = "");
 
         let propertyNames = Object.keys(this.#backingData);
@@ -100,75 +78,10 @@ export class ToDoItemCard {
                                 event.target.blur();
                             }
                         });
+                    } else {
+                        let textEditor = new TextEditor();
+                        textEditor.AttachTo(boundElement);
                     }
-                    else {
-                        boundElement.addEventListener("focusout", (event) => {
-                            let selection = document.getSelection();
-                            this.#lastFocusedField = selection.focusNode;
-                            this.#lastFocusedFieldPosition = selection.focusOffset;
-                        });
-                        this.#lastFocusedField = boundElement;
-                        this.#lastFocusedFieldPosition = 0;
-                    }
-
-
-                    boundElement.addEventListener("keypress", (event) => {
-                        if (event.key == "Enter") {
-                            let selection = document.getSelection();
-                            if ((selection.anchorNode != undefined)) {
-                                let listNode = selection.anchorNode.parentElement;
-                                if (listNode.firstChild.nodeName == "INPUT" && listNode.firstChild.type == "checkbox") {
-                                    if (listNode.innerText.trim() == "") {
-                                        let afterDiv = document.createElement("div");
-                                        afterDiv.innerHTML = "&nbsp;";
-                                        listNode.parentElement.after(afterDiv);
-                                        listNode.parentElement.removeChild(listNode);
-                                        selection.collapse(afterDiv, 1);
-                                        event.preventDefault();
-                                        return false;
-                                    }
-
-                                    let newCheckbox = this.#CreateCheckmarkListItem();
-                                    listNode.after(newCheckbox);
-                                    selection.modify("move", "right", "line");
-                                    event.preventDefault();
-                                    return false;
-                                }
-                            }
-                        }
-                    });
-
-                    boundElement.addEventListener("keydown", (event) => {
-                        if (event.key == "Backspace") {
-                            let selection = document.getSelection();
-                            let selectionRange = selection.getRangeAt(0);
-                            if ((selectionRange.startOffset == 1) && (selectionRange.startContainer.nodeName == "LI") && (selectionRange.startContainer.firstChild.type == "checkbox")) {
-                                selection.modify("move", "left", "word");
-                                selectionRange.startContainer.parentElement.removeChild(selectionRange.startContainer);
-                                event.preventDefault();
-                                return false;
-                            }
-
-                            let anchorNode = document.getSelection().anchorNode;
-                            if (anchorNode != undefined && anchorNode.previousSibling == null && anchorNode.parentElement.nodeName == "UL") {
-                                event.preventDefault();
-                                anchorNode.parentElement.parentElement.removeChild(anchorNode.parentElement);
-                                return false;
-                            }
-                        }
-                    });
-
-                    let checkboxes = boundElement.querySelectorAll(`input[type="checkbox"]`);
-                    checkboxes.forEach(checkbox => {
-                        checkbox.addEventListener("click", (event) => {
-                            if (checkbox.checked)
-                            {
-                                checkbox.setAttribute("checked", "");
-                            } else {
-                                checkbox.removeAttribute("checked");
-                            }
-                        });
-                    });
                 }
                 else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "checkbox")) {
                     boundElement.checked = this.#backingData[property];
@@ -180,16 +93,6 @@ export class ToDoItemCard {
                 }
             }
         });
-    }
-
-    #CreateCheckmarkListItem() {
-        let defaultItem = document.createElement("li");
-        defaultItem.className = "checkList";
-        let checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        defaultItem.appendChild(checkbox);
-        defaultItem.innerHTML += "&nbsp";
-        return defaultItem;
     }
 
     #UpdateBackingData() {

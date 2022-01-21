@@ -79,10 +79,6 @@
     overflow: auto;
 }
 
-.checkList {
-    list-style-type: none;
-}
-
 input[type="datetime-local" i]::-webkit-calendar-picker-indicator {
     margin-inline: unset;
     padding-inline: unset;
