@@ -81,6 +81,7 @@ export class ToDoItemCard {
                     } else {
                         let textEditor = new TextEditor();
                         textEditor.EditorText = this.#backingData[property];
+                        textEditor.Enabled = true;
                         textEditor.AttachTo(boundElement);
                     }
                 }
