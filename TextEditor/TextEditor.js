@@ -10,10 +10,10 @@ export class TextEditor {
 <div class="textEditor">
     <div class="textEditorToolBar">
         <div>
-            <button id="insertList">Insert List</button>
+            <button id="insertList"><div>•1</div><div>•2</div><div>•3</div></button>
         </div>
         <div>
-            <button id="insertCheckList">Insert Checklist</button>
+            <button id="insertCheckList"><div>□1</div><div>□2</div><div>□3</div></button>
         </div>
         <div>
             <label for="listTypeSelector">Checklist type:</label>
