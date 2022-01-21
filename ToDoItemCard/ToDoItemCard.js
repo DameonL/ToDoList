@@ -42,7 +42,7 @@ export class ToDoItemCard {
         if (this.#backspaceListener == null) {
             this.#backspaceListener = this.#CloseListener.bind(this);
             window.onhashchange = (event) => {
-                if (!window.location.hash) {
+                if (window.location.hash != "toDoItemCard") {
                     this.#CloseWindow();
                 }
             }
