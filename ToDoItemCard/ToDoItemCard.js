@@ -36,6 +36,7 @@ export class ToDoItemCard {
             defaultItem.innerHTML = "My new list item";
             listElement.appendChild(defaultItem);
             descriptionInput.appendChild(listElement);
+            document.getSelection().collapse(defaultItem, 1);
         });
 
         let insertCheckListButton = this.#rootNode.querySelector("#insertCheckList");
@@ -79,16 +80,18 @@ export class ToDoItemCard {
                                 let listNode = selection.anchorNode.parentElement;
                                 if (listNode.firstChild.nodeName == "INPUT" && listNode.firstChild.type == "checkbox") {
                                     if (listNode.innerText.trim() == "") {
-                                        listNode.parentElement.removeChild(listNode);
                                         let afterDiv = document.createElement("div");
+                                        afterDiv.innerHTML = "&nbsp;";
                                         listNode.parentElement.after(afterDiv);
-                                        selection.modify("move", "right", "paragraph");
-                                        return;
+                                        listNode.parentElement.removeChild(listNode);
+                                        selection.collapse(afterDiv, 1);
+                                        event.preventDefault();
+                                        return false;
                                     }
 
                                     let newCheckbox = this.#CreateCheckmarkListItem();
                                     listNode.after(newCheckbox);
-                                    selection.modify("move", "right", "paragraph");
+                                    selection.modify("move", "right", "line");
                                     event.preventDefault();
                                     return false;
                                 }
@@ -98,6 +101,15 @@ export class ToDoItemCard {
 
                     boundElement.addEventListener("keydown", (event) => {
                         if (event.key == "Backspace") {
+                            let selection = document.getSelection();
+                            let selectionRange = selection.getRangeAt(0);
+                            if ((selectionRange.startOffset == 1) && (selectionRange.startContainer.nodeName == "LI") && (selectionRange.startContainer.firstChild.type == "checkbox")) {
+                                selection.modify("move", "left", "word");
+                                selectionRange.startContainer.parentElement.removeChild(selectionRange.startContainer);
+                                event.preventDefault();
+                                return false;
+                            }
+
                             let anchorNode = document.getSelection().anchorNode;
                             if (anchorNode != undefined && anchorNode.previousSibling == null && anchorNode.parentElement.nodeName == "UL") {
                                 event.preventDefault();
@@ -133,6 +145,7 @@ export class ToDoItemCard {
 
     #CreateCheckmarkListItem() {
         let defaultItem = document.createElement("li");
+        defaultItem.className = "checkList";
         let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         defaultItem.appendChild(checkbox);
