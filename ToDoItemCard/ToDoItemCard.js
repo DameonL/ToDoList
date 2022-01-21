@@ -47,6 +47,7 @@ export class ToDoItemCard {
             let hashChangeEvent = (event) => {
                 if (window.location.hash != "toDoItemCard") {
                     window.onhashchange = null;
+                    this.#CloseWindow();
                 }
             }
             window.onhashchange = hashChangeEvent;
