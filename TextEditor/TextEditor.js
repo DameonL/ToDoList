@@ -40,7 +40,6 @@ export class TextEditor {
     constructor() {
         this.#rootNode = document.createRange().createContextualFragment(this.#editorHTML.trim()).firstChild;
         this.#editorNode = this.#rootNode.querySelector(`.editorTarget`);
-        this.#saveHandler = saveHandler;
         this.#editorNode.addEventListener("focusout", (event) => this.#RememberSelection(event));
         this.#lastFocusedField = this.#editorNode;
         this.#lastFocusedFieldPosition = 0;
