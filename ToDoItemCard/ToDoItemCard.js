@@ -107,10 +107,11 @@ export class ToDoItemCard {
                     }
 
                     boundElement.addEventListener("focusout", (event) => {
-                        this.#lastFocusedField = boundElement;
-                        this.#lastFocusedFieldPosition = document.selection.focusOffset;
+                        let selection = document.getSelection();
+                        this.#lastFocusedField = selection.focusNode;
+                        this.#lastFocusedFieldPosition = selection.focusOffset;
                     });
-                    
+
                     boundElement.addEventListener("keypress", (event) => {
                         if (event.key == "Enter") {
                             let selection = document.getSelection();
