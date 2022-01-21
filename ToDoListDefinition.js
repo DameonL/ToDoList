@@ -64,7 +64,7 @@ export let listDefinition = {
             <div class="arrangeableListItemHandle arrangeableListLabelHandle"></div>
             <div class="arrangeableListCheckbox completeCheckBox" boundField="complete" style="text-align: center">◻</div>
             <div class="arrangeableListTextInput nameInputField" boundField="name">Name</div>
-            <div class="shortDateTimeField" boundField="dueDate">Due Date</div>
+            <div class="shortDateTimeField" boundField="dueDate">Due</div>
             <div class="dateTimeInputField" boundfield="dueDate">Due Date</div>
             <div class="arrangeableListTextInput descriptionInputField" boundField="description">Description</div>
             <div class="arrangeableListItemButtons arrangeableListLabelButtons">
@@ -81,7 +81,7 @@ export let listDefinition = {
             <div class="arrangeableListItemHandle toDoListHandle">⬛️⬛️⬛️</div>
             <input type="checkbox" class="completeCheckbox" boundField="complete">
             <div class="nameInputField" boundField="name" contenteditable="true"></div>
-            <div class="shortDateTimeField" boundField="dueDate" dataType="Date" formatFunction="toLocaleDateString">Due</div>
+            <div class="shortDateTimeField" boundField="dueDate" dataType="Date" formatFunction="toLocaleDateString"></div>
             <div class="dateTimeInputField"><input type="datetime-local" boundfield="dueDate"></div>
             <div class="descriptionInputField" boundField="description" multiline="true" contenteditable="true">Description</div>
             <div class="arrangeableListItemButtons"></div>
