@@ -145,6 +145,16 @@ export class TextEditor {
         listElement.appendChild(defaultItem);
         this.#InsertNode(listElement);
     }
+
+    #CreateCheckmarkListItem() {
+        let defaultItem = document.createElement("li");
+        defaultItem.className = "checkList";
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        defaultItem.appendChild(checkbox);
+        defaultItem.innerHTML += "&nbsp";
+        return defaultItem;
+    }
     
     #InsertList(event) {
         let descriptionInput = this.#rootNode.querySelector(`[boundField="description"]`);
