@@ -106,7 +106,7 @@ export class ToDoItemCard {
                 if (!boundElement.getAttribute("multiline")) {
                     this.#backingData[fieldName] = boundElement.innerHTML;
                 } else {
-                    this.#backingData[fieldName] = boundElement.querySelector(`.editorTarget`);
+                    this.#backingData[fieldName] = boundElement.querySelector(`.editorTarget`).innerHTML;
                 }
             } else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "checkbox")) {
                 this.#backingData[fieldName] = boundElement.checked;
