@@ -1,4 +1,4 @@
-import { TextEditor } from "../TextEditor/TextEditor";
+import { TextEditor } from "../TextEditor/TextEditor.js";
 
 export class ToDoItemCard {
     #bindingName = "boundField"
