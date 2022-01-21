@@ -24,6 +24,7 @@ export let editItem = (data) => {
     let itemCard = new ToDoItemCard(data, () => {
        database.UpdateItem(data);
     });
+    window.location.hash = "#toDoItemCard";
 }
 
 export let editNewItem = (data) => {

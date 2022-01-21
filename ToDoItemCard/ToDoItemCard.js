@@ -20,7 +20,23 @@ export class ToDoItemCard {
         });
     }
 
+    #closeWindow = () => {
+        this.#UpdateBackingData();
+        documentHider.parentNode.removeChild(documentHider);
+        cardNode.parentNode.removeChild(cardNode);
+        document.removeEventListener("keydown", closeListener);
+        this.#closedHandler();
+    }
+
+    closeListener = (event) => {
+        if ((event.key == "Backspace") && (!document.activeElement)) {
+            this.#closeWindow();
+            return;
+        }
+    }
+
     Render() {
+        document.addEventListener("keydown", closeListener);
         let documentHider = document.createRange().createContextualFragment(this.#documentHider.trim()).firstChild;
         let cardNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
         
@@ -48,13 +64,7 @@ export class ToDoItemCard {
             descriptionInput.appendChild(listElement);
         });
 
-        documentHider.addEventListener("click", (event) => {
-            this.#UpdateBackingData();
-            documentHider.parentNode.removeChild(documentHider);
-            cardNode.parentNode.removeChild(cardNode);
-            this.#UpdateBackingData();
-            this.#closedHandler();
-        });
+        documentHider.addEventListener("click", this.#closeWindow);
 
         let propertyNames = Object.keys(this.#backingData);
         propertyNames.forEach(property => {
