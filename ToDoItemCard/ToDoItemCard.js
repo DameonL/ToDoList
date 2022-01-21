@@ -31,7 +31,7 @@ export class ToDoItemCard {
     }
 
     #CloseListener(event) {
-        if ((event.key == "Backspace") && (!document.activeElement)) {
+        if ((event.key == "Backspace") && (event.srcElement.nodeName == "BODY")) {
             this.#CloseWindow();
             return;
         }
