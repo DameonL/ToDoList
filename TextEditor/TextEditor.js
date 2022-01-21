@@ -19,14 +19,14 @@ export class TextEditor {
             <label for="listTypeSelector">Checklist type:</label>
             <select id="listTypeSelector" name="listTypes">
                 <option value="none">None</option>
-                <option value="disk">Disk</option>
-                <option value="circle">Circle</option>
-                <option value="square">Square</option>
-                <option value="decimal">1 2 3</option>
-                <option value="upper-roman">I II III</option>
-                <option value="lower-roman">i ii iii</option>
-                <option value="upper-alpha">A B C</option>
-                <option value="lower-alpha">a b c</option>
+                <option value="disc">⚫</option>
+                <option value="circle">⚪</option>
+                <option value="square">◼</option>
+                <option value="decimal">1,2,3</option>
+                <option value="upper-roman">I,II,III</option>
+                <option value="lower-roman">i,ii,iii</option>
+                <option value="upper-alpha">A,B,C</option>
+                <option value="lower-alpha">a,b,c</option>
             </select>
         </div>
     </div>
@@ -37,9 +37,7 @@ export class TextEditor {
     get EditorText() { return this.#editorNode.innerHTML; }
     set EditorText(newText) { this.#editingText = newText; this.#editorNode.innerHTML = newText; }
     get Enabled() { return this.#editorNode.getAttribute("contenteditable") == true; }
-    set Enabled(newValue) {
-        this.#editorNode.setAttribute("contenteditable", newValue == true);
-    }
+    set Enabled(newValue) { this.#editorNode.setAttribute("contenteditable", newValue == true); }
     
     constructor() {
         this.#rootNode = document.createRange().createContextualFragment(this.#editorHTML.trim()).firstChild;

@@ -1,3 +1,11 @@
 .textEditorToolBar {
     display: flex;
+    box-shadow: 1px 1px 5px #555 inset;
+    padding: 4px 4px 4px 4px;
+}
+
+.editorTarget {
+    display: block;
+    box-shadow: 1px 1px 5px #555 inset;
+    padding: 4px 4px 4px 4px;
 }
