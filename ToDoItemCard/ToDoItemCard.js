@@ -27,14 +27,13 @@ export class ToDoItemCard {
         this.#documentHiderInstance.parentNode.removeChild(this.#documentHiderInstance);
         this.#rootNode.parentNode.removeChild(this.#rootNode);
         document.removeEventListener("keydown", this.#backspaceListener);
-        window.location.hash = "";
         this.#backspaceListener = null;
         this.#closedHandler();
     }
 
     #CloseListener(event) {
         if ((event.key == "Backspace") && (event.srcElement.nodeName == "BODY")) {
-            this.#CloseWindow();
+            window.location.hash = "";
             return;
         }
     }
@@ -78,7 +77,7 @@ export class ToDoItemCard {
             descriptionInput.appendChild(listElement);
         });
 
-        documentHiderInstance.addEventListener("click", this.#CloseWindow.bind(this));
+        documentHiderInstance.addEventListener("click", () => window.location.hash = "");
 
         let propertyNames = Object.keys(this.#backingData);
         propertyNames.forEach(property => {
