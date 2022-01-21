@@ -6,6 +6,7 @@ export class ToDoItemCard {
     #cardHtml = ``;
     #documentHiderInstance = null;
     #rootNode = null;
+    #backspaceListener = null;
 
     #boundElements = [];
 
@@ -25,7 +26,7 @@ export class ToDoItemCard {
         this.#UpdateBackingData();
         this.#documentHiderInstance.parentNode.removeChild(this.#documentHiderInstance);
         this.#rootNode.parentNode.removeChild(this.#rootNode);
-        document.removeEventListener("keydown", this.#CloseListener);
+        document.removeEventListener("keydown", this.#backspaceListener);
         this.#closedHandler();
     }
 
@@ -37,7 +38,11 @@ export class ToDoItemCard {
     }
 
     Render() {
-        document.addEventListener("keydown", this.#CloseListener.bind(this));
+        if (this.#backspaceListener == null) {
+            this.#backspaceListener = this.#CloseListener.bind(this);
+            document.addEventListener("keydown", this.#backspaceListener);
+        }
+
         let documentHiderInstance = document.createRange().createContextualFragment(this.#documentHiderHtml.trim()).firstChild;
         this.#documentHiderInstance = documentHiderInstance;
         let cardNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
