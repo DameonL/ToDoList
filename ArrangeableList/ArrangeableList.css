@@ -38,6 +38,7 @@
     column-gap: 5px;
     cursor: grab;
     min-height: 25px;
+    align-items: center;
 }
 
 .arrangeableListItemAlt {
@@ -52,10 +53,7 @@
 
 .arrangeableListItemHandle {
     flex: 0.1;
-    max-width: 20px;
-    max-height: 20px;
-    background-color: darkslategrey;
-    border: 1px solid black;
+    width: 20px;
 }
 
 .arrangeableListLabel {

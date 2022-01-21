@@ -2,9 +2,8 @@ import { ArrangeableList } from "./ArrangeableList/ArrangeableList.js";
 import { listDefinition, database, getNewItem, editNewItem } from "./ToDoListDefinition.js";
 
 
-let toDoList = null;
-toDoList = new ArrangeableList(listDefinition);
-document.body.appendChild(toDoList.RootNode);
+let toDoList = new ArrangeableList(listDefinition);
+document.querySelector("#renderTarget").appendChild(toDoList.RootNode);
 
 database.AddListChangedHandler((newListData) => {
     toDoList.ItemData = newListData;
@@ -24,8 +23,6 @@ toDoList.ItemData = database.Items;
 let renderButton = document.createElement("button");
 renderButton.addEventListener("click", () => toDoList.Render());
 document.body.appendChild(renderButton);
-
-setInterval(() => toDoList.Render(), 5000);
 
 function Start() {
     if (!('indexedDB' in window)) {

@@ -2,9 +2,16 @@ body {
     font-family: "Times New Roman", Times, serif;
 }
 
-#ArrangeableListRender {
-    display: flex;
-    flex-direction: column;
+#toDoListRender {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+#renderTarget {
+    background-color: aquamarine;
+    padding: 5px 5px 5px 5px;
+    border-radius: 15px;
+    overflow: hidden;
 }
 
 .itemDeleteDialog {
@@ -28,6 +35,12 @@ body {
 
 .completeCheckBox {
     flex: 0.1;
+}
+
+.toDoListHandle {
+    font-size: 4px;
+    transform: rotate(90deg);
+    opacity: 35%;
 }
 
 .nameInputField {
@@ -59,9 +72,18 @@ body {
     cursor: text;
 }
 
+.shortDateTimeField {
+    display: none;
+    flex: .5;
+}
+
 @media (max-width: 800px) {
     .dateTimeInputField {
         display: none;
+    }
+
+    .shortDateTimeField {
+        display: unset;
     }
 }
 
