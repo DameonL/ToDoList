@@ -102,7 +102,11 @@ export class ToDoItemCard {
             let fieldName = boundElement.getAttribute(this.#bindingName);
 
             if ((boundElement.nodeName == "DIV") || (boundElement.nodeName == "SPAN")) {
-                this.#backingData[fieldName] = boundElement.innerHTML;
+                if (!boundElement.getAttribute("multiline")) {
+                    this.#backingData[fieldName] = boundElement.innerHTML;
+                } else {
+                    this.#backingData[fieldName] = boundElement.firstChild.innerHTML;
+                }
             } else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "checkbox")) {
                 this.#backingData[fieldName] = boundElement.checked;
             } else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "datetime-local")) {
