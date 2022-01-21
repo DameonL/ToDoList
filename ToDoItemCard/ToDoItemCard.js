@@ -70,7 +70,6 @@ export class ToDoItemCard {
                 this.#boundElements.push(boundElement);
 
                 if ((boundElement.nodeName == "DIV") || (boundElement.nodeName == "SPAN")) {
-                    boundElement.innerHTML = this.#backingData[property];
                     if (!boundElement.getAttribute("multiLine")) {
                         boundElement.addEventListener("keypress", (event) => {
                             if (event.key == "Enter") {
@@ -78,8 +77,10 @@ export class ToDoItemCard {
                                 event.target.blur();
                             }
                         });
+                        boundElement.innerHTML = this.#backingData[property];
                     } else {
                         let textEditor = new TextEditor();
+                        textEditor.EditorText = this.#backingData[property];
                         textEditor.AttachTo(boundElement);
                     }
                 }
