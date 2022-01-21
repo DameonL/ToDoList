@@ -2,7 +2,8 @@
     display: flex;
     box-shadow: 1px 1px 5px #555 inset;
     padding: 4px 4px 4px 4px;
-    align-items: center;
+    align-items: stretch;
+    justify-items: baseline;
 }
 
 .editorTarget {
@@ -11,6 +12,9 @@
     padding: 4px 4px 4px 4px;
 }
 
-#insertList, #insertCheckList {
+#insertList, #insertCheckList, #listTypeSelector {
+    display: block;
     font-size: 7px;
+    height: 100%;
+    padding-bottom: unset;
 }

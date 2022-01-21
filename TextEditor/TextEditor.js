@@ -16,10 +16,9 @@ export class TextEditor {
             <button id="insertCheckList"><div>□1</div><div>□2</div><div>□3</div></button>
         </div>
         <div>
-            <label for="listTypeSelector">Checklist type:</label>
             <select id="listTypeSelector" name="listTypes">
-                <option value="none">None</option>
                 <option value="disc">⚫</option>
+                <option value="none">None</option>
                 <option value="circle">⚪</option>
                 <option value="square">◼</option>
                 <option value="decimal">1,2,3</option>
