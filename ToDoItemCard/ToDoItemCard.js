@@ -79,7 +79,7 @@ export class ToDoItemCard {
             let listElement = document.createElement("ul");
             let defaultItem = this.#CreateCheckmarkListItem();
             listElement.appendChild(defaultItem);
-            this.#lastFocusedField.parentNode.appendChild(listElement);
+            this.#lastFocusedField.after(listElement);
             document.getSelection().collapse(defaultItem, 1);
         });
 
