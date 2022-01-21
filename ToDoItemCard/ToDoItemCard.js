@@ -28,7 +28,7 @@ export class ToDoItemCard {
         this.#closedHandler();
     }
 
-    #closeListener = (event) => {
+    #closeListener(event) {
         if ((event.key == "Backspace") && (!document.activeElement)) {
             this.#closeWindow();
             return;
