@@ -61,7 +61,7 @@ export class ToDoItemCard {
             document.addEventListener("keydown", this.#backspaceListener);
         }
 
-        documentHiderInstance.addEventListener("click", () => window.location.hash = "");
+        documentHiderInstance.addEventListener("click", () => { window.location.hash = ""; this.#CloseWindow(); });
 
         let propertyNames = Object.keys(this.#backingData);
         propertyNames.forEach(property => {
