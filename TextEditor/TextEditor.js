@@ -127,6 +127,7 @@ export class TextEditor {
 
     #ToolBarListStyleChanged(event) {
         let targetList = this.#GetParentList(this.#lastFocusedField);
+        let listStyleDropdown = this.#rootNode.querySelector("#listTypeSelector");
 
         if (targetList) {
             targetList.style.listStyle = listStyleDropdown.options[listStyleDropdown.selectedIndex].value;
