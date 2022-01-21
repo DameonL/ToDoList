@@ -7,6 +7,8 @@ export class ToDoItemCard {
     #documentHiderInstance = null;
     #rootNode = null;
     #backspaceListener = null;
+    #lastFocus = null;
+
     #focusChangeEvent = (event) => {
         console.log(event);
     }
@@ -30,7 +32,6 @@ export class ToDoItemCard {
         this.#documentHiderInstance.parentNode.removeChild(this.#documentHiderInstance);
         this.#rootNode.parentNode.removeChild(this.#rootNode);
         document.removeEventListener("keydown", this.#backspaceListener);
-        window.removeEventListener("focus", this.#focusChangeEvent);
         this.#backspaceListener = null;
         this.#closedHandler();
     }
@@ -43,6 +44,13 @@ export class ToDoItemCard {
     }
 
     Render() {
+        let documentHiderInstance = document.createRange().createContextualFragment(this.#documentHiderHtml.trim()).firstChild;
+        this.#documentHiderInstance = documentHiderInstance;
+        let cardNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
+        
+        document.body.appendChild(documentHiderInstance);
+        document.body.appendChild(cardNode);
+        this.#rootNode = cardNode;
         if (this.#backspaceListener == null) {
             this.#backspaceListener = this.#CloseListener.bind(this);
             let hashChangeEvent = (event) => {
@@ -53,16 +61,9 @@ export class ToDoItemCard {
             }
             window.onhashchange = hashChangeEvent;
             document.addEventListener("keydown", this.#backspaceListener);
-            window.addEventListener("focus", this.#focusChangeEvent);
+            this.#rootNode.addEventListener("focusin", this.#focusChangeEvent);
         }
 
-        let documentHiderInstance = document.createRange().createContextualFragment(this.#documentHiderHtml.trim()).firstChild;
-        this.#documentHiderInstance = documentHiderInstance;
-        let cardNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
-        
-        document.body.appendChild(documentHiderInstance);
-        document.body.appendChild(cardNode);
-        this.#rootNode = cardNode;
         let insertListButton = this.#rootNode.querySelector("#insertList");
         insertListButton.addEventListener("click", (event) => {
             let selection = document.selection;
