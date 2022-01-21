@@ -38,8 +38,8 @@ export class ArrangeableListItem {
 
         let propertyNames = Object.keys(this.#backingData);
         propertyNames.forEach(property => {
-            let boundElement = this.#renderRoot.querySelector(`[boundField="${property}"]`);
-            if (boundElement) {
+            let boundElements = this.#renderRoot.querySelectorAll(`[boundField="${property}"]`);
+            boundElements.forEach(boundElement => {
                 this.#boundElements.push(boundElement);
 
                 if ((boundElement.nodeName == "DIV") || (boundElement.nodeName == "SPAN")) {
@@ -82,7 +82,7 @@ export class ArrangeableListItem {
                         this.#UpdateBackingData();
                     });
                 }
-            }
+            });
         });
 
         this.#UpdateAppearance();
