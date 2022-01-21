@@ -29,26 +29,22 @@ export class ToDoItemCard {
         this.#rootNode = cardNode;
         let insertListButton = this.#rootNode.querySelector("#insertList");
         insertListButton.addEventListener("click", (event) => {
+            let selection = document.selection;
             let descriptionInput = this.#rootNode.querySelector(`[boundField="description"]`);
             let listElement = document.createElement("ul");
             let defaultItem = document.createElement("li");
             defaultItem.innerHTML = "My new list item";
             listElement.appendChild(defaultItem);
             descriptionInput.appendChild(listElement);
-            let endDiv = document.createElement("div");
-            endDiv.innerHTML = "&nbsp";
-            descriptionInput.appendChild(endDiv);
         });
 
-        let insertCheckListButton = this.#rootNode.querySelector("#insertList");
+        let insertCheckListButton = this.#rootNode.querySelector("#insertCheckList");
         insertCheckListButton.addEventListener("click", (event) => {
             let descriptionInput = this.#rootNode.querySelector(`[boundField="description"]`);
             let listElement = document.createElement("ul");
             let defaultItem = this.#CreateCheckmarkListItem();
             listElement.appendChild(defaultItem);
             descriptionInput.appendChild(listElement);
-            endDiv.innerHTML = "&nbsp";
-            descriptionInput.appendChild(endDiv);
         });
 
         documentHider.addEventListener("click", (event) => {
@@ -80,11 +76,33 @@ export class ToDoItemCard {
                         if (event.key == "Enter") {
                             let selection = document.getSelection();
                             if ((selection.anchorNode != undefined)) {
-                                let parent = selection.anchorNode.parentElement;
-                                if (parent.firstChild.nodeName == "INPUT" && parent.firstChild.type == "checkbox") {
+                                let listNode = selection.anchorNode.parentElement;
+                                if (listNode.firstChild.nodeName == "INPUT" && listNode.firstChild.type == "checkbox") {
+                                    if (listNode.innerText.trim() == "") {
+                                        listNode.parentElement.removeChild(listNode);
+                                        let afterDiv = document.createElement("div");
+                                        listNode.parentElement.after(afterDiv);
+                                        selection.modify("move", "right", "paragraph");
+                                        return;
+                                    }
+
                                     let newCheckbox = this.#CreateCheckmarkListItem();
-                                    parent.parent.appendChild(newCheckbox);
+                                    listNode.after(newCheckbox);
+                                    selection.modify("move", "right", "paragraph");
+                                    event.preventDefault();
+                                    return false;
                                 }
+                            }
+                        }
+                    });
+
+                    boundElement.addEventListener("keydown", (event) => {
+                        if (event.key == "Backspace") {
+                            let anchorNode = document.getSelection().anchorNode;
+                            if (anchorNode != undefined && anchorNode.previousSibling == null && anchorNode.parentElement.nodeName == "UL") {
+                                event.preventDefault();
+                                anchorNode.parentElement.parentElement.removeChild(anchorNode.parentElement);
+                                return false;
                             }
                         }
                     });
