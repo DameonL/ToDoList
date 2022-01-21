@@ -27,6 +27,7 @@ export class ToDoItemCard {
         this.#documentHiderInstance.parentNode.removeChild(this.#documentHiderInstance);
         this.#rootNode.parentNode.removeChild(this.#rootNode);
         document.removeEventListener("keydown", this.#backspaceListener);
+        window.location.hash = "";
         this.#backspaceListener = null;
         this.#closedHandler();
     }
