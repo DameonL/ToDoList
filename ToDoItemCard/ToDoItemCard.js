@@ -2,8 +2,9 @@ export class ToDoItemCard {
     #bindingName = "boundField"
     #backingData = null;
     #closedHandler = null;
-    #documentHider = `<div class="documentHider"></div>`;
+    #documentHiderHtml = `<div class="documentHider"></div>`;
     #cardHtml = ``;
+    #documentHiderInstance = null;
     #rootNode = null;
 
     #boundElements = [];
@@ -22,7 +23,7 @@ export class ToDoItemCard {
 
     #CloseWindow() {
         this.#UpdateBackingData();
-        this.#documentHider.parentNode.removeChild(this.#documentHider);
+        this.#documentHiderInstance.parentNode.removeChild(this.#documentHiderInstance);
         this.#rootNode.parentNode.removeChild(this.#rootNode);
         document.removeEventListener("keydown", this.#CloseListener);
         this.#closedHandler();
@@ -37,10 +38,11 @@ export class ToDoItemCard {
 
     Render() {
         document.addEventListener("keydown", this.#CloseListener.bind(this));
-        let documentHider = document.createRange().createContextualFragment(this.#documentHider.trim()).firstChild;
+        let documentHiderInstance = document.createRange().createContextualFragment(this.#documentHiderHtml.trim()).firstChild;
+        this.#documentHiderInstance = documentHiderInstance;
         let cardNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
         
-        document.body.appendChild(documentHider);
+        document.body.appendChild(documentHiderInstance);
         document.body.appendChild(cardNode);
         this.#rootNode = cardNode;
         let insertListButton = this.#rootNode.querySelector("#insertList");
@@ -64,7 +66,7 @@ export class ToDoItemCard {
             descriptionInput.appendChild(listElement);
         });
 
-        documentHider.addEventListener("click", this.#CloseWindow.bind(this));
+        documentHiderInstance.addEventListener("click", this.#CloseWindow.bind(this));
 
         let propertyNames = Object.keys(this.#backingData);
         propertyNames.forEach(property => {
