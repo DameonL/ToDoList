@@ -48,7 +48,7 @@ export class TextEditor {
     }
 
     AttachTo(targetNode) {
-        targetNode.appendChild(this.#editorNode);
+        targetNode.appendChild(this.#rootNode);
     }
 
     #InitializeEditorField() {
