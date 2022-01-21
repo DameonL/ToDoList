@@ -36,7 +36,7 @@ export class ToDoItemCard {
     }
 
     Render() {
-        document.addEventListener("keydown", this.#closeListener);
+        document.addEventListener("keydown", () => this.#closeListener);
         let documentHider = document.createRange().createContextualFragment(this.#documentHider.trim()).firstChild;
         let cardNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
         
