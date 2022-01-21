@@ -10,7 +10,7 @@ export class TextEditor {
 <div class="textEditor">
     <div class="textEditorToolBar">
         <div>
-            <button id="insertList">Insert List</button
+            <button id="insertList">Insert List</button>
         </div>
         <div>
             <button id="insertCheckList">Insert Checklist</button>
