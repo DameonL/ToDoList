@@ -7,6 +7,9 @@ export class ToDoItemCard {
     #documentHiderInstance = null;
     #rootNode = null;
     #backspaceListener = null;
+    #focusChangeEvent = (event) => {
+        console.log(event);
+    }
 
     #boundElements = [];
 
@@ -41,12 +44,14 @@ export class ToDoItemCard {
     Render() {
         if (this.#backspaceListener == null) {
             this.#backspaceListener = this.#CloseListener.bind(this);
-            window.onhashchange = (event) => {
+            let hashChangeEvent = (event) => {
                 if (window.location.hash != "toDoItemCard") {
-                    this.#CloseWindow();
+                    window.onhashchange = null;
                 }
             }
+            window.onhashchange = hashChangeEvent;
             document.addEventListener("keydown", this.#backspaceListener);
+            window.addEventListener("focus", this.#focusChangeEvent);
         }
 
         let documentHiderInstance = document.createRange().createContextualFragment(this.#documentHiderHtml.trim()).firstChild;
