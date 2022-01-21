@@ -8,12 +8,7 @@ export class ToDoItemCard {
     #rootNode = null;
     #backspaceListener = null;
     #lastFocusedField = null;
-    #lastFocusedFieldPosition = null;
-    #focusChangeEvent = (event) => {
-        this.#lastFocusedFieldPosition = document.selection.focusOffset;
-    }
-
-
+    #lastFocusedFieldPosition = 0;
     #boundElements = [];
 
     constructor(backingData, closedHandler) {
@@ -84,7 +79,8 @@ export class ToDoItemCard {
             let listElement = document.createElement("ul");
             let defaultItem = this.#CreateCheckmarkListItem();
             listElement.appendChild(defaultItem);
-            descriptionInput.appendChild(listElement);
+            this.#lastFocusedField.parentNode.appendChild(listElement);
+            document.getSelection().collapse(defaultItem, 1);
         });
 
         documentHiderInstance.addEventListener("click", () => window.location.hash = "");
@@ -105,12 +101,16 @@ export class ToDoItemCard {
                             }
                         });
                     }
+                    else {
+                        boundElement.addEventListener("focusout", (event) => {
+                            let selection = document.getSelection();
+                            this.#lastFocusedField = selection.focusNode;
+                            this.#lastFocusedFieldPosition = selection.focusOffset;
+                        });
+                        this.#lastFocusedField = boundElement;
+                        this.#lastFocusedFieldPosition = 0;
+                    }
 
-                    boundElement.addEventListener("focusout", (event) => {
-                        let selection = document.getSelection();
-                        this.#lastFocusedField = selection.focusNode;
-                        this.#lastFocusedFieldPosition = selection.focusOffset;
-                    });
 
                     boundElement.addEventListener("keypress", (event) => {
                         if (event.key == "Enter") {
