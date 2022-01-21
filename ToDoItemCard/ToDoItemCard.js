@@ -22,9 +22,9 @@ export class ToDoItemCard {
 
     #CloseWindow() {
         this.#UpdateBackingData();
-        documentHider.parentNode.removeChild(documentHider);
-        cardNode.parentNode.removeChild(cardNode);
-        document.removeEventListener("keydown", closeListener);
+        this.#documentHider.parentNode.removeChild(this.#documentHider);
+        this.#rootNode.parentNode.removeChild(this.#rootNode);
+        document.removeEventListener("keydown", this.#CloseListener);
         this.#closedHandler();
     }
 
