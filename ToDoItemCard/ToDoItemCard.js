@@ -7,11 +7,12 @@ export class ToDoItemCard {
     #documentHiderInstance = null;
     #rootNode = null;
     #backspaceListener = null;
-    #lastFocus = null;
-
+    #lastFocusedField = null;
+    #lastFocusedFieldPosition = null;
     #focusChangeEvent = (event) => {
-        console.log(event);
+        this.#lastFocusedFieldPosition = document.selection.focusOffset;
     }
+
 
     #boundElements = [];
 
@@ -61,19 +62,20 @@ export class ToDoItemCard {
             }
             window.onhashchange = hashChangeEvent;
             document.addEventListener("keydown", this.#backspaceListener);
-            this.#rootNode.addEventListener("focusin", this.#focusChangeEvent);
         }
 
         let insertListButton = this.#rootNode.querySelector("#insertList");
         insertListButton.addEventListener("click", (event) => {
-            let selection = document.selection;
-            let descriptionInput = this.#rootNode.querySelector(`[boundField="description"]`);
-            let listElement = document.createElement("ul");
-            let defaultItem = document.createElement("li");
-            defaultItem.innerHTML = "My new list item";
-            listElement.appendChild(defaultItem);
-            descriptionInput.appendChild(listElement);
-            document.getSelection().collapse(defaultItem, 1);
+            if (event.relatedTarget) {
+                let selection = document.selection;
+                let descriptionInput = this.#rootNode.querySelector(`[boundField="description"]`);
+                let listElement = document.createElement("ul");
+                let defaultItem = document.createElement("li");
+                defaultItem.innerHTML = "My new list item";
+                listElement.appendChild(defaultItem);
+                descriptionInput.appendChild(listElement);
+                document.getSelection().collapse(defaultItem, 1);
+            }
         });
 
         let insertCheckListButton = this.#rootNode.querySelector("#insertCheckList");
@@ -104,6 +106,7 @@ export class ToDoItemCard {
                         });
                     }
 
+                    boundElement.addEventListener("focusout", this.#focusChangeEvent);
                     boundElement.addEventListener("keypress", (event) => {
                         if (event.key == "Enter") {
                             let selection = document.getSelection();
