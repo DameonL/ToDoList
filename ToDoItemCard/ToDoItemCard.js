@@ -27,6 +27,7 @@ export class ToDoItemCard {
         this.#documentHiderInstance.parentNode.removeChild(this.#documentHiderInstance);
         this.#rootNode.parentNode.removeChild(this.#rootNode);
         document.removeEventListener("keydown", this.#backspaceListener);
+        this.#backspaceListener = null;
         this.#closedHandler();
     }
 
@@ -40,6 +41,11 @@ export class ToDoItemCard {
     Render() {
         if (this.#backspaceListener == null) {
             this.#backspaceListener = this.#CloseListener.bind(this);
+            window.onhashchange = (event) => {
+                if (!window.location.hash) {
+                    this.#CloseWindow();
+                }
+            }
             document.addEventListener("keydown", this.#backspaceListener);
         }
 
