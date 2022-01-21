@@ -30,6 +30,7 @@ export class ToDoItemCard {
         this.#documentHiderInstance.parentNode.removeChild(this.#documentHiderInstance);
         this.#rootNode.parentNode.removeChild(this.#rootNode);
         document.removeEventListener("keydown", this.#backspaceListener);
+        window.removeEventListener("focus", this.#focusChangeEvent);
         this.#backspaceListener = null;
         this.#closedHandler();
     }
