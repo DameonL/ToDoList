@@ -28,7 +28,7 @@ export class ToDoItemCard {
         this.#closedHandler();
     }
 
-    closeListener = (event) => {
+    #closeListener = (event) => {
         if ((event.key == "Backspace") && (!document.activeElement)) {
             this.#closeWindow();
             return;
@@ -36,7 +36,7 @@ export class ToDoItemCard {
     }
 
     Render() {
-        document.addEventListener("keydown", closeListener);
+        document.addEventListener("keydown", this.#closeListener);
         let documentHider = document.createRange().createContextualFragment(this.#documentHider.trim()).firstChild;
         let cardNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
         
