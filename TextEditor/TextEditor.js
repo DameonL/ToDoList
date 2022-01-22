@@ -28,6 +28,9 @@ export class TextEditor {
                 <option value="lower-alpha">a,b,c</option>
             </select>
         </div>
+        <div>
+            <input type="color">
+        </div>
     </div>
     <div class="editorTarget"></div>
 </div>
@@ -166,6 +169,8 @@ export class TextEditor {
     }
 
     #InsertNode(nodeToInsert) {
+        let listStyleDropdown = this.#rootNode.querySelector("#listTypeSelector");
+        nodeToInsert.style.listStyle = listStyleDropdown.options[listStyleDropdown.selectedIndex].value;
         if (this.#lastFocusedField.nodeName == "#text") {
             let content = this.#lastFocusedField.textContent;
             let text1 = content.substring(0, this.#lastFocusedFieldPosition);
@@ -176,7 +181,11 @@ export class TextEditor {
             nodeToInsert.after(newTextNode);
         }
         else {
-            this.#lastFocusedField.after(nodeToInsert);
+            if (this.#lastFocusedField == this.#editorNode) {
+                this.#editorNode.appendChild(nodeToInsert);
+            } else {
+                this.#lastFocusedField.after(nodeToInsert);
+            }
         }
 
         document.getSelection().collapse(nodeToInsert, 1);

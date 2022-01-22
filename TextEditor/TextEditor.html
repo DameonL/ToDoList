@@ -1,23 +1,22 @@
 <div class="textEditor">
     <div class="textEditorToolBar">
         <div>
-            <button id="insertList">Insert List</button>
+            <button id="insertList"><div>•1</div><div>•2</div><div>•3</div></button>
         </div>
         <div>
-            <button id="insertCheckList">Insert Checklist</button>
+            <button id="insertCheckList"><div>□1</div><div>□2</div><div>□3</div></button>
         </div>
         <div>
-            <label for="listTypeSelector">Checklist type:</label>
             <select id="listTypeSelector" name="listTypes">
+                <option value="disc">⚫</option>
                 <option value="none">None</option>
-                <option value="disk">Disk</option>
-                <option value="circle">Circle</option>
-                <option value="square">Square</option>
-                <option value="decimal">1 2 3</option>
-                <option value="upper-roman">I II III</option>
-                <option value="lower-roman">i ii iii</option>
-                <option value="upper-alpha">A B C</option>
-                <option value="lower-alpha">a b c</option>
+                <option value="circle">⚪</option>
+                <option value="square">◼</option>
+                <option value="decimal">1,2,3</option>
+                <option value="upper-roman">I,II,III</option>
+                <option value="lower-roman">i,ii,iii</option>
+                <option value="upper-alpha">A,B,C</option>
+                <option value="lower-alpha">a,b,c</option>
             </select>
         </div>
     </div>
