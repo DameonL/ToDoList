@@ -146,7 +146,9 @@ export class TextEditor {
         insertCheckListButton.addEventListener("click", (event) => this.#InsertCheckList(event));
 
         let fontColorButton = this.#rootNode.querySelector("#fontColorSelector");
-        fontColorButton.addEventListener("change", (event) => this.#ChangeFontColor(event));
+//        fontColorButton.addEventListener("change", (event) => this.#ChangeFontColor(event));
+        fontColorButton.addEventListener("input", (event) => this.#ChangeFontColor(event));
+
 
         this.#toolBarNode = this.#rootNode.querySelector(".textEditorToolBar");
     }
@@ -232,9 +234,21 @@ export class TextEditor {
         let selection = document.getSelection();
         let range = selection.getRangeAt(0);
         let colorTarget = range.startContainer;
-        if ((range.startContainer == range.endContainer) && (range.startOffset == 0) && (range.endOffset == range.startContainer.nodeValue.length)) {
+        let textLength = (range.startContainer instanceof Text) ? range.startContainer.nodeValue.length : range.startContainer.innerText.length;
+        // Handle cases where a whole text node is selected
+        if ((range.startContainer == range.endContainer) && (range.startOffset == 0) && (range.endOffset == textLength)) {
             if (range.startContainer instanceof Text) {
-                colorTarget = range.startContainer.parentElement;
+                // If the only thing this contains is our text, just change the parent element's style
+                if (range.startContainer.parentElement.childElementCount == 0) {
+                    colorTarget = range.startContainer.parentElement;
+                } else {
+                    let newSpan = document.createElement("span");
+                    newSpan.innerText = range.startContainer.nodeValue;
+                    colorTarget = newSpan;
+                    range.startContainer.before(newSpan);
+                    range.deleteContents();
+                    range.selectNode(newSpan);
+                }
             }
         }
         
@@ -243,6 +257,8 @@ export class TextEditor {
         // TODO: If a span has no style, class, or ID and is surrounded by text nodes, it should be converted to a text node.
 
         // TODO: If we change color but cursor has been collapsed, new text typed should be the new color (insert a span or change color of current element if no content)
+
+        if (!colorTarget || !colorTarget.style) return;
 
         if (fontColor == "#000000") {
             colorTarget.style.color = null;
