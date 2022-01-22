@@ -29,7 +29,7 @@ export class TextEditor {
             </select>
         </div>
         <div>
-            <input type="color">
+            <input id="fontColorSelector" type="color">
         </div>
     </div>
     <div class="editorTarget"></div>

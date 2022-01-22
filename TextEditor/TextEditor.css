@@ -1,18 +1,22 @@
 .textEditorToolBar {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(20, auto);
+    column-gap: 0px;
+    border: 1px solid grey;
     box-shadow: 1px 1px 5px #555 inset;
     padding: 4px 4px 4px 4px;
-    align-items: stretch;
-    justify-items: baseline;
+    align-content: left;
+    justify-content: start;
 }
 
 .editorTarget {
     display: block;
+    border: 1px solid grey;
     box-shadow: 1px 1px 5px #555 inset;
     padding: 4px 4px 4px 4px;
 }
 
-#insertList, #insertCheckList, #listTypeSelector {
+#insertList, #insertCheckList, #listTypeSelector, #fontColorSelector {
     display: flex;
     flex-direction: column;
     font-size: 8px;
