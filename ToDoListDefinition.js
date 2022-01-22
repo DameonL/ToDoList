@@ -46,10 +46,6 @@ let itemDrawHandler = (htmlElement, data) => {
     htmlElement.style.textDecoration = (data.complete) ? "line-through" : "";
 }
 
-let textDrawHandler = (element, data) => {
-    element.style.textDecoration = (data.complete) ? "line-through" : "";
-    element.contentEditable = (data.complete) ? false : true;
-}
 let itemUpdatedHandler = (data) => { database.UpdateItem(data); }
 let itemIndexHandler = (data) => database.GetItemIndex(data);
 let itemInsertHandler = (itemToInsert, priorItem) => database.InsertItemBefore(itemToInsert, priorItem);

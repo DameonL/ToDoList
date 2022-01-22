@@ -17,14 +17,44 @@
 }
 
 #insertList, #insertCheckList, #listTypeSelector, #fontColorSelector {
-    display: flex;
-    flex-direction: column;
+    appearance: none;
+    width:inherit;
+    height: inherit;
+    margin: inherit;
+    padding: inherit;
     font-size: 8px;
-    justify-items: stretch;
-    align-items: stretch;
+    display: block;
+    text-align: center;
+    border: none;
+    background-color: unset;
+}
+
+.toolBarButton {
     height: 30px;
     width:  30px;
-    appearance: none;
-    text-align: center;
     border: 1px solid black;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#insertList > ul, #insertCheckList > ul {
+    padding-inline-start: unset;
+    margin-block-start: unset;
+    margin-block-end: unset;
+    text-align: center;
+    position: relative;
+    left: 15px;
+}
+
+#insertList > ul > li > span, #insertCheckList > ul > li > span {
+    position: relative;
+    left: -15px;
+}
+
+#insertCheckList > ul > li > span {
+    line-height: 75%;
+}
+
+input[type="color" i]::-webkit-color-swatch {
+    background-color: unset !important;
 }

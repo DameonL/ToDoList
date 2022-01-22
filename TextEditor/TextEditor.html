@@ -1,12 +1,12 @@
 <div class="textEditor">
     <div class="textEditorToolBar">
-        <div>
-            <button id="insertList"><div>•1</div><div>•2</div><div>•3</div></button>
+        <div class="toolBarButton">
+            <button id="insertList"><ul><li><span>a</span></li><li><span>b</span></li><li><span>c</span></li></ul></button>
         </div>
-        <div>
-            <button id="insertCheckList"><div>□1</div><div>□2</div><div>□3</div></button>
+        <div class="toolBarButton">
+            <button id="insertCheckList"><ul><li><span>☑</span></li><li><span>☑</span></li><li><span>☑</span></li></ul></button>
         </div>
-        <div>
+        <div class="toolBarButton">
             <select id="listTypeSelector" name="listTypes">
                 <option value="disc">⚫</option>
                 <option value="none">None</option>
@@ -18,6 +18,19 @@
                 <option value="upper-alpha">A,B,C</option>
                 <option value="lower-alpha">a,b,c</option>
             </select>
+        </div>
+        <div class="toolBarButton">
+            <input id="fontColorSelector" type="color">
+            <div style="
+                position: relative;
+                top: -75%;
+                font-size: 10px;
+                text-align: center;
+                width: 30px;
+                height: 30px;
+                pointer-events: none;
+                ">ABC
+            </div>
         </div>
     </div>
     <div class="editorTarget"></div>
