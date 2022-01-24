@@ -16,7 +16,7 @@
     padding: 4px 4px 4px 4px;
 }
 
-#insertList, #insertCheckList, #listTypeSelector, #fontColorSelector, #fontSizeSelector {
+#insertList, #insertCheckList, #listTypeSelector, #fontColorSelector, #fontSizeSelector, #fontWeightDropdown {
     appearance: none;
     width:inherit;
     height: inherit;
@@ -29,7 +29,7 @@
     background-color: unset;
 }
 
-#fontSizeSelector {
+#fontSizeSelector, #fontWeightDropdown, #font {
     font-size: 16px;
 }
 

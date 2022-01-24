@@ -75,6 +75,10 @@ export class TextEditor {
             </select>
         </div>
 
+        <div class="toolBarButton">
+            <button id="italicButton" style="font-style: italic">I</button>
+        </div>
+
     </div>
     <div class="editorTarget"></div>
 </div>
@@ -357,15 +361,28 @@ export class TextEditor {
     }
 
     #ChangeFontWeight(event) {
-        let fontweightDropdown = this.#rootNode.querySelector("#fontWeightSelector");
-        let fontWeight = fontSizeDropdown.options[fontSizeDropdown.selectedIndex].value;
+        let fontweightDropdown = this.#rootNode.querySelector("#fontWeightDropdown");
+        let fontWeight = fontweightDropdown.options[fontweightDropdown.selectedIndex].value;
 
         let callBack = null;
         callBack = (fontWeight == "0") ? 
-            (element) => element.style.setProperty("font-weight", null)
-            : (element) => element.style.setProperty("font-weight", fontWeight, "important");
+            (element) => { element.style.setProperty("font-weight", null); fontWeightDropdown.style.setProperty("font-weight", null); }
+            : (element) => { element.style.setProperty("font-weight", fontWeight, "important"); fontWeightDropdown.style.setProperty("font-weight", fontWeight, "important"); }
 
         this.#ChangeSelectionStyle(callBack);
+    }
+
+    #ChangeFontStyle(event) {
+        let italicButton = this.#rootNode.querySelector("#italicButton");
+
+        this.#ChangeSelectionStyle((element) => {
+            if (element.style.fontStyle = "italic") {
+                element.style.setProperty("font-style", null);
+            }
+            else {
+                element.style.setProperty("font-style", "italic", "important");
+            }
+        });
     }
 
     #RememberSelection(event) {
