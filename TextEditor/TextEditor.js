@@ -46,16 +46,17 @@ export class TextEditor {
         </div>
         <div class="toolBarButton">
             <select id="fontSizeSelector" name="fontSize">
+                <option value="+">+</option>
+                <option value="-">-</option>
                 <option value="8px">8</option>
                 <option value="10px">10</option>
                 <option value="12px">12</option>
                 <option value="14px">14</option>
-                <option value="16px">16</option>
+                <option value="16px" selected>16</option>
                 <option value="18px">18</option>
                 <option value="20px">20</option>
                 <option value="22px">22</option>
                 <option value="24px">24</option>
-                <option value="?">?</option>
             </select>
         </div>
     </div>
@@ -163,7 +164,10 @@ export class TextEditor {
         fontColorButton.addEventListener("input", (event) => this.#ChangeFontColor(event));
 
         let fontSizeDropdown = this.#rootNode.querySelector("#fontSizeSelector");
-        fontSizeDropdown.addEventListener("change", (event) => this.#ChangeFontSize(event));
+        let fontSizeClickTracker = false;
+        fontSizeDropdown.addEventListener("input", (event) => {
+            this.#ChangeFontSize(event);
+        });
 
         this.#toolBarNode = this.#rootNode.querySelector(".textEditorToolBar");
     }
@@ -296,13 +300,33 @@ export class TextEditor {
     }
 
     #ChangeFontSize(event) {
-        let fontSizeDropdown = this.#rootNode.querySelector("#listTypeSelector");
+        let fontSizeDropdown = this.#rootNode.querySelector("#fontSizeSelector");
         let fontSize = fontSizeDropdown.options[fontSizeDropdown.selectedIndex].value;
 
-        let callBack = (fontSize == "#000000") ? 
-            (element) => element.style.setProperty("font-size", null)
-            : (element) => element.style.setProperty("font-size", fontSize, "important");
-            this.#ChangeSelectionStyle(callBack);
+        let callBack = null;
+        if ((fontSize == "+") || (fontSize == "-")) {
+            callBack = (element) => {
+                let currentSize = element.style.fontSize;
+                if (currentSize == "") {
+                    let computedStyle = window.getComputedStyle(element);
+                    currentSize = computedStyle.getPropertyValue("font-size");
+                    if (currentSize == "")
+                        currentSize = "16px";
+                }
+
+                currentSize = Number(currentSize.replace("px", ""));
+                if (fontSize == "+") currentSize++;
+                else currentSize--;
+
+                element.style.setProperty("font-size", `${currentSize} px`, "important");
+            }
+        }
+        else {
+            callBack = (fontSize == "16px") ? 
+                (element) => element.style.setProperty("font-size", null)
+                : (element) => element.style.setProperty("font-size", fontSize, "important");
+        }
+        this.#ChangeSelectionStyle(callBack);
     }
 
     #RememberSelection(event) {

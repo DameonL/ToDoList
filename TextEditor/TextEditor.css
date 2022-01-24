@@ -16,7 +16,7 @@
     padding: 4px 4px 4px 4px;
 }
 
-#insertList, #insertCheckList, #listTypeSelector, #fontColorSelector {
+#insertList, #insertCheckList, #listTypeSelector, #fontColorSelector, #fontSizeSelector {
     appearance: none;
     width:inherit;
     height: inherit;
@@ -27,6 +27,10 @@
     text-align: center;
     border: none;
     background-color: unset;
+}
+
+#fontSizeSelector {
+    font-size: 16px;
 }
 
 .toolBarButton {
