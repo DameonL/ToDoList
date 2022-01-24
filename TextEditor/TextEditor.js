@@ -44,6 +44,20 @@ export class TextEditor {
                 ">ABC
             </div>
         </div>
+        <div class="toolBarButton">
+            <select id="fontSizeSelector" name="fontSize">
+                <option value="8px">8</option>
+                <option value="10px">10</option>
+                <option value="12px">12</option>
+                <option value="14px">14</option>
+                <option value="16px">16</option>
+                <option value="18px">18</option>
+                <option value="20px">20</option>
+                <option value="22px">22</option>
+                <option value="24px">24</option>
+                <option value="?">?</option>
+            </select>
+        </div>
     </div>
     <div class="editorTarget"></div>
 </div>
@@ -146,9 +160,10 @@ export class TextEditor {
         insertCheckListButton.addEventListener("click", (event) => this.#InsertCheckList(event));
 
         let fontColorButton = this.#rootNode.querySelector("#fontColorSelector");
-        //        fontColorButton.addEventListener("change", (event) => this.#ChangeFontColor(event));
         fontColorButton.addEventListener("input", (event) => this.#ChangeFontColor(event));
 
+        let fontSizeDropdown = this.#rootNode.querySelector("#fontSizeSelector");
+        fontSizeDropdown.addEventListener("change", (event) => this.#ChangeFontSize(event));
 
         this.#toolBarNode = this.#rootNode.querySelector(".textEditorToolBar");
     }
@@ -278,6 +293,16 @@ export class TextEditor {
             (element) => element.style.setProperty("color", null)
             : (element) => element.style.setProperty("color", fontColor, "important");
         this.#ChangeSelectionStyle(callBack);
+    }
+
+    #ChangeFontSize(event) {
+        let fontSizeDropdown = this.#rootNode.querySelector("#listTypeSelector");
+        let fontSize = fontSizeDropdown.options[fontSizeDropdown.selectedIndex].value;
+
+        let callBack = (fontSize == "#000000") ? 
+            (element) => element.style.setProperty("font-size", null)
+            : (element) => element.style.setProperty("font-size", fontSize, "important");
+            this.#ChangeSelectionStyle(callBack);
     }
 
     #RememberSelection(event) {
