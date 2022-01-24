@@ -52,13 +52,13 @@ export class TextEditor {
     get EditorText() { return this.#editorNode.innerHTML; }
     set EditorText(newText) {
         this.#editingText = newText;
-        this.#editorNode.innerHTML = newText; 
+        this.#editorNode.innerHTML = newText;
         let checkboxes = this.#editorNode.querySelectorAll(`input[type="checkbox"]`);
         checkboxes.forEach(checkbox => this.#AddCheckBoxListener(checkbox));
     }
     get Enabled() { return this.#editorNode.getAttribute("contenteditable") == true; }
     set Enabled(newValue) { this.#editorNode.setAttribute("contenteditable", newValue == true); }
-    
+
     constructor() {
         this.#rootNode = document.createRange().createContextualFragment(this.#editorHTML.trim()).firstChild;
         this.#editorNode = this.#rootNode.querySelector(`.editorTarget`);
@@ -102,7 +102,7 @@ export class TextEditor {
                         event.preventDefault();
                         return false;
                     }
-                    
+
                 }
             }
         });
@@ -146,7 +146,7 @@ export class TextEditor {
         insertCheckListButton.addEventListener("click", (event) => this.#InsertCheckList(event));
 
         let fontColorButton = this.#rootNode.querySelector("#fontColorSelector");
-//        fontColorButton.addEventListener("change", (event) => this.#ChangeFontColor(event));
+        //        fontColorButton.addEventListener("change", (event) => this.#ChangeFontColor(event));
         fontColorButton.addEventListener("input", (event) => this.#ChangeFontColor(event));
 
 
@@ -194,7 +194,7 @@ export class TextEditor {
         defaultItem.appendChild(checkbox);
         return defaultItem;
     }
-    
+
     #InsertList() {
         let listElement = document.createElement("ul");
         let defaultItem = document.createElement("li");
@@ -226,72 +226,58 @@ export class TextEditor {
         document.getSelection().collapse(nodeToInsert, 1);
     }
 
+    #ChangeSelectionStyle(styleChangeCallback) {
+        let selection = document.getSelection();
+        let range = selection.getRangeAt(0);
+        let startContainer = range.startContainer
+        if (range.startContainer instanceof Text) {
+            if ((range.startContainer === range.endContainer) && (range.startOffset == 0 && range.endOffset == range.startContainer.nodeValue.length)
+             && range.startContainer.parentNode.classList.contains("textEditorFormatSpan")) {
+                range.selectNode(range.startContainer.parentNode);
+            }
+        }
+
+        let contents = range.extractContents();
+        contents.childNodes.forEach(child => {
+            let elementToChange = null;
+            if (!(child instanceof Text) && child.classList.contains("textEditorFormatSpan")) {
+                elementToChange = child;
+            } else {
+                if (!(range.startContainer instanceof Text) && (range.startContainer.classList.contains("textEditorFormatSpan"))) {
+                    range.startContainer.appendChild(child);
+                    elementToChange = range;
+                } else {
+                    let styleSpan = document.createElement("span");
+                    styleSpan.classList.add("textEditorFormatSpan");
+                    child.after(styleSpan);
+                    child.parentNode.removeChild(child);
+                    styleSpan.appendChild(child);
+                    elementToChange = styleSpan;
+                }
+            }
+
+            styleChangeCallback(elementToChange);
+            if (elementToChange.getAttribute("style") == "") {
+                let parentNode = elementToChange.parentNode;
+                elementToChange.childNodes.forEach(child => {
+                    elementToChange.before(child);
+                });
+                parentNode.removeChild(elementToChange);
+                parentNode.normalize();
+            }
+        });
+        range.insertNode(contents);
+    }
+
     #ChangeFontColor(event) {
         let fontColorButton = this.#rootNode.querySelector("#fontColorSelector");
         let fontDisplay = fontColorButton.nextSibling.parentElement;
         let fontColor = fontColorButton.value;
         fontDisplay.style.color = fontColor;
-        let selection = document.getSelection();
-        let range = selection.getRangeAt(0);
-        let startContainer = range.startContainer
-        let contents = range.extractContents();
-        contents.childNodes.forEach(child => {
-            let colorTarget = null;
-            if (!(child instanceof Text) && child.classList.contains("textEditorFormatSpan")) {
-                colorTarget = child;
-            } else {
-                // Need to refine this approach because we're trying to expand to select the parent node if the whole text is selected (to catch existing spans), but at this point we've actually removed the textnode from the parent we're checking for.
-                if (child instanceof Text) {
-                    if ((startContainer === range.endContainer) && (startContainer instanceof Text) && (range.startOffset == 0 && range.endOffset == startContainer.nodeValue.length)) {
-                        range.selectNode(range.startContainer.parentNode);
-                    }
-                }
-
-                if (!range.startContainer instanceof Text && range.startContainer.classList.contains("textEditorFormatSpan")) {
-                    let styleSpan = document.createElement("span");
-                    styleSpan.className = "textEditorFormatSpan";
-                    styleSpan.classList.add("textEditorFormatSpan");
-                    colorTarget = styleSpan;
-                    styleSpan.appendChild(child);
-                }
-            }
-            if (fontColor == "#000000") {
-                colorTarget.style.color = null;
-                if (colorTarget.getAttribute("style") == "") {
-                    let parentNode = colorTarget.parentNode;
-                    colorTarget.childNodes.forEach(child => {
-                        colorTarget.before(child);
-                    });
-                    parentNode.removeChild(colorTarget);
-                    parentNode.normalize();
-                }
-            } else {
-                colorTarget.style.setProperty("color", fontColor, "important");
-            }
-        });
-        range.insertNode(contents);
-        
-/*        newSpan.appendChild(contents);
-        newSpan.querySelectorAll(".textEditorFormatSpan").forEach(element => {
-            element.classList.remove("textEditorFormatSpan");
-            if (element.classList.length == 0) {
-                let children = [];
-                element.childNodes.forEach(child => element.before(child));
-            }
-        }); */
-/*        colorTarget = newSpan;
-        
-        // TODO: If a span has no style, class, or ID and is surrounded by text nodes, it should be converted to a text node.
-
-        // TODO: If we change color but cursor has been collapsed, new text typed should be the new color (insert a span or change color of current element if no content)
-
-        if (!colorTarget || !colorTarget.style) return;
-
-        if (fontColor == "#000000") {
-            colorTarget.style.color = null;
-        } else {
-            colorTarget.style.setProperty("color", fontColor, "important");
-        } */
+        let callBack = (fontColor == "#000000") ? 
+            (element) => element.style.setProperty("color", null)
+            : (element) => element.style.setProperty("color", fontColor, "important");
+        this.#ChangeSelectionStyle(callBack);
     }
 
     #RememberSelection(event) {
