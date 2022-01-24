@@ -7,7 +7,6 @@ export class TextEditor {
     #saveHandlers = [];
     #lastFocusedField = null;
     #lastFocusedFieldPosition = -1;
-    #fontColor = null;
 
     #editorHTML = `
 <div class="textEditor">
@@ -42,6 +41,19 @@ export class TextEditor {
                 height: 30px;
                 pointer-events: none;
                 ">ABC
+            </div>
+        </div>
+        <div class="toolBarButton">
+            <input id="bgColorSelector" type="color">
+            <div style="
+                position: relative;
+                top: -75%;
+                font-size: 10px;
+                text-align: center;
+                width: 30px;
+                height: 30px;
+                pointer-events: none;
+                ">&nbsp;
             </div>
         </div>
         <div class="toolBarButton">
@@ -102,7 +114,6 @@ export class TextEditor {
         this.#lastFocusedFieldPosition = 0;
         this.#InitializeToolBar();
         this.#InitializeEditorField();
-        this.#fontColor = "#000000";
     }
 
     AttachTo(targetNode) {
@@ -171,17 +182,20 @@ export class TextEditor {
     }
 
     #InitializeToolBar() {
-        let listStyleDropdown = this.#rootNode.querySelector("#listTypeSelector");
-        listStyleDropdown.addEventListener("change", (event) => this.#ToolBarListStyleChanged(event));
-
         let insertListButton = this.#rootNode.querySelector("#insertList");
         insertListButton.addEventListener("click", (event) => this.#InsertList(event));
 
         let insertCheckListButton = this.#rootNode.querySelector("#insertCheckList");
         insertCheckListButton.addEventListener("click", (event) => this.#InsertCheckList(event));
 
+        let listStyleDropdown = this.#rootNode.querySelector("#listTypeSelector");
+        listStyleDropdown.addEventListener("change", (event) => this.#ToolBarListStyleChanged(event));
+
         let fontColorButton = this.#rootNode.querySelector("#fontColorSelector");
         fontColorButton.addEventListener("input", (event) => this.#ChangeFontColor(event));
+
+        let bgColorButton = this.#rootNode.querySelector("#bgColorSelector");
+        bgColorButton.addEventListener("input", (event) => this.#ChangeBgColor(event));
 
         let fontSizeDropdown = this.#rootNode.querySelector("#fontSizeSelector");
         fontSizeDropdown.addEventListener("change", (event) => {
@@ -196,6 +210,9 @@ export class TextEditor {
         });
 
         this.#toolBarNode = this.#rootNode.querySelector(".textEditorToolBar");
+
+        let italicButton = this.#rootNode.querySelector("#italicButton");
+        italicButton.addEventListener("click", (event) => this.#ChangeFontStyle(event));
     }
 
     #ToolBarListStyleChanged(event) {
@@ -328,6 +345,18 @@ export class TextEditor {
         this.#ChangeSelectionStyle(callBack);
     }
 
+    #ChangeBgColor(event) {
+        let bgColorButton = this.#rootNode.querySelector("#bgColorSelector");
+        let bgDisplay = bgColorButton.nextSibling.parentElement;
+        let bgColor = bgColorButton.value;
+        bgDisplay.style.backgroundColor = bgColor;
+        let callBack = (bgColor == "#000000") ? 
+            (element) => element.style.setProperty("background-color", null)
+            : (element) => element.style.setProperty("background-color", bgColor, "important");
+
+        this.#ChangeSelectionStyle(callBack);
+    }
+
     #ChangeFontSize(event) {
         let fontSizeDropdown = this.#rootNode.querySelector("#fontSizeSelector");
         let fontSize = fontSizeDropdown.options[fontSizeDropdown.selectedIndex].value;
@@ -376,7 +405,7 @@ export class TextEditor {
         let italicButton = this.#rootNode.querySelector("#italicButton");
 
         this.#ChangeSelectionStyle((element) => {
-            if (element.style.fontStyle = "italic") {
+            if (element.style.fontStyle == "italic") {
                 element.style.setProperty("font-style", null);
             }
             else {

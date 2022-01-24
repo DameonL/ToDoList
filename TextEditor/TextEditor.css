@@ -16,7 +16,7 @@
     padding: 4px 4px 4px 4px;
 }
 
-#insertList, #insertCheckList, #listTypeSelector, #fontColorSelector, #fontSizeSelector, #fontWeightDropdown {
+#insertList, #insertCheckList, #listTypeSelector, #fontColorSelector, #fontSizeSelector, #fontWeightDropdown, #italicButton {
     appearance: none;
     width:inherit;
     height: inherit;
@@ -29,7 +29,7 @@
     background-color: unset;
 }
 
-#fontSizeSelector, #fontWeightDropdown, #fontStyleButton {
+#fontSizeSelector, #fontWeightDropdown, #italicButton {
     font-size: 16px;
 }
 
@@ -61,8 +61,4 @@
 
 input[type="color" i]::-webkit-color-swatch {
     background-color: unset !important;
-}
-
-.textEditorFormatSpan::after {
-    content: '\200B';
 }
