@@ -240,17 +240,20 @@ export class TextEditor {
             if (!(child instanceof Text) && child.classList.contains("textEditorFormatSpan")) {
                 colorTarget = child;
             } else {
+                // Need to refine this approach because we're trying to expand to select the parent node if the whole text is selected (to catch existing spans), but at this point we've actually removed the textnode from the parent we're checking for.
                 if (child instanceof Text) {
                     if ((startContainer === range.endContainer) && (startContainer instanceof Text) && (range.startOffset == 0 && range.endOffset == startContainer.nodeValue.length)) {
                         range.selectNode(range.startContainer.parentNode);
                     }
                 }
 
-                let styleSpan = document.createElement("span");
-                styleSpan.className = "textEditorFormatSpan";
-                styleSpan.classList.add("textEditorFormatSpan");
-                colorTarget = styleSpan;
-                styleSpan.appendChild(child);
+                if (!range.startContainer instanceof Text && range.startContainer.classList.contains("textEditorFormatSpan")) {
+                    let styleSpan = document.createElement("span");
+                    styleSpan.className = "textEditorFormatSpan";
+                    styleSpan.classList.add("textEditorFormatSpan");
+                    colorTarget = styleSpan;
+                    styleSpan.appendChild(child);
+                }
             }
             if (fontColor == "#000000") {
                 colorTarget.style.color = null;
