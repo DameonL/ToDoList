@@ -46,6 +46,7 @@ export class TextEditor {
         </div>
         <div class="toolBarButton">
             <select id="fontSizeSelector" name="fontSize">
+                <option value="" id="fontSizePlaceholder"> </option>
                 <option value="+">+</option>
                 <option value="-">-</option>
                 <option value="8px">8</option>
@@ -59,6 +60,21 @@ export class TextEditor {
                 <option value="24px">24</option>
             </select>
         </div>
+        <div class="toolBarButton">
+            <select id="fontWeightDropdown">
+                <option value="0" style="font-weight: 0">B</option>
+                <option value="100" style="font-weight: 100">B</option>
+                <option value="200" style="font-weight: 200">B</option>
+                <option value="300" style="font-weight: 300">B</option>
+                <option value="400" style="font-weight: 400">B</option>
+                <option value="500" style="font-weight: 500">B</option>
+                <option value="600" style="font-weight: 600">B</option>
+                <option value="700" style="font-weight: 700">B</option>
+                <option value="800" style="font-weight: 800">B</option>
+                <option value="900" style="font-weight: 900">B</option>
+            </select>
+        </div>
+
     </div>
     <div class="editorTarget"></div>
 </div>
@@ -164,9 +180,15 @@ export class TextEditor {
         fontColorButton.addEventListener("input", (event) => this.#ChangeFontColor(event));
 
         let fontSizeDropdown = this.#rootNode.querySelector("#fontSizeSelector");
-        let fontSizeClickTracker = false;
-        fontSizeDropdown.addEventListener("input", (event) => {
+        fontSizeDropdown.addEventListener("change", (event) => {
             this.#ChangeFontSize(event);
+            fontSizeDropdown.blur();
+        });
+        fontSizeDropdown.addEventListener("blur", (event) => fontSizeDropdown.selectedIndex = -1);
+
+        let fontWeightDropdown = this.#rootNode.querySelector("#fontWeightDropdown");
+        fontWeightDropdown.addEventListener("change", (event) => {
+            this.#ChangeFontWeight(event);
         });
 
         this.#toolBarNode = this.#rootNode.querySelector(".textEditorToolBar");
@@ -248,13 +270,15 @@ export class TextEditor {
     #ChangeSelectionStyle(styleChangeCallback) {
         let selection = document.getSelection();
         let range = selection.getRangeAt(0);
-        let startContainer = range.startContainer
+        if ((range.startContainer === range.endContainer) && (range.startOffset == range.endOffset)) { return; }
+
         if (range.startContainer instanceof Text) {
             if ((range.startContainer === range.endContainer) && (range.startOffset == 0 && range.endOffset == range.startContainer.nodeValue.length)
              && range.startContainer.parentNode.classList.contains("textEditorFormatSpan")) {
                 range.selectNode(range.startContainer.parentNode);
             }
         }
+
 
         let contents = range.extractContents();
         contents.childNodes.forEach(child => {
@@ -282,9 +306,9 @@ export class TextEditor {
                     elementToChange.before(child);
                 });
                 parentNode.removeChild(elementToChange);
-                parentNode.normalize();
             }
         });
+
         range.insertNode(contents);
     }
 
@@ -296,12 +320,15 @@ export class TextEditor {
         let callBack = (fontColor == "#000000") ? 
             (element) => element.style.setProperty("color", null)
             : (element) => element.style.setProperty("color", fontColor, "important");
+
         this.#ChangeSelectionStyle(callBack);
     }
 
     #ChangeFontSize(event) {
         let fontSizeDropdown = this.#rootNode.querySelector("#fontSizeSelector");
         let fontSize = fontSizeDropdown.options[fontSizeDropdown.selectedIndex].value;
+        let fontSizePlaceholder = fontSizeDropdown.querySelector("#fontSizePlaceholder");
+        fontSizePlaceholder.innerText = fontSize.replace("px", "");
 
         let callBack = null;
         if ((fontSize == "+") || (fontSize == "-")) {
@@ -318,7 +345,7 @@ export class TextEditor {
                 if (fontSize == "+") currentSize++;
                 else currentSize--;
 
-                element.style.setProperty("font-size", `${currentSize} px`, "important");
+                element.style.setProperty("font-size", `${currentSize}px`, "important");
             }
         }
         else {
@@ -326,6 +353,18 @@ export class TextEditor {
                 (element) => element.style.setProperty("font-size", null)
                 : (element) => element.style.setProperty("font-size", fontSize, "important");
         }
+        this.#ChangeSelectionStyle(callBack);
+    }
+
+    #ChangeFontWeight(event) {
+        let fontweightDropdown = this.#rootNode.querySelector("#fontWeightSelector");
+        let fontWeight = fontSizeDropdown.options[fontSizeDropdown.selectedIndex].value;
+
+        let callBack = null;
+        callBack = (fontWeight == "0") ? 
+            (element) => element.style.setProperty("font-weight", null)
+            : (element) => element.style.setProperty("font-weight", fontWeight, "important");
+
         this.#ChangeSelectionStyle(callBack);
     }
 

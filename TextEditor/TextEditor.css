@@ -62,3 +62,7 @@
 input[type="color" i]::-webkit-color-swatch {
     background-color: unset !important;
 }
+
+.textEditorFormatSpan::after {
+    content: '\200B';
+}
