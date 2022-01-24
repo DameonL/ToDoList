@@ -29,7 +29,7 @@
     background-color: unset;
 }
 
-#fontSizeSelector, #fontWeightDropdown, #font {
+#fontSizeSelector, #fontWeightDropdown, #fontStyleButton {
     font-size: 16px;
 }
 
