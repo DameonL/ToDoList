@@ -16,7 +16,11 @@
     padding: 4px 4px 4px 4px;
 }
 
-#insertList, #insertCheckList, #listTypeSelector, #fontColorSelector, #fontSizeSelector, #fontWeightDropdown, #italicButton {
+.editorTarget * {
+    background-color: inherit;
+}
+
+#insertList, #insertCheckList, #listTypeSelector, #fontColorSelector, #fontSizeSelector, #fontWeightDropdown, #italicButton, #bgColorSelector {
     appearance: none;
     width:inherit;
     height: inherit;

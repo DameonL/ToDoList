@@ -45,16 +45,6 @@ export class TextEditor {
         </div>
         <div class="toolBarButton">
             <input id="bgColorSelector" type="color">
-            <div style="
-                position: relative;
-                top: -75%;
-                font-size: 10px;
-                text-align: center;
-                width: 30px;
-                height: 30px;
-                pointer-events: none;
-                ">&nbsp;
-            </div>
         </div>
         <div class="toolBarButton">
             <select id="fontSizeSelector" name="fontSize">
@@ -304,20 +294,19 @@ export class TextEditor {
         let contents = range.extractContents();
         contents.childNodes.forEach(child => {
             let elementToChange = null;
+
+            while (child && !(child instanceof Text) && !(child.classList.contains("textEditorFormatSpan")) && (child.childNodes.length > 0)) {
+                child = child.firstChild;
+            }
+
             if (!(child instanceof Text) && child.classList.contains("textEditorFormatSpan")) {
                 elementToChange = child;
             } else {
-                if (!(range.startContainer instanceof Text) && (range.startContainer.classList.contains("textEditorFormatSpan"))) {
-                    range.startContainer.appendChild(child);
-                    elementToChange = range;
-                } else {
-                    let styleSpan = document.createElement("span");
-                    styleSpan.classList.add("textEditorFormatSpan");
-                    child.after(styleSpan);
-                    child.parentNode.removeChild(child);
-                    styleSpan.appendChild(child);
-                    elementToChange = styleSpan;
-                }
+                let styleSpan = document.createElement("span");
+                styleSpan.classList.add("textEditorFormatSpan");
+                child.parentNode.replaceChild(styleSpan, child);
+                styleSpan.appendChild(child);
+                elementToChange = styleSpan;
             }
 
             styleChangeCallback(elementToChange);
@@ -350,7 +339,7 @@ export class TextEditor {
         let bgDisplay = bgColorButton.nextSibling.parentElement;
         let bgColor = bgColorButton.value;
         bgDisplay.style.backgroundColor = bgColor;
-        let callBack = (bgColor == "#000000") ? 
+        let callBack = (bgColor == "#FFFFFF") ? 
             (element) => element.style.setProperty("background-color", null)
             : (element) => element.style.setProperty("background-color", bgColor, "important");
 
