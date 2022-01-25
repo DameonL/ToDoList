@@ -283,29 +283,40 @@ export class TextEditor {
         let range = selection.getRangeAt(0);
         if ((range.startContainer === range.endContainer) && (range.startOffset == range.endOffset)) { return; }
 
-        while ((range.startOffset == 0) && (range.startContainer.parentNode !== range.commonAncestorContainer)){
-            let offset = Array.prototype.indexOf.call(range.startContainer.parentNode.childNodes, range.startContainer);
+        let getOffset = (node, nodeList) => {
+            let offset = 0;
+            for (;offset < nodeList.length; offset++) {
+                if (nodeList[offset] === node) {
+                    break;
+                }
+            }
+
+            return offset;
+        }
+
+        while ((range.startOffset == 0) && (range.startContainer !== range.commonAncestorContainer)){
+            let offset = getOffset(range.startContainer, range.startContainer.parentNode.childNodes);
             range.setStart(range.startContainer.parentNode, offset);
         }
 
-        if (range.startContainer instanceof Text) {
+        while ((range.endOffset == ((range.endContainer instanceof Text) ? range.endContainer.length : range.endContainer.childNodes.length))
+        && (range.endContainer !== range.commonAncestorContainer)) {
+            let offset = getOffset(range.endContainer, range.endContainer.parentNode.childNodes);
+            range.setEnd(range.endContainer.parentNode, offset + 1);
+        }
 
-/*          if ((range.startContainer === range.endContainer) && (range.startOffset == 0 && range.endOffset == range.startContainer.nodeValue.length)) {
+        // Also need to check if start offset == startcontainer.length and end offset == 0 and adjust accordingly to not capture surrounding elements
+
+        if (range.startContainer instanceof Text) {
+          if ((range.startContainer === range.endContainer) && (range.startOffset == 0 && range.endOffset == range.startContainer.nodeValue.length)) {
                 range.selectNode(range.startContainer.parentNode);
-            } */
+            } 
         }
 
 
         let contents = range.extractContents();
         contents.childNodes.forEach(child => {
             let elementToChange = null;
-
-            while (child && !(child instanceof Text) && !(child.classList.contains("textEditorFormatSpan")) && (child.childNodes.length > 0)) {
-                child = child.firstChild;
-            }
-
-            if (!child) return;
-
             if (!(child instanceof Text) && child.classList.contains("textEditorFormatSpan")) {
                 elementToChange = child;
             } else {
