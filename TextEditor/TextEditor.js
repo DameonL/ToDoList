@@ -282,12 +282,17 @@ export class TextEditor {
         let selection = document.getSelection();
         let range = selection.getRangeAt(0);
         if ((range.startContainer === range.endContainer) && (range.startOffset == range.endOffset)) { return; }
+        
+        while ((range.startOffset == 0) && (range.startContainer.parentNode !== range.commonAncestorContainer)){
+            let offset = Array.prototype.indexOf.call(range.startContainer.parentNode.childNodes, range.startContainer);
+            range.setStart(range.startContainer.parentNode, offset);
+        }
 
         if (range.startContainer instanceof Text) {
-            if ((range.startContainer === range.endContainer) && (range.startOffset == 0 && range.endOffset == range.startContainer.nodeValue.length)
-             && range.startContainer.parentNode.classList.contains("textEditorFormatSpan")) {
+
+/*          if ((range.startContainer === range.endContainer) && (range.startOffset == 0 && range.endOffset == range.startContainer.nodeValue.length)) {
                 range.selectNode(range.startContainer.parentNode);
-            }
+            } */
         }
 
 
@@ -298,6 +303,8 @@ export class TextEditor {
             while (child && !(child instanceof Text) && !(child.classList.contains("textEditorFormatSpan")) && (child.childNodes.length > 0)) {
                 child = child.firstChild;
             }
+
+            if (!child) return;
 
             if (!(child instanceof Text) && child.classList.contains("textEditorFormatSpan")) {
                 elementToChange = child;
@@ -339,7 +346,7 @@ export class TextEditor {
         let bgDisplay = bgColorButton.nextSibling.parentElement;
         let bgColor = bgColorButton.value;
         bgDisplay.style.backgroundColor = bgColor;
-        let callBack = (bgColor == "#FFFFFF") ? 
+        let callBack = (bgColor == "#ffffff") ? 
             (element) => element.style.setProperty("background-color", null)
             : (element) => element.style.setProperty("background-color", bgColor, "important");
 
