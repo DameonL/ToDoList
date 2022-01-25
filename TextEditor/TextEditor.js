@@ -282,7 +282,7 @@ export class TextEditor {
         let selection = document.getSelection();
         let range = selection.getRangeAt(0);
         if ((range.startContainer === range.endContainer) && (range.startOffset == range.endOffset)) { return; }
-        
+
         while ((range.startOffset == 0) && (range.startContainer.parentNode !== range.commonAncestorContainer)){
             let offset = Array.prototype.indexOf.call(range.startContainer.parentNode.childNodes, range.startContainer);
             range.setStart(range.startContainer.parentNode, offset);
