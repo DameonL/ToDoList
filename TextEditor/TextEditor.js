@@ -294,25 +294,31 @@ export class TextEditor {
             return offset;
         }
 
+        let containerLength = (container) => {
+            return (container instanceof Text) ? container.length : container.childNodes.length;
+        }
+
         while ((range.startOffset == 0) && (range.startContainer !== range.commonAncestorContainer)){
             let offset = getOffset(range.startContainer, range.startContainer.parentNode.childNodes);
             range.setStart(range.startContainer.parentNode, offset);
         }
 
-        while ((range.endOffset == ((range.endContainer instanceof Text) ? range.endContainer.length : range.endContainer.childNodes.length))
-        && (range.endContainer !== range.commonAncestorContainer)) {
+        while ((range.startOffset == containerLength(range.startContainer))
+        && (range.startContainer !== range.commonAncestorContainer)) {
+            let offset = getOffset(range.startContainer, range.startContainer.parentNode.childNodes);
+            range.setStart(range.startContainer.parentNode, offset);
+        }
+
+        while ((range.endOffset == 0) && (range.endContainer !== range.commonAncestorContainer)){
             let offset = getOffset(range.endContainer, range.endContainer.parentNode.childNodes);
             range.setEnd(range.endContainer.parentNode, offset + 1);
         }
 
-        // Also need to check if start offset == startcontainer.length and end offset == 0 and adjust accordingly to not capture surrounding elements
-
-        if (range.startContainer instanceof Text) {
-          if ((range.startContainer === range.endContainer) && (range.startOffset == 0 && range.endOffset == range.startContainer.nodeValue.length)) {
-                range.selectNode(range.startContainer.parentNode);
-            } 
+        while ((range.endOffset == containerLength(range.endContainer))
+        && (range.endContainer !== range.commonAncestorContainer)) {
+            let offset = getOffset(range.endContainer, range.endContainer.parentNode.childNodes);
+            range.setEnd(range.endContainer.parentNode, offset + 1);
         }
-
 
         let contents = range.extractContents();
         contents.childNodes.forEach(child => {
