@@ -9,8 +9,6 @@ export class ToDoItemCard {
     #documentHiderInstance = null;
     #rootNode = null;
     #backspaceListener = null;
-    #lastFocusedField = null;
-    #lastFocusedFieldPosition = 0;
     #boundElements = [];
 
     constructor(backingData, closedHandler) {
@@ -42,11 +40,13 @@ export class ToDoItemCard {
     }
 
     Render() {
-        let documentHiderInstance = document.createRange().createContextualFragment(this.#documentHiderHtml.trim()).firstChild;
-        this.#documentHiderInstance = documentHiderInstance;
+        if (this.#documentHiderInstance == null) {
+            this.#documentHiderInstance = document.createRange().createContextualFragment(this.#documentHiderHtml.trim()).firstChild;
+        }
+
         let cardNode = document.createRange().createContextualFragment(this.#cardHtml.trim()).firstChild;
         
-        document.body.appendChild(documentHiderInstance);
+        document.body.appendChild(this.#documentHiderInstance);
         document.body.appendChild(cardNode);
         this.#rootNode = cardNode;
         if (this.#backspaceListener == null) {
@@ -61,7 +61,7 @@ export class ToDoItemCard {
             document.addEventListener("keydown", this.#backspaceListener);
         }
 
-        documentHiderInstance.addEventListener("click", () => { window.location.hash = ""; });
+        this.#documentHiderInstance.addEventListener("click", () => { window.location.hash = ""; });
 
         let propertyNames = Object.keys(this.#backingData);
         propertyNames.forEach(property => {
@@ -79,10 +79,11 @@ export class ToDoItemCard {
                         });
                         boundElement.innerHTML = this.#backingData[property];
                     } else {
-                        let textEditor = new TextEditor();
-                        textEditor.EditorText = this.#backingData[property];
-                        textEditor.Enabled = true;
-                        textEditor.AttachTo(boundElement);
+                        let textEditor = new TextEditor(() => {
+                            textEditor.EditorText = this.#backingData[property];
+                            textEditor.Enabled = true;
+                            textEditor.AttachTo(boundElement);
+                        });
                     }
                 }
                 else if ((boundElement.nodeName == "INPUT") && (boundElement.getAttribute("type") == "checkbox")) {

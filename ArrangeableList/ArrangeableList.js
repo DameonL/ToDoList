@@ -6,7 +6,6 @@ export class ArrangeableList {
     #listDefinition = null;
     #sortColumn = "";
     #sortDirection = "asc";
-
     #listLabel = null;
     #listItems = [];
     #itemMovementDropPoint = null;
@@ -31,6 +30,8 @@ export class ArrangeableList {
     get SortColumn() { return this.#sortColumn; }
     set SortColumn(newColumn) { this.#sortColumn = newColumn; }
 
+    IndexOf = (data) => this.#listDefinition.itemIndexHandler(data);
+
     AddRenderListener(listener) {
         this.#renderHandlers.push(listener);
     }
@@ -53,7 +54,11 @@ export class ArrangeableList {
         return newItem;
     }
 
-    IndexOf = (data) => this.#listDefinition.itemIndexHandler(data);
+
+    RedrawListItem(data) {
+        let index = this.#itemData.indexOf(data);
+        this.#listItems[index].Redraw();
+    }
 
     Render() {
         this.#listItems.forEach(item => {
@@ -66,37 +71,10 @@ export class ArrangeableList {
         this.#listItems = [];
 
         if (this.#sortColumn != "") {
+            this.#itemData.sort((a, b) => this.#SortByDataType(this.#sortColumn, a, b));
+        } else {
             this.#itemData.sort((a, b) => {
-                let comparison = 0;
-                a = a[this.#sortColumn];
-                b = b[this.#sortColumn];
-
-
-                if ((typeof a) == "string")
-                {
-                    comparison = a.localeCompare(b);
-                } else if ((typeof a) == "boolean")
-                {
-                    if (a == true && b == false) comparison = -1;
-                    else if (a == false && b == true) comparison = 1;
-                } else {
-                    if (a < b) comparison = -1;
-                    else if (a > b) comparison = 1;
-                }
-
-                if (this.#sortDirection != "asc") comparison = (comparison > 0) ? -comparison :  Math.abs(comparison);
-
-                return comparison;
-            });
-        }
-        else {
-            this.#itemData.sort((a, b) => {
-                a = this.IndexOf(a);
-                b = this.IndexOf(b);
-                let comparison = 0;
-                if (a < b) comparison = -1;
-                else if (a > b) comparison = 1;
-                return comparison;
+                return (this.IndexOf(a) > this.IndexOf(b)) ? 1 : -1;
             });
         }
 
@@ -107,14 +85,14 @@ export class ArrangeableList {
         if (this.#itemMovementDropPoint == null) {
             this.#itemMovementDropPoint = this.#CreateMovementDiv(itemData);
         }
-        
+
         for (let i = 0; i < itemData.length; i++) {
             let listItem = this.#CreateChildItem(itemData, i, this.#itemMovementDropPoint);
             let renderer = listItem.Renderer;
             if (this.#listDefinition.itemDrawHandler) {
                 this.#listDefinition.itemDrawHandler(renderer, itemData[i]);
             }
-            
+
             this.#listItems.push(listItem);
             this.#rootNode.appendChild(renderer);
         }
@@ -122,6 +100,27 @@ export class ArrangeableList {
         this.#renderHandlers.forEach(handler => {
             handler(this.#rootNode);
         });
+    }
+
+    #SortByDataType(sortColumn, a, b) {
+        let comparison = 0;
+        a = a[sortColumn];
+        b = b[sortColumn];
+
+
+        if ((typeof a) == "string") {
+            comparison = a.localeCompare(b);
+        } else if ((typeof a) == "boolean") {
+            if (a == true && b == false) comparison = -1;
+            else if (a == false && b == true) comparison = 1;
+        } else {
+            if (a < b) comparison = -1;
+            else if (a > b) comparison = 1;
+        }
+
+        if (this.#sortDirection != "asc") comparison = (comparison > 0) ? -comparison : Math.abs(comparison);
+
+        return comparison;
     }
 
     #CreateLabelDiv() {
@@ -134,15 +133,14 @@ export class ArrangeableList {
 
             let clickedHandler = (event) => {
                 if (this.#sortColumn == sortColumn) {
-                        if (this.#sortDirection == "desc") { sortColumn = ""; }
-                        this.#sortDirection = (this.#sortDirection == "asc") ? "desc" : "asc";   
-                    }
-    
+                    if (this.#sortDirection == "desc") { sortColumn = ""; }
+                    this.#sortDirection = (this.#sortDirection == "asc") ? "desc" : "asc";
+                }
+
                 this.#sortColumn = sortColumn;
                 this.Render();
             }
-        
-            clickedHandler = clickedHandler.bind(this);
+
             if (sortColumn == this.#sortColumn) {
                 element.innerText += (this.#sortDirection == "asc") ? "⬇" : "⬆";
             }
@@ -170,12 +168,11 @@ export class ArrangeableList {
             if (currentIndex != targetIndex) {
                 itemMovementDropPoint.setAttribute("targetIndex", targetIndex);
                 let targetRenderer = undefined;
-                if (targetIndex < this.#listItems.length) 
-                {
-                    targetRenderer = this.#listItems[targetIndex].Renderer; 
+                if (targetIndex < this.#listItems.length) {
+                    targetRenderer = this.#listItems[targetIndex].Renderer;
                 }
                 this.#rootNode.insertBefore(itemMovementDropPoint, targetRenderer);
-                
+
                 // Trigger animations
                 itemMovementDropPoint.className = itemMovementDropPoint.className.replace("arrangeableItemMovementTarget", "");
                 itemMovementDropPoint.className += " arrangeableItemMovementTarget";
@@ -208,7 +205,7 @@ export class ArrangeableList {
         itemMovementDropPoint.addEventListener("dragover", (event) => {
             event.preventDefault();
         });
-        
+
         return itemMovementDropPoint;
     }
 }

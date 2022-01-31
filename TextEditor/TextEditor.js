@@ -7,84 +7,7 @@ export class TextEditor {
     #saveHandlers = [];
     #lastFocusedField = null;
     #lastFocusedFieldPosition = -1;
-
-    #editorHTML = `
-<div class="textEditor">
-    <div class="textEditorToolBar">
-        <div class="toolBarButton">
-            <button id="insertList"><ul><li><span>a</span></li><li><span>b</span></li><li><span>c</span></li></ul></button>
-        </div>
-        <div class="toolBarButton">
-            <button id="insertCheckList"><ul><li><span>☑</span></li><li><span>☑</span></li><li><span>☑</span></li></ul></button>
-        </div>
-        <div class="toolBarButton">
-            <select id="listTypeSelector" name="listTypes">
-                <option value="disc">⚫</option>
-                <option value="none">None</option>
-                <option value="circle">⚪</option>
-                <option value="square">◼</option>
-                <option value="decimal">1,2,3</option>
-                <option value="upper-roman">I,II,III</option>
-                <option value="lower-roman">i,ii,iii</option>
-                <option value="upper-alpha">A,B,C</option>
-                <option value="lower-alpha">a,b,c</option>
-            </select>
-        </div>
-        <div class="toolBarButton">
-            <input id="fontColorSelector" type="color">
-            <div style="
-                position: relative;
-                top: -75%;
-                font-size: 10px;
-                text-align: center;
-                width: 30px;
-                height: 30px;
-                pointer-events: none;
-                ">ABC
-            </div>
-        </div>
-        <div class="toolBarButton">
-            <input id="bgColorSelector" type="color">
-        </div>
-        <div class="toolBarButton">
-            <select id="fontSizeSelector" name="fontSize">
-                <option value="" id="fontSizePlaceholder"> </option>
-                <option value="+">+</option>
-                <option value="-">-</option>
-                <option value="8px">8</option>
-                <option value="10px">10</option>
-                <option value="12px">12</option>
-                <option value="14px">14</option>
-                <option value="16px" selected>16</option>
-                <option value="18px">18</option>
-                <option value="20px">20</option>
-                <option value="22px">22</option>
-                <option value="24px">24</option>
-            </select>
-        </div>
-        <div class="toolBarButton">
-            <select id="fontWeightDropdown">
-                <option value="0" style="font-weight: 0">B</option>
-                <option value="100" style="font-weight: 100">B</option>
-                <option value="200" style="font-weight: 200">B</option>
-                <option value="300" style="font-weight: 300">B</option>
-                <option value="400" style="font-weight: 400">B</option>
-                <option value="500" style="font-weight: 500">B</option>
-                <option value="600" style="font-weight: 600">B</option>
-                <option value="700" style="font-weight: 700">B</option>
-                <option value="800" style="font-weight: 800">B</option>
-                <option value="900" style="font-weight: 900">B</option>
-            </select>
-        </div>
-
-        <div class="toolBarButton">
-            <button id="italicButton" style="font-style: italic">I</button>
-        </div>
-
-    </div>
-    <div class="editorTarget"></div>
-</div>
-    `;
+    #editorHTML = null;
 
     get EditorText() { return this.#editorNode.innerHTML; }
     set EditorText(newText) {
@@ -93,10 +16,21 @@ export class TextEditor {
         let checkboxes = this.#editorNode.querySelectorAll(`input[type="checkbox"]`);
         checkboxes.forEach(checkbox => this.#AddCheckBoxListener(checkbox));
     }
+
     get Enabled() { return this.#editorNode.getAttribute("contenteditable") == true; }
     set Enabled(newValue) { this.#editorNode.setAttribute("contenteditable", newValue == true); }
 
-    constructor() {
+    constructor(loadedHandler) {
+        fetch("./TextEditor/TextEditor.html").then(response => {
+            return response.text();
+        }).then(text => {
+            this.#editorHTML = text;
+            this.Render();
+            loadedHandler();
+        });
+    }
+
+    Render() {
         this.#rootNode = document.createRange().createContextualFragment(this.#editorHTML.trim()).firstChild;
         this.#editorNode = this.#rootNode.querySelector(`.editorTarget`);
         this.#editorNode.addEventListener("focusout", (event) => this.#RememberSelection(event));
@@ -110,59 +44,58 @@ export class TextEditor {
         targetNode.appendChild(this.#rootNode);
     }
 
+
     #InitializeEditorField() {
         let boundElement = this.#editorNode;
-        boundElement.addEventListener("keypress", (event) => {
-            if (event.key == "Enter") {
-                let selection = document.getSelection();
-                if (selection.anchorNode != undefined) {
-                    let listNode = selection.anchorNode;
-                    while (listNode && listNode.nodeName != "LI") listNode = listNode.parentElement;
-
-                    if (!listNode) return true;
-
-                    if ((listNode.firstChild) && (listNode.firstChild.nodeName == "INPUT") && (listNode.firstChild.type == "checkbox")) {
-                        if (listNode.innerText.trim() == "") {
-                            let afterDiv = document.createElement("div");
-                            afterDiv.innerHTML = "&nbsp;";
-                            listNode.parentElement.after(afterDiv);
-                            listNode.parentElement.removeChild(listNode);
-                            selection.collapse(afterDiv, 1);
-                            event.preventDefault();
-                            return false;
-                        }
-
-                        let newCheckbox = this.#CreateCheckmarkListItem();
-                        listNode.after(newCheckbox);
-                        selection.collapse(newCheckbox, 1);
-                        event.preventDefault();
-                        return false;
-                    }
-
-                }
-            }
-        });
-
-        boundElement.addEventListener("keydown", (event) => {
-            if (event.key == "Backspace") {
-                let selection = document.getSelection();
-                let selectionRange = selection.getRangeAt(0);
-                if ((selectionRange.startOffset == 1) && (selectionRange.startContainer.nodeName == "LI") && (selectionRange.startContainer.firstChild.type == "checkbox")) {
-                    selection.modify("move", "left", "word");
-                    selectionRange.startContainer.parentElement.removeChild(selectionRange.startContainer);
-                    event.preventDefault();
-                    return false;
-                }
-
-                let anchorNode = document.getSelection().anchorNode;
-                if (anchorNode != undefined && anchorNode.previousSibling == null && anchorNode.parentElement.nodeName == "UL") {
-                    event.preventDefault();
-                    anchorNode.parentElement.parentElement.removeChild(anchorNode.parentElement);
-                    return false;
-                }
-            }
-        });
+        boundElement.addEventListener("keypress", (event) => { if (event.key == "Enter") this.#EnterKeyHandler(event); });
+        boundElement.addEventListener("keydown", (event) => { if (event.key == "Backspace") this.#BackspaceHandler(event); });
     }
+
+    #EnterKeyHandler(event) {
+        let selection = document.getSelection();
+        if (selection.anchorNode != undefined) {
+            let listNode = selection.anchorNode;
+            while (listNode && listNode.nodeName != "LI") listNode = listNode.parentElement;
+
+            if (!listNode) return true;
+
+            if ((listNode.firstChild) && (listNode.firstChild.nodeName == "INPUT") && (listNode.firstChild.type == "checkbox")) {
+                if (listNode.innerText.trim() == "") {
+                    let afterDiv = document.createElement("div");
+                    afterDiv.innerHTML = "&nbsp;";
+                    listNode.parentElement.after(afterDiv);
+                    listNode.parentElement.removeChild(listNode);
+                    selection.collapse(afterDiv, 1);
+                    event.preventDefault();
+                    return false;
+                }
+
+                let newCheckbox = this.#CreateCheckmarkListItem();
+                listNode.after(newCheckbox);
+                selection.collapse(newCheckbox, 1);
+                event.preventDefault();
+                return false;
+            }
+        }
+    }
+
+    #BackspaceHandler(event) {
+        let selection = document.getSelection();
+        let selectionRange = selection.getRangeAt(0);
+        if ((selectionRange.startOffset == 1) && (selectionRange.startContainer.nodeName == "LI") && (selectionRange.startContainer.firstChild.type == "checkbox")) {
+            selection.modify("move", "left", "word");
+            selectionRange.startContainer.parentElement.removeChild(selectionRange.startContainer);
+            event.preventDefault();
+            return false;
+        }
+
+        let anchorNode = document.getSelection().anchorNode;
+        if (anchorNode != undefined && anchorNode.previousSibling == null && anchorNode.parentElement.nodeName == "UL") {
+            event.preventDefault();
+            anchorNode.parentElement.parentElement.removeChild(anchorNode.parentElement);
+            return false;
+        }
+    };
 
     #AddCheckBoxListener(checkbox) {
         checkbox.addEventListener("change", (event) => {
@@ -283,67 +216,77 @@ export class TextEditor {
         let range = selection.getRangeAt(0);
         if ((range.startContainer === range.endContainer) && (range.startOffset == range.endOffset)) { return; }
 
-        let getOffset = (node, nodeList) => {
+        this.#adjustRangeBoundaries(range);
+
+        let contents = range.extractContents();
+        contents.childNodes.forEach(child => {
+            this.#AddOrChangeStyleSpan(child, styleChangeCallback);
+        });
+
+        range.insertNode(contents);
+    }
+
+    #AddOrChangeStyleSpan(child, styleChangeCallback) {
+        let elementToChange = null;
+        if (!(child instanceof Text) && child.classList.contains("textEditorFormatSpan")) {
+            elementToChange = child;
+        } else {
+            let styleSpan = document.createElement("span");
+            styleSpan.classList.add("textEditorFormatSpan");
+            child.parentNode.replaceChild(styleSpan, child);
+            styleSpan.appendChild(child);
+            elementToChange = styleSpan;
+        }
+
+        styleChangeCallback(elementToChange);
+        if (elementToChange.getAttribute("style") == "") {
+            let parentNode = elementToChange.parentNode;
+            elementToChange.childNodes.forEach(child => {
+                elementToChange.before(child);
+            });
+            parentNode.removeChild(elementToChange);
+        }
+    }
+
+    #adjustRangeBoundaries(range) {
+        let containerLength = (container) => {
+            return (container instanceof Text) ? container.length : container.childNodes.length;
+        }
+
+        while ((range.startOffset == 0) && (range.startContainer !== range.commonAncestorContainer)) {
+            let offset = this.#getOffset(range.startContainer, range.startContainer.parentNode.childNodes);
+            range.setStart(range.startContainer.parentNode, offset);
+        }
+
+        while ((range.startOffset == containerLength(range.startContainer))
+            && (range.startContainer !== range.commonAncestorContainer)) {
+            let offset = this.#getOffset(range.startContainer, range.startContainer.parentNode.childNodes);
+            range.setStart(range.startContainer.parentNode, offset);
+        }
+
+        while ((range.endOffset == 0) && (range.endContainer !== range.commonAncestorContainer)) {
+            let offset = this.#getOffset(range.endContainer, range.endContainer.parentNode.childNodes);
+            range.setEnd(range.endContainer.parentNode, offset + 1);
+        }
+
+        while ((range.endOffset == containerLength(range.endContainer))
+            && (range.endContainer !== range.commonAncestorContainer)) {
+            let offset = this.#getOffset(range.endContainer, range.endContainer.parentNode.childNodes);
+            range.setEnd(range.endContainer.parentNode, offset + 1);
+        }
+    }
+
+    #getOffset() {
+        return (node, nodeList) => {
             let offset = 0;
-            for (;offset < nodeList.length; offset++) {
+            for (; offset < nodeList.length; offset++) {
                 if (nodeList[offset] === node) {
                     break;
                 }
             }
 
             return offset;
-        }
-
-        let containerLength = (container) => {
-            return (container instanceof Text) ? container.length : container.childNodes.length;
-        }
-
-        while ((range.startOffset == 0) && (range.startContainer !== range.commonAncestorContainer)){
-            let offset = getOffset(range.startContainer, range.startContainer.parentNode.childNodes);
-            range.setStart(range.startContainer.parentNode, offset);
-        }
-
-        while ((range.startOffset == containerLength(range.startContainer))
-        && (range.startContainer !== range.commonAncestorContainer)) {
-            let offset = getOffset(range.startContainer, range.startContainer.parentNode.childNodes);
-            range.setStart(range.startContainer.parentNode, offset);
-        }
-
-        while ((range.endOffset == 0) && (range.endContainer !== range.commonAncestorContainer)){
-            let offset = getOffset(range.endContainer, range.endContainer.parentNode.childNodes);
-            range.setEnd(range.endContainer.parentNode, offset + 1);
-        }
-
-        while ((range.endOffset == containerLength(range.endContainer))
-        && (range.endContainer !== range.commonAncestorContainer)) {
-            let offset = getOffset(range.endContainer, range.endContainer.parentNode.childNodes);
-            range.setEnd(range.endContainer.parentNode, offset + 1);
-        }
-
-        let contents = range.extractContents();
-        contents.childNodes.forEach(child => {
-            let elementToChange = null;
-            if (!(child instanceof Text) && child.classList.contains("textEditorFormatSpan")) {
-                elementToChange = child;
-            } else {
-                let styleSpan = document.createElement("span");
-                styleSpan.classList.add("textEditorFormatSpan");
-                child.parentNode.replaceChild(styleSpan, child);
-                styleSpan.appendChild(child);
-                elementToChange = styleSpan;
-            }
-
-            styleChangeCallback(elementToChange);
-            if (elementToChange.getAttribute("style") == "") {
-                let parentNode = elementToChange.parentNode;
-                elementToChange.childNodes.forEach(child => {
-                    elementToChange.before(child);
-                });
-                parentNode.removeChild(elementToChange);
-            }
-        });
-
-        range.insertNode(contents);
+        };
     }
 
     #ChangeFontColor(event) {
@@ -351,7 +294,7 @@ export class TextEditor {
         let fontDisplay = fontColorButton.nextSibling.parentElement;
         let fontColor = fontColorButton.value;
         fontDisplay.style.color = fontColor;
-        let callBack = (fontColor == "#000000") ? 
+        let callBack = (fontColor == "#000000") ?
             (element) => element.style.setProperty("color", null)
             : (element) => element.style.setProperty("color", fontColor, "important");
 
@@ -363,7 +306,7 @@ export class TextEditor {
         let bgDisplay = bgColorButton.nextSibling.parentElement;
         let bgColor = bgColorButton.value;
         bgDisplay.style.backgroundColor = bgColor;
-        let callBack = (bgColor == "#ffffff") ? 
+        let callBack = (bgColor == "#ffffff") ?
             (element) => element.style.setProperty("background-color", null)
             : (element) => element.style.setProperty("background-color", bgColor, "important");
 
@@ -395,7 +338,7 @@ export class TextEditor {
             }
         }
         else {
-            callBack = (fontSize == "16px") ? 
+            callBack = (fontSize == "16px") ?
                 (element) => element.style.setProperty("font-size", null)
                 : (element) => element.style.setProperty("font-size", fontSize, "important");
         }
@@ -407,7 +350,7 @@ export class TextEditor {
         let fontWeight = fontweightDropdown.options[fontweightDropdown.selectedIndex].value;
 
         let callBack = null;
-        callBack = (fontWeight == "0") ? 
+        callBack = (fontWeight == "0") ?
             (element) => { element.style.setProperty("font-weight", null); fontWeightDropdown.style.setProperty("font-weight", null); }
             : (element) => { element.style.setProperty("font-weight", fontWeight, "important"); fontWeightDropdown.style.setProperty("font-weight", fontWeight, "important"); }
 

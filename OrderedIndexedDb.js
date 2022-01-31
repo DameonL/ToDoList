@@ -31,6 +31,10 @@ export class OrderedIndexedDb {
         }
     }
 
+    Includes(data) {
+        return this.#items.includes(data);
+    }
+
     GetItemAt(index) {
         return this.#items[index];
     }
@@ -134,7 +138,7 @@ export class OrderedIndexedDb {
             
             store.put(data, index);
 
-//            this.#itemChangedHandlers.forEach(x => { x(data); });
+            this.#itemChangedHandlers.forEach(x => { x(data); });
         }
     }
 

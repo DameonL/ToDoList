@@ -1,32 +1,34 @@
 import { ArrangeableList } from "./ArrangeableList/ArrangeableList.js";
-import { listDefinition, database, getNewItem, editNewItem } from "./ToDoListDefinition.js";
+import { listDefinition, database, editItem } from "./ToDoListDefinition.js";
 
 
-let toDoList = new ArrangeableList(listDefinition);
-document.querySelector("#renderTarget").appendChild(toDoList.RootNode);
+if (!('indexedDB' in window)) {
+    document.getRootNode().innerHTML = "Sorry, your browser does not support indexedDB";
+} else {
+    let toDoList = new ArrangeableList(listDefinition);
+    document.querySelector("#renderTarget").appendChild(toDoList.RootNode);
+    
+    database.AddListChangedHandler((newListData) => {
+        toDoList.ItemData = newListData;
+    });
 
-database.AddListChangedHandler((newListData) => {
-    toDoList.ItemData = newListData;
-});
-
-toDoList.AddRenderListener(rootNode => {
-    let addButton = rootNode.querySelector("#newItemButton");
-    if (addButton) {
-        addButton.addEventListener("click", () => {
-            let newItem = getNewItem();
-            editNewItem(newItem);
-        });
-    }
-});
-toDoList.ItemData = database.Items;
-
-let renderButton = document.createElement("button");
-renderButton.addEventListener("click", () => toDoList.Render());
-document.body.appendChild(renderButton);
-
-function Start() {
-    if (!('indexedDB' in window)) {
-        document.getRootNode().innerHTML = "Sorry, your browser does not support indexedDB";
-        return;
-    }
+    database.AddItemChangedHandler((changedData) => {
+        
+        toDoList.RedrawListItem(changedData);
+    })
+    
+    toDoList.AddRenderListener(rootNode => {
+        let addButton = rootNode.querySelector("#newItemButton");
+        if (addButton) {
+            addButton.addEventListener("click", () => {
+                editItem();
+            });
+        }
+    });
+    toDoList.ItemData = database.Items;
+    
+    let renderButton = document.createElement("button");
+    renderButton.addEventListener("click", () => toDoList.Render());
+    document.body.appendChild(renderButton);
 }
+
