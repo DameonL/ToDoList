@@ -105,6 +105,9 @@ export class ArrangeableListItem {
         let dataType = boundElement.getAttribute("dataType");
         if (this.#allowedDataTypes.includes(dataType)) {
             let newObject = eval(`new ${dataType}(${this.#backingData[property]})`);
+            if (dataType == "Date") {
+                newObject.setMinutes(newObject.getMinutes() + newObject.getTimezoneOffset());
+            }
             let formatFunction = boundElement.getAttribute("formatFunction");
             if (formatFunction) {
                 boundElement.innerHTML = newObject[formatFunction]();
