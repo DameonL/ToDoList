@@ -1,6 +1,5 @@
 import { OrderedIndexedDb } from "./OrderedIndexedDb.js";
 import { ToDoItemCard } from "./ToDoItemCard/ToDoItemCard.js";
-import { ItemDeleteDialog } from "./ItemDeleteDialog.js";
 
 export function getNewItem() {
     let dueDate = new Date(Date.now());
