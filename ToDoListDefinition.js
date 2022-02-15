@@ -88,7 +88,7 @@ export let listDefinition = {
         },
         {
             label: `<div title="Delete this item">🗑️</div>`,
-            clickedHandler: (data) => { new ItemDeleteDialog(() => { database.DeleteItem(data); }); }
+            clickedHandler: (data) => { if (confirm("Delete this item? This cannot be undone.")) database.DeleteItem(data); }
         },
     ],
 
