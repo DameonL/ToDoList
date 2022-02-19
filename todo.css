@@ -1,5 +1,5 @@
 body {
-    font-family: "Times New Roman", Times, serif;
+    background-color: #131313;
 }
 
 #toDoListRender {
@@ -8,7 +8,7 @@ body {
 }
 
 #renderTarget {
-    background-color: aquamarine;
+    background-color: #003fb1;
     padding: 5px 5px 5px 5px;
     border-radius: 15px;
     overflow: hidden;
@@ -49,6 +49,10 @@ body {
     text-overflow: ellipsis;
     max-height: 20px;
     cursor: text;
+}
+
+.arrangeableListLabel > div {
+    cursor: pointer;
 }
 
 .nameInputField:focus {

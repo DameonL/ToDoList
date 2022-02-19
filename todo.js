@@ -26,9 +26,5 @@ if (!('indexedDB' in window)) {
         }
     });
     toDoList.ItemData = database.Items;
-    
-    let renderButton = document.createElement("button");
-    renderButton.addEventListener("click", () => toDoList.Render());
-    document.body.appendChild(renderButton);
 }
 

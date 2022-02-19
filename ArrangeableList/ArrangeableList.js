@@ -92,6 +92,7 @@ export class ArrangeableList {
             if (this.#listDefinition.itemDrawHandler) {
                 this.#listDefinition.itemDrawHandler(renderer, itemData[i]);
             }
+            if (i % 2 == 1) { renderer.className += " arrangeableListItemAlt"; }
 
             this.#listItems.push(listItem);
             this.#rootNode.appendChild(renderer);

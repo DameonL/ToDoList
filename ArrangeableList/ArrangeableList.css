@@ -31,7 +31,7 @@
 }
 
 .arrangeableListItem {
-    background-color: #f2fcf9;
+    background-color: #ffffff;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -42,7 +42,7 @@
 }
 
 .arrangeableListItemAlt {
-    background-color: #ebf5f2;
+    background-color: #b8b8b8;
 }
 
 .arrangeableListItemButtons {
@@ -56,7 +56,8 @@
 }
 
 .arrangeableListLabel {
-    background-color: #f0f0f0;
+    background-color: #5a5a5a;
+    color: white;
     cursor: default;
 }
 
